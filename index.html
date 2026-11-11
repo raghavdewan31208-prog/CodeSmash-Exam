@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CodeTantra C++ Practical Exam Lab</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0b0f19;
+      color: #e2e8f0;
+    }
+    .font-mono-code {
+      font-family: 'Fira Code', monospace;
+    }
+    ::-webkit-scrollbar {
+      width: 7px;
+      height: 7px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0f172a;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #475569;
+    }
+    .editor-line-numbers {
+      counter-reset: line;
+    }
+    .editor-line-numbers div::before {
+      counter-increment: line;
+      content: counter(line);
+      display: inline-block;
+      width: 100%;
+      text-align: right;
+      color: #475569;
+    }
+  </style>
+</head>
+<body class="h-screen flex flex-col overflow-hidden">
+
+  <!-- ================= TOP NAVIGATION ================= -->
+  <header class="h-14 bg-slate-900/90 border-b border-slate-800 flex items-center justify-between px-5 select-none shrink-0">
+    <div class="flex items-center space-x-3">
+      <div class="w-8 h-8 rounded-lg bg-sky-600/20 border border-sky-500/40 flex items-center justify-center font-bold text-sky-400 text-sm">
+        C++
+      </div>
+      <div>
+        <div class="flex items-center space-x-2">
+          <span class="font-bold text-white text-sm tracking-wide">CodeTantra Lab</span>
+          <span class="text-[10px] bg-slate-800 border border-slate-700 text-slate-300 px-1.5 py-0.5 rounded font-mono">B.Tech AI Exam Prep</span>
+        </div>
+        <span class="text-xs text-sky-400/80 block -mt-0.5 font-mono">GCC 10.2 / C++17 Active</span>
+      </div>
+    </div>
+
+    <!-- Center Mode Selectors -->
+    <div class="flex items-center space-x-1.5 bg-slate-950 p-1 rounded-lg border border-slate-800">
+      <button id="tab-btn-practice" onclick="switchMainView('practice')" class="px-3 py-1 rounded text-xs font-medium text-white bg-slate-800 transition">
+        Workspace
+      </button>
+      <button id="tab-btn-bank" onclick="switchMainView('bank')" class="px-3 py-1 rounded text-xs font-medium text-slate-400 hover:text-white transition">
+        Question Bank (<span id="total-q-count">0</span>)
+      </button>
+      <button id="tab-btn-exam" onclick="openMockExamModal()" class="px-3 py-1 rounded text-xs font-semibold text-amber-400 hover:bg-amber-500/10 border border-amber-500/30 transition flex items-center space-x-1">
+        <span>⏱️ Practical Mock Exam</span>
+      </button>
+    </div>
+
+    <!-- Right Stats -->
+    <div class="flex items-center space-x-4">
+      <div class="flex items-center space-x-1.5 px-2.5 py-1 rounded bg-amber-500/10 border border-amber-500/20 text-amber-300 text-xs font-semibold">
+        <span>🔥</span>
+        <span id="streak-counter">1 Day Streak</span>
+      </div>
+      <div class="flex items-center space-x-1.5 px-2.5 py-1 rounded bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-xs font-semibold">
+        <span>✅</span>
+        <span id="solved-counter">0 Solved</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= MAIN SPLIT WORKSPACE ================= -->
+  <main id="view-practice" class="flex-1 flex overflow-hidden">
+    <!-- LEFT PANEL: QUESTION & SPECS -->
+    <section class="w-1/2 flex flex-col border-r border-slate-800 bg-slate-900/40">
+      <!-- Question Selector Sub-bar -->
+      <div class="h-10 bg-slate-900/80 border-b border-slate-800 px-4 flex items-center justify-between text-xs shrink-0">
+        <div class="flex items-center space-x-2">
+          <span id="q-badge-id" class="px-2 py-0.5 rounded bg-sky-950 text-sky-400 border border-sky-800 font-mono font-bold">ARR-01</span>
+          <span id="q-badge-module" class="text-slate-400 font-medium">Arrays</span>
+          <span class="text-slate-600">•</span>
+          <span id="q-badge-diff" class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Easy</span>
+          <span id="q-badge-mode" class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-purple-500/10 text-purple-300 border border-purple-500/20">Full Code</span>
+        </div>
+        <div class="flex items-center space-x-1">
+          <button onclick="navigateQuestion(-1)" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded text-xs">◀ Prev</button>
+          <button onclick="navigateQuestion(1)" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded text-xs">Next ▶</button>
+        </div>
+      </div>
+
+      <!-- Problem Statement Scroll Area -->
+      <div class="flex-1 overflow-y-auto p-6 space-y-6">
+        <div>
+          <h1 id="q-title" class="text-xl font-bold text-white tracking-tight">Sum and Average of an Array</h1>
+          <p id="q-desc" class="mt-2 text-sm text-slate-300 leading-relaxed whitespace-pre-line">
+            Write a C++ program to read an array of N integers and compute the sum and the average (integer division).
+          </p>
+        </div>
+
+        <!-- Formats -->
+        <div class="space-y-3">
+          <div>
+            <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">Input Format</span>
+            <div id="q-input-fmt" class="bg-slate-950/80 p-3 rounded-lg border border-slate-800 text-xs font-mono-code text-slate-300 whitespace-pre-wrap"></div>
+          </div>
+          <div>
+            <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">Output Format</span>
+            <div id="q-output-fmt" class="bg-slate-950/80 p-3 rounded-lg border border-slate-800 text-xs font-mono-code text-slate-300 whitespace-pre-wrap"></div>
+          </div>
+          <div id="q-constraints-box">
+            <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">Constraints</span>
+            <div id="q-constraints" class="bg-slate-950/80 p-2.5 rounded-lg border border-slate-800 text-xs font-mono-code text-amber-300/90 whitespace-pre-wrap"></div>
+          </div>
+        </div>
+
+        <!-- Sample Test Cases (Visible) -->
+        <div class="space-y-3">
+          <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider block">Visible Sample Test Cases</span>
+          <div id="q-samples-container" class="space-y-3"></div>
+        </div>
+
+        <!-- Hints System -->
+        <div class="pt-4 border-t border-slate-800 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Exam Hints</span>
+            <span class="text-[11px] text-slate-500">3-tier guidance</span>
+          </div>
+          <div class="flex space-x-2">
+            <button onclick="toggleHint(0)" id="hint-btn-0" class="px-3 py-1 text-xs rounded border border-slate-700 bg-slate-800/80 text-slate-300 hover:text-white">Hint 1 (Concept)</button>
+            <button onclick="toggleHint(1)" id="hint-btn-1" class="px-3 py-1 text-xs rounded border border-slate-700 bg-slate-800/80 text-slate-300 hover:text-white">Hint 2 (Logic)</button>
+            <button onclick="toggleHint(2)" id="hint-btn-2" class="px-3 py-1 text-xs rounded border border-slate-700 bg-slate-800/80 text-slate-300 hover:text-white">Hint 3 (Pseudocode)</button>
+          </div>
+          <div id="hint-display-box" class="hidden p-3 bg-amber-950/20 border border-amber-800/40 rounded-lg text-amber-200 text-xs font-mono-code leading-relaxed whitespace-pre-wrap"></div>
+        </div>
+
+        <!-- Reveal Solution -->
+        <div class="pt-4 border-t border-slate-800">
+          <button onclick="revealSolution()" class="text-xs font-semibold text-sky-400 hover:text-sky-300 flex items-center space-x-1.5">
+            <span>👁️ Reveal Exam Reference Solution & Explanation</span>
+          </button>
+          <div id="solution-display-box" class="hidden mt-3 p-4 bg-slate-950 rounded-lg border border-slate-800 space-y-2">
+            <div class="text-xs font-bold text-sky-400 uppercase tracking-wider font-mono">Reference C++17 Solution</div>
+            <pre id="solution-code" class="text-xs font-mono-code text-slate-200 bg-slate-900 p-3 rounded overflow-x-auto whitespace-pre"></pre>
+            <p id="solution-explanation" class="text-xs text-slate-300 leading-relaxed pt-1"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RIGHT PANEL: CODE EDITOR & RUNNER -->
+    <section class="w-1/2 flex flex-col bg-slate-950">
+      <!-- Editor Header & Actions -->
+      <div class="h-10 bg-slate-900 border-b border-slate-800 px-4 flex items-center justify-between shrink-0">
+        <div class="flex items-center space-x-2">
+          <span class="text-xs font-mono text-slate-400 font-semibold">solution.cpp</span>
+          <span class="text-[10px] text-slate-500">(Auto-saved)</span>
+        </div>
+        <div class="flex items-center space-x-2">
+          <button onclick="resetCurrentCode()" class="px-2.5 py-1 text-xs rounded bg-slate-800 text-slate-300 hover:text-white border border-slate-700">
+            Reset
+          </button>
+          <button id="btn-run" onclick="executeUserCode(false)" class="flex items-center space-x-1 px-3.5 py-1 text-xs font-semibold bg-emerald-600 hover:bg-emerald-500 text-white rounded transition">
+            <span>▶</span>
+            <span>Run Code</span>
+          </button>
+          <button id="btn-submit" onclick="executeUserCode(true)" class="flex items-center space-x-1 px-4 py-1 text-xs font-semibold bg-sky-600 hover:bg-sky-500 text-white rounded shadow-md shadow-sky-600/30 transition">
+            <span>⚡</span>
+            <span>Submit</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Editor Area with Line Numbers -->
+      <div class="flex-1 flex overflow-hidden border-b border-slate-800">
+        <div id="line-numbers" class="w-11 bg-slate-950 text-slate-600 py-3 text-right pr-2 select-none font-mono-code text-xs leading-6 overflow-hidden editor-line-numbers">
+          <!-- Populated by JS -->
+        </div>
+        <textarea
+          id="code-editor"
+          spellcheck="false"
+          class="flex-1 bg-transparent text-slate-100 p-3 leading-6 font-mono-code text-xs outline-none resize-none whitespace-pre overflow-auto selection:bg-sky-500/30"
+        ></textarea>
+      </div>
+
+      <!-- Bottom Console / Drawer -->
+      <div class="h-64 flex flex-col bg-slate-900/90 shrink-0">
+        <!-- Tabs -->
+        <div class="h-9 bg-slate-950 border-b border-slate-800 px-4 flex items-center justify-between">
+          <div class="flex space-x-1">
+            <button onclick="switchBottomTab('console')" id="tab-console-btn" class="px-3 py-1 text-xs rounded font-medium bg-slate-800 text-sky-400">
+              Output Console
+            </button>
+            <button onclick="switchBottomTab('input')" id="tab-input-btn" class="px-3 py-1 text-xs rounded font-medium text-slate-400 hover:text-white">
+              Custom Input (<span class="font-mono text-[11px]">cin</span>)
+            </button>
+            <button onclick="switchBottomTab('tests')" id="tab-tests-btn" class="px-3 py-1 text-xs rounded font-medium text-slate-400 hover:text-white">
+              Test Cases Result (<span id="test-summary-tag">Ready</span>)
+            </button>
+          </div>
+          <div id="compiler-status-indicator" class="text-[11px] text-slate-500 font-mono">
+            Idle
+          </div>
+        </div>
+
+        <!-- Tab 1: Console Output -->
+        <div id="bottom-tab-console" class="flex-1 p-3 overflow-auto font-mono-code text-xs text-slate-200 bg-slate-950">
+          <div id="console-output" class="text-slate-500 italic">Click "Run Code" to compile and run with custom input, or "Submit" to validate against all test cases.</div>
+        </div>
+
+        <!-- Tab 2: Custom Input -->
+        <div id="bottom-tab-input" class="hidden flex-1 p-3 overflow-auto bg-slate-950">
+          <textarea
+            id="custom-input-box"
+            placeholder="Enter standard input data here (passed directly to cin during 'Run Code')..."
+            class="w-full h-full bg-transparent outline-none resize-none font-mono-code text-xs text-slate-200 placeholder-slate-600"
+          ></textarea>
+        </div>
+
+        <!-- Tab 3: Test Cases Result -->
+        <div id="bottom-tab-tests" class="hidden flex-1 p-3 overflow-auto bg-slate-950 space-y-2">
+          <div id="test-cases-results-list" class="space-y-2 text-xs">
+            <div class="text-slate-500 italic">Submit your code to evaluate against visible and hidden test cases.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= QUESTION BANK VIEW ================= -->
+  <section id="view-bank" class="hidden flex-1 overflow-y-auto p-8 max-w-7xl mx-auto w-full space-y-6">
+    <div class="flex items-center justify-between">
+      <div>
+        <h2 class="text-2xl font-bold text-white tracking-tight">C++ University Question Bank</h2>
+        <p class="text-sm text-slate-400">Strictly following your 5-module B.Tech CSE Practical exam syllabus.</p>
+      </div>
+      <div class="flex space-x-3">
+        <select id="filter-module" onchange="applyFilters()" class="bg-slate-800 border border-slate-700 text-xs rounded-lg px-3 py-2 text-slate-200 outline-none">
+          <option value="All">All Modules</option>
+          <option value="Arrays">Module 1: Arrays (1D & 2D)</option>
+          <option value="Pointers">Module 2: Pointers</option>
+          <option value="DMA">Module 3: Dynamic Memory (DMA)</option>
+          <option value="Functions">Module 4: Functions & Recursion</option>
+          <option value="Logic">Module 5: Logic Fundamentals</option>
+        </select>
+        <select id="filter-mode" onchange="applyFilters()" class="bg-slate-800 border border-slate-700 text-xs rounded-lg px-3 py-2 text-slate-200 outline-none">
+          <option value="All">All Modes</option>
+          <option value="full_code">Mode A: Full Code</option>
+          <option value="debugging">Mode B: Debugging</option>
+          <option value="fill_blanks">Mode C: Fill Blanks</option>
+          <option value="predict_output">Mode D: Predict Output</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden shadow-xl">
+      <div class="grid grid-cols-12 gap-4 px-6 py-3 bg-slate-950 border-b border-slate-800 text-xs font-semibold text-slate-400 uppercase tracking-wider">
+        <div class="col-span-1">Status</div>
+        <div class="col-span-2">ID & Topic</div>
+        <div class="col-span-5">Title</div>
+        <div class="col-span-2">Practice Mode</div>
+        <div class="col-span-2 text-right">Difficulty</div>
+      </div>
+      <div id="question-table-body" class="divide-y divide-slate-800/80 text-xs font-medium"></div>
+    </div>
+  </section>
+
+  <!-- ================= TIMED MOCK EXAM MODAL ================= -->
+  <div id="mock-exam-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center hidden">
+    <div class="bg-slate-900 border border-slate-800 rounded-xl p-6 max-w-lg w-full space-y-5 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <div class="flex items-center space-x-2">
+          <span class="text-xl">⏱️</span>
+          <h3 class="text-lg font-bold text-white">University Practical Exam Simulation</h3>
+        </div>
+        <button onclick="closeMockExamModal()" class="text-slate-400 hover:text-white">✕</button>
+      </div>
+      <p class="text-xs text-slate-300 leading-relaxed">
+        This mode sets up a timed exam session with random questions selected across your 5 syllabus modules.
+        Includes a live countdown timer and test-case submission tracker.
+      </p>
+      <div class="grid grid-cols-3 gap-3">
+        <button onclick="startExam(30)" class="p-3 bg-slate-950 hover:bg-slate-800 border border-slate-800 rounded-lg text-left transition">
+          <div class="text-white font-bold text-sm">30 Minutes</div>
+          <div class="text-[11px] text-slate-400">Quick Test (3 Qs)</div>
+        </button>
+        <button onclick="startExam(60)" class="p-3 bg-slate-950 hover:bg-slate-800 border border-slate-800 rounded-lg text-left transition">
+          <div class="text-white font-bold text-sm">60 Minutes</div>
+          <div class="text-[11px] text-slate-400">Standard (5 Qs)</div>
+        </button>
+        <button onclick="startExam(90)" class="p-3 bg-slate-950 hover:bg-slate-800 border border-slate-800 rounded-lg text-left transition">
+          <div class="text-white font-bold text-sm">90 Minutes</div>
+          <div class="text-[11px] text-slate-400">Full Practical (6 Qs)</div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Exam Banner (When active) -->
+  <div id="exam-active-banner" class="hidden h-10 bg-amber-500/20 border-b border-amber-500/30 px-6 flex items-center justify-between select-none">
+    <div class="flex items-center space-x-3 text-xs font-semibold text-amber-300">
+      <span>🚨 EXAM IN PROGRESS</span>
+      <span class="text-slate-400">•</span>
+      <span id="exam-q-indicator">Question 1 of 5</span>
+    </div>
+    <div class="flex items-center space-x-4">
+      <div class="font-mono text-sm font-bold text-amber-400 bg-amber-950/60 px-2.5 py-0.5 rounded border border-amber-500/30" id="exam-timer-display">
+        60:00
+      </div>
+      <button onclick="finishMockExam()" class="px-2.5 py-1 text-xs bg-rose-600 hover:bg-rose-500 text-white font-semibold rounded transition">
+        End & Grade Exam
+      </button>
+    </div>
+  </div>
+
+  <!-- ================= LOGIC & REAL COMPILER INTEGRATION ================= -->
+  <script>
+    // ==========================================
+    // 1. SYLLABUS QUESTION BANK (All 5 Modules)
+    // ==========================================
+    const QUESTIONS = [
+      // MODULE 1: 1D & 2D ARRAYS
+      {
+        id: 'ARR-01',
+        module: 'Arrays',
+        subtopic: '1D Arrays',
+        mode: 'full_code',
+        difficulty: 'Easy',
+        title: 'Sum and Average of an Array',
+        description: 'Read an array of N integers. Compute and print the sum and the average (integer division).',
+        inputFormat: 'First line: N\nSecond line: N space-separated integers',
+        outputFormat: 'Sum = <sum>\nAverage = <avg>',
+        constraints: '1 <= N <= 1000',
+        sampleTestCases: [
+          { input: '5\n10 20 30 40 50', expectedOutput: 'Sum = 150\nAverage = 30' },
+          { input: '4\n1 2 3 4', expectedOutput: 'Sum = 10\nAverage = 2' }
+        ],
+        hiddenTestCases: [
+          { input: '1\n100', expectedOutput: 'Sum = 100\nAverage = 100' },
+          { input: '6\n-10 20 -30 40 -50 60', expectedOutput: 'Sum = 30\nAverage = 5' }
+        ],
+        starterCode: `#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    if (!(cin >> n)) return 0;\n    // Write your code here\n    \n    return 0;\n}`,
+        hints: [
+          'Declare int sum = 0; Loop i from 0 to n-1 and accumulate arr[i].',
+          'Calculate average using integer division: sum / n.',
+          'Format: cout << "Sum = " << sum << "\\nAverage = " << (sum / n) << "\\n";'
+        ],
+        solution: `#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    if (!(cin >> n)) return 0;\n    int arr[1000];\n    int sum = 0;\n    for (int i = 0; i < n; i++) {\n        cin >> arr[i];\n        sum += arr[i];\n    }\n    cout << "Sum = " << sum << "\\n";\n    cout << "Average = " << (sum / n) << "\\n";\n    return 0;\n}`,
+        explanation: 'We read n elements into an array, accumulate the total sum inside a loop, and print both sum and integer average.'
+      },
+      {
+        id: 'ARR-02',
+        module: 'Arrays',
+        subtopic: '1D Arrays',
+        mode: 'full_code',
+        difficulty: 'Easy',
+        title: 'Linear Search with First Occurrence Index',
+        description: 'Find the 0-based index of key X in an array of N integers. If not found, print -1.',
+        inputFormat: 'First line: N\nSecond line: N integers\nThird line: X',
+        outputFormat: 'Print 0-based index or -1',
+        constraints: '1 <= N <= 1000',
+        sampleTestCases: [
+          { input: '5\n12 45 67 23 90\n23', expectedOutput: '3' },
+          { input: '4\n1 3 5 7\n8', expectedOutput: '-1' }
+        ],
+        hiddenTestCases: [
+          { input: '5\n5 5 5 5 5\n5', expectedOutput: '0' },
+          { input: '3\n10 20 30\n10', expectedOutput: '0' }
+        ],
+        starterCode: `#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    if (!(cin >> n)) return 0;\n    // Implement linear search\n    \n    return 0;\n}`,
+        hints: [
+          'Read array of n numbers and target x.',
+          'Traverse from index 0 to n-1. When arr[i] == x, record index and break.',
+          'Print recorded index or -1 if the loop finished without finding x.'
+        ],
+        solution: `#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    if (!(cin >> n)) return 0;\n    int arr[1000];\n    for (int i = 0; i < n; i++) cin >> arr[i];\n    int x;\n    cin >> x;\n    int found = -1;\n    for (int i = 0; i < n; i++) {\n        if (arr[i] == x) {\n            found = i;\n            break;\n        }\n    }\n    cout << found << "\\n";\n    return 0;\n}`,
+        explanation: 'Sequential search checks every element from left to right, terminating upon finding the first match.'
+      },
+      {
+        id: 'ARR-03',
+        module: 'Arrays',
+        subtopic: '1D Arrays',
+        mode: 'full_code',
+        difficulty: 'Medium',
+        title: 'Binary Search in a Sorted Array',
+        description: 'Implement Binary Search on a sorted array of N integers to locate index of X. Use low and high variables.',
+        inputFormat: 'Line 1: N\nLine 2: N sorted integers\nLine 3: X',
+        outputFormat: '0-based index or -1',
+        constraints: '1 <= N <= 1000',
+        sampleTestCases: [
+          { input: '6\n2 5 8 12 16 23\n12', expectedOutput: '3' },
+          { input: '5\n10 20 30 40 50\n25', expectedOutput: '-1' }
+        ],
+        hiddenTestCases: [
+          { input: '1\n100\n100', expectedOutput: '0' },
+          { input: '4\n1 2 3 4\n1', expectedOutput: '0' }
+        ],
+        starterCode: `#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    if (!(cin >> n)) return 0;\n    // Binary search with low, high, and mid\n    \n    return 0;\n}`,
+        hints: [
+          'Initialize low = 0, high = n - 1.',
+          'While low <= high, compute mid = (low + high) / 2.',
+          'If arr[mid] == x, found! If arr[mid] < x, low = mid + 1; else high = mid - 1.'
+        ],
+        solution: `#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    if (!(cin >> n)) return 0;\n    int arr[1000];\n    for (int i = 0; i < n; i++) cin >> arr[i];\n    int x;\n    cin >> x;\n    int low = 0, high = n - 1;\n    int ans = -1;\n    while (low <= high) {\n        int mid = (low + high) / 2;\n        if (arr[mid] == x) {\n            ans = mid;\n            break;\n        } else if (arr[mid] < x) {\n            low = mid + 1;\n        } else {\n            high = mid - 1;\n        }\n    }\n    cout << ans << "\\n";\n    return 0;\n}`,
+        explanation: 'Binary search repeatedly halves the search space, achieving O(log N) efficiency.'
+      },
+      {
+        id: 'ARR-04',
+        module: 'Arrays',
+        subtopic: '1D Arrays',
+        mode: 'full_code',
+        difficulty: 'Medium',
+        title: 'Bubble Sort with Manual Swapping',
+        description: 'Sort an array of N integers in ascending order using Bubble Sort. Use variables i and k for nested loops, and temp for swapping.',
+        inputFormat: 'Line 1: N\nLine 2: N integers',
+        outputFormat: 'Space-separated sorted integers',
+        constraints: '1 <= N <= 500',
+        sampleTestCases: [
+          { input: '5\n64 25 12 22 11', expectedOutput: '11 12 22 25 64' },
+          { input: '4\n4 3 2 1', expectedOutput: '1 2 3 4' }
+        ],
+        hiddenTestCases: [
+          { input: '3\n5 1 2', expectedOutput: '1 2 5' }
+        ],
+        starterCode: `#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    if (!(cin >> n)) return 0;\n    // Bubble sort with temp\n    \n    return 0;\n}`,
+        hints: [
+          'Outer loop runs i from 0 to n-2.',
+          'Inner loop runs k from 0 to n-i-2.',
+          'If arr[k] > arr[k+1], swap using: int temp = arr[k]; arr[k] = arr[k+1]; arr[k+1] = temp;'
+        ],
+        solution: `#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    if (!(cin >> n)) return 0;\n    int arr[500];\n    for (int i = 0; i < n; i++) cin >> arr[i];\n    for (int i = 0; i < n - 1; i++) {\n        for (int k = 0; k < n - i - 1; k++) {\n            if (arr[k] > arr[k + 1]) {\n                int temp = arr[k];\n                arr[k] = arr[k + 1];\n                arr[k + 1] = temp;\n            }\n        }\n    }\n    for (int i = 0; i < n; i++) {\n        cout << arr[i] << (i == n - 1 ? "" : " ");\n    }\n    cout << "\\n";\n    return 0;\n}`,
+        explanation: 'Adjacent values are compared and swapped, pushing the largest element to the end in each outer pass.'
+      },
+      {
+        id: 'ARR-05',
+        module: 'Arrays',
+        subtopic: '2D Arrays',
+        mode: 'full_code',
+        difficulty: 'Medium',
+        title: 'Matrix Transpose',
+        description: 'Read an R x C matrix and output its transpose of dimensions C x R.',
+        inputFormat: 'Line 1: R C\nNext R lines: C integers',
+        outputFormat: 'Transpose matrix with rows on newlines',
+        constraints: '1 <= R, C <= 30',
+        sampleTestCases: [
+          { input: '2 3\n1 2 3\n4 5 6', expectedOutput: '1 4\n2 5\n3 6' }
+        ],
+        hiddenTestCases: [
+          { input: '1 2\n9 8', expectedOutput: '9\n8' }
+        ],
+        starterCode: `#include <iostream>\nusing namespace std;\n\nint main() {\n    int r, c;\n    if (!(cin >> r >> c)) return 0;\n    // Read matrix and print transpose\n    return 0;\n}`,
+        hints: [
+          'Read into mat[r][c].',
+          'Outer loop runs i from 0 to c-1; inner loop runs k from 0 to r-1.',
+          'Print mat[k][i] followed by space, and newline after each row.'
+        ],
+        solution: `#include <iostream>\nusing namespace std;\n\nint main() {\n    int r, c;\n    if (!(cin >> r >> c)) return 0;\n    int mat[30][30];\n    for (int i = 0; i < r; i++) {\n        for (int k = 0; k < c; k++) {\n            cin >> mat[i][k];\n        }\n    }\n    for (int i = 0; i < c; i++) {\n        for (int k = 0; k < r; k++) {\n            cout << mat[k][i] << (k == r - 1 ? "" : " ");\n        }\n        cout << "\\n";\n    }\n    return 0;\n}`,
+        explanation: 'Transposing exchanges rows and columns by reading mat[i][k] and outputting mat[k][i].'
+      },
+
+      // MODULE 2: POINTERS
+      {
+        id: 'PTR-01',
+        module: 'Pointers',
+        subtopic: 'Pointer Arithmetic',
+        mode: 'full_code',
+        difficulty: 'Easy',
+        title: 'Array Sum Using Pointers Only',
+        description: 'Calculate the sum of N array integers using pointer arithmetic (*(ptr + i) or ptr++).',
+        inputFormat: 'Line 1: N\nLine 2: N integers',
+        outputFormat: 'Print the sum',
+        constraints: '1 <= N <= 1000',
+        sampleTestCases: [
+          { input: '4\n5 10 15 20', expectedOutput: '50' }
+        ],
+        hiddenTestCases: [
+          { input: '3\n-2 0 2', expectedOutput: '0' }
+        ],
+        starterCode: `#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    if (!(cin >> n)) return 0;\n    int arr[1000];\n    for (int i = 0; i < n; i++) cin >> arr[i];\n    // Sum using pointer\n    \n    return 0;\n}`,
+        hints: [
+          'Declare int *ptr = arr;',
+          'Accumulate sum += *(ptr + i); inside loop from 0 to n-1.'
+        ],
+        solution: `#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    if (!(cin >> n)) return 0;\n    int arr[1000];\n    for (int i = 0; i < n; i++) cin >> arr[i];\n    int *ptr = arr;\n    int sum = 0;\n    for (int i = 0; i < n; i++) {\n        sum += *(ptr + i);\n    }\n    cout << sum << "\\n";\n    return 0;\n}`,
+        explanation: 'Pointer arithmetic calculates offset memory addresses and dereferences the values directly.'
+      },
+      {
+        id: 'PTR-02',
+        module: 'Pointers',
+        subtopic: 'Functions & Pointers',
+        mode: 'full_code',
+        difficulty: 'Medium',
+        title: 'Swap Two Variables via Pointers',
+        description: 'Write a function void swapNums(int *a, int *b) that swaps values using a temp variable. Read two numbers, swap them, and print.',
+        inputFormat: 'Two space-separated integers A and B',
+        outputFormat: 'Print swapped values separated by space',
+        constraints: 'All integers',
+        sampleTestCases: [
+          { input: '10 20', expectedOutput: '20 10' }
+        ],
+        hiddenTestCases: [
+          { input: '0 -50', expectedOutput: '-50 0' }
+        ],
+        starterCode: `#include <iostream>\nusing namespace std;\n\nvoid swapNums(int *a, int *b) {\n    // Implement swap using temp\n}\n\nint main() {\n    int x, y;\n    if (cin >> x >> y) {\n        // Call swapNums\n        cout << x << " " << y << "\\n";\n    }\n    return 0;\n}`,
+        hints: [
+          'In swapNums: int temp = *a; *a = *b; *b = temp;',
+          'In main: pass addresses with &x and &y: swapNums(&x, &y);'
+        ],
+        solution: `#include <iostream>\nusing namespace std;\n\nvoid swapNums(int *a, int *b) {\n    int temp = *a;\n    *a = *b;\n    *b = temp;\n}\n\nint main() {\n    int x, y;\n    if (cin >> x >> y) {\n        swapNums(&x, &y);\n        cout << x << " " << y << "\\n";\n    }\n    return 0;\n}`,
+        explanation: 'Passing pointer addresses permits direct modification of caller variables in memory.'
+      },
+
+      // MODULE 3: DYNAMIC MEMORY ALLOCATION (DMA)
+      {
+        id: 'DMA-01',
+        module: 'DMA',
+        subtopic: 'Dynamic 1D Array',
+        mode: 'full_code',
+        difficulty: 'Medium',
+        title: 'Dynamic Array Allocation and Reversal',
+        description: 'Dynamically allocate an array of N integers on the heap using new. Read elements, reverse in-place using two pointers/indices with a temp variable, print, and deallocate using delete[].',
+        inputFormat: 'Line 1: N\nLine 2: N integers',
+        outputFormat: 'Space-separated reversed integers',
+        constraints: '1 <= N <= 1000',
+        sampleTestCases: [
+          { input: '5\n1 2 3 4 5', expectedOutput: '5 4 3 2 1' }
+        ],
+        hiddenTestCases: [
+          { input: '2\n99 100', expectedOutput: '100 99' }
+        ],
+        starterCode: `#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    if (!(cin >> n)) return 0;\n    // Allocate with new int[n], reverse, delete[]\n    \n    return 0;\n}`,
+        hints: [
+          'Allocate: int *arr = new int[n];',
+          'Reverse: low = 0, high = n - 1; swap with temp while low < high.',
+          'Deallocate: delete[] arr;'
+        ],
+        solution: `#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    if (!(cin >> n)) return 0;\n    int *arr = new int[n];\n    for (int i = 0; i < n; i++) cin >> arr[i];\n    int low = 0, high = n - 1;\n    while (low < high) {\n        int temp = arr[low];\n        arr[low] = arr[high];\n        arr[high] = temp;\n        low++;\n        high--;\n    }\n    for (int i = 0; i < n; i++) {\n        cout << arr[i] << (i == n - 1 ? "" : " ");\n    }\n    cout << "\\n";\n    delete[] arr;\n    return 0;\n}`,
+        explanation: 'Heap memory is allocated via new[] and must be explicitly released via delete[] to prevent memory leaks.'
+      },
+
+      // MODULE 4: FUNCTIONS & RECURSION
+      {
+        id: 'REC-01',
+        module: 'Functions and Recursion',
+        subtopic: 'Recursion',
+        mode: 'full_code',
+        difficulty: 'Easy',
+        title: 'Print 1 to N Using Head Recursion',
+        description: 'Write a recursive function void printNums(int n) that prints numbers 1 to N separated by spaces without loops.',
+        inputFormat: 'Single integer N',
+        outputFormat: 'Numbers from 1 to N separated by space',
+        constraints: '1 <= N <= 1000',
+        sampleTestCases: [
+          { input: '5', expectedOutput: '1 2 3 4 5' }
+        ],
+        hiddenTestCases: [
+          { input: '1', expectedOutput: '1' }
+        ],
+        starterCode: `#include <iostream>\nusing namespace std;\n\nvoid printNums(int n) {\n    // Base case and recursive call\n}\n\nint main() {\n    int n;\n    if (cin >> n) {\n        printNums(n);\n        cout << "\\n";\n    }\n    return 0;\n}`,
+        hints: [
+          'Base case: if (n == 0) return;',
+          'Call printNums(n - 1) before printing n.'
+        ],
+        solution: `#include <iostream>\nusing namespace std;\n\nvoid printNums(int n) {\n    if (n <= 0) return;\n    printNums(n - 1);\n    cout << n << " ";\n}\n\nint main() {\n    int n;\n    if (cin >> n) {\n        printNums(n);\n        cout << "\\n";\n    }\n    return 0;\n}`,
+        explanation: 'Stack frames unwind from base case 1 up to N.'
+      },
+      {
+        id: 'REC-02',
+        module: 'Functions and Recursion',
+        subtopic: 'Recursion',
+        mode: 'full_code',
+        difficulty: 'Medium',
+        title: 'Recursive Sum of Digits',
+        description: 'Compute the sum of digits of a positive number N recursively.',
+        inputFormat: 'Single integer N',
+        outputFormat: 'Sum of digits',
+        constraints: '1 <= N <= 1000000000',
+        sampleTestCases: [
+          { input: '12345', expectedOutput: '15' }
+        ],
+        hiddenTestCases: [
+          { input: '90', expectedOutput: '9' }
+        ],
+        starterCode: `#include <iostream>\nusing namespace std;\n\nint sumDigits(int n) {\n    // Recursive logic\n}\n\nint main() {\n    int n;\n    if (cin >> n) {\n        cout << sumDigits(n) << "\\n";\n    }\n    return 0;\n}`,
+        hints: [
+          'Base case: if (n == 0) return 0;',
+          'Recursive step: return (n % 10) + sumDigits(n / 10);'
+        ],
+        solution: `#include <iostream>\nusing namespace std;\n\nint sumDigits(int n) {\n    if (n == 0) return 0;\n    return (n % 10) + sumDigits(n / 10);\n}\n\nint main() {\n    int n;\n    if (cin >> n) {\n        cout << sumDigits(n) << "\\n";\n    }\n    return 0;\n}`,
+        explanation: 'Strips the last digit with % 10 and adds to recursive call on n / 10.'
+      },
+
+      // MODULE 5: LOGIC FUNDAMENTALS
+      {
+        id: 'LOGIC-01',
+        module: 'Logic Fundamentals',
+        subtopic: 'Number Properties',
+        mode: 'full_code',
+        difficulty: 'Easy',
+        title: 'Check 3-Digit Armstrong Number',
+        description: 'Check if a 3-digit number is an Armstrong number (sum of cubes of its digits equals the number). Print YES or NO.',
+        inputFormat: 'A 3-digit integer N',
+        outputFormat: 'YES or NO',
+        constraints: '100 <= N <= 999',
+        sampleTestCases: [
+          { input: '153', expectedOutput: 'YES' },
+          { input: '120', expectedOutput: 'NO' }
+        ],
+        hiddenTestCases: [
+          { input: '370', expectedOutput: 'YES' },
+          { input: '371', expectedOutput: 'YES' }
+        ],
+        starterCode: `#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    if (cin >> n) {\n        // Check Armstrong\n    }\n    return 0;\n}`,
+        hints: [
+          'Extract digits: d = temp % 10; sum += (d * d * d); temp /= 10;',
+          'Compare sum with original n.'
+        ],
+        solution: `#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    if (cin >> n) {\n        int original = n;\n        int sum = 0;\n        int temp = n;\n        while (temp > 0) {\n            int d = temp % 10;\n            sum += (d * d * d);\n            temp /= 10;\n        }\n        if (sum == original) cout << "YES\\n";\n        else cout << "NO\\n";\n    }\n    return 0;\n}`,
+        explanation: 'Cube of each digit is summed and verified against the original value.'
+      },
+      {
+        id: 'LOGIC-02',
+        module: 'Logic Fundamentals',
+        subtopic: 'GCD & LCM',
+        mode: 'full_code',
+        difficulty: 'Easy',
+        title: 'GCD and LCM of Two Numbers',
+        description: 'Compute GCD and LCM of two integers using the Euclidean algorithm.',
+        inputFormat: 'Two integers A and B',
+        outputFormat: 'GCD = <gcd>\nLCM = <lcm>',
+        constraints: '1 <= A, B <= 100000',
+        sampleTestCases: [
+          { input: '12 18', expectedOutput: 'GCD = 6\nLCM = 36' }
+        ],
+        hiddenTestCases: [
+          { input: '7 13', expectedOutput: 'GCD = 1\nLCM = 91' }
+        ],
+        starterCode: `#include <iostream>\nusing namespace std;\n\nint main() {\n    long long a, b;\n    if (cin >> a >> b) {\n        // Euclidean GCD and LCM\n    }\n    return 0;\n}`,
+        hints: [
+          'Euclidean: while(y != 0) { int temp = y; y = x % y; x = temp; }',
+          'LCM = (A * B) / GCD'
+        ],
+        solution: `#include <iostream>\nusing namespace std;\n\nint main() {\n    long long a, b;\n    if (cin >> a >> b) {\n        long long x = a, y = b;\n        while (y != 0) {\n            long long temp = y;\n            y = x % y;\n            x = temp;\n        }\n        long long gcd = x;\n        long long lcm = (a * b) / gcd;\n        cout << "GCD = " << gcd << "\\n";\n        cout << "LCM = " << lcm << "\\n";\n    }\n    return 0;\n}`,
+        explanation: 'Euclidean division quickly finds the GCD, and LCM is derived from the product divided by GCD.'
+      },
+
+      // MODE B: DEBUGGING EXERCISES
+      {
+        id: 'DEBUG-01',
+        module: 'Arrays',
+        subtopic: 'Array Indexing & Bounds',
+        mode: 'debugging',
+        difficulty: 'Easy',
+        title: 'Fix Array Maximum & Bounds Bug',
+        description: 'CodeTantra Debug: The program below has an off-by-one bounds error (i <= n) and fails for negative numbers. Fix the errors so all tests pass.',
+        inputFormat: 'Line 1: N\nLine 2: N integers',
+        outputFormat: 'Maximum integer',
+        constraints: '1 <= N <= 1000',
+        sampleTestCases: [
+          { input: '5\n12 45 7 89 23', expectedOutput: '89' },
+          { input: '3\n-10 -5 -20', expectedOutput: '-5' }
+        ],
+        hiddenTestCases: [
+          { input: '1\n-99', expectedOutput: '-99' }
+        ],
+        starterCode: `#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    int arr[1000];\n    // Bug 1: off-by-one reading\n    for (int i = 0; i <= n; i++) {\n        cin >> arr[i];\n    }\n    // Bug 2: 0 fails for all negative numbers\n    int maxVal = 0;\n    for (int i = 0; i < n; i++) {\n        if (arr[i] < maxVal) { // Bug 3: inverted comparison\n            maxVal = arr[i];\n        }\n    }\n    cout << maxVal << "\\n";\n    return 0;\n}`,
+        hints: [
+          'Change reading loop to i < n.',
+          'Initialize maxVal = arr[0].',
+          'Change comparison to if (arr[i] > maxVal).'
+        ],
+        solution: `#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    if (!(cin >> n)) return 0;\n    int arr[1000];\n    for (int i = 0; i < n; i++) cin >> arr[i];\n    int maxVal = arr[0];\n    for (int i = 1; i < n; i++) {\n        if (arr[i] > maxVal) maxVal = arr[i];\n    }\n    cout << maxVal << "\\n";\n    return 0;\n}`,
+        explanation: 'Corrects bounds and ensures negative elements are handled.'
+      },
+
+      // MODE C: FILL IN THE MISSING CODE
+      {
+        id: 'FILL-01',
+        module: 'Arrays',
+        subtopic: '2D Diagonal Traversal',
+        mode: 'fill_blanks',
+        difficulty: 'Easy',
+        title: 'Fill Main Diagonal Sum Expression',
+        description: 'Complete the missing expression in the matrix traversal to compute the main diagonal sum. Replace /*___BLANK_1___*/ with the correct syntax.',
+        inputFormat: 'Line 1: N\nNext N lines: N integers',
+        outputFormat: 'Main diagonal sum',
+        constraints: '1 <= N <= 30',
+        sampleTestCases: [
+          { input: '3\n1 2 3\n4 5 6\n7 8 9', expectedOutput: '15' }
+        ],
+        hiddenTestCases: [
+          { input: '2\n10 20\n30 40', expectedOutput: '50' }
+        ],
+        starterCode: `#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    if (!(cin >> n)) return 0;\n    int mat[30][30];\n    for (int i = 0; i < n; i++) {\n        for (int k = 0; k < n; k++) {\n            cin >> mat[i][k];\n        }\n    }\n    int diagSum = 0;\n    for (int i = 0; i < n; i++) {\n        diagSum += /*___BLANK_1___*/;\n    }\n    cout << diagSum << "\\n";\n    return 0;\n}`,
+        hints: [
+          'Main diagonal has row index equal to column index: mat[i][i]'
+        ],
+        solution: `#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    if (!(cin >> n)) return 0;\n    int mat[30][30];\n    for (int i = 0; i < n; i++) {\n        for (int k = 0; k < n; k++) {\n            cin >> mat[i][k];\n        }\n    }\n    int diagSum = 0;\n    for (int i = 0; i < n; i++) {\n        diagSum += mat[i][i];\n    }\n    cout << diagSum << "\\n";\n    return 0;\n}`,
+        explanation: 'The primary diagonal uses matching indices mat[i][i].'
+      }
+    ];
+
+    // ==========================================
+    // 2. STATE MANAGEMENT & LOCAL STORAGE
+    // ==========================================
+    let currentQuestionIndex = 0;
+    let savedDrafts = {};
+    let solvedQuestions = new Set();
+    let isExamActive = false;
+    let examTimerInterval = null;
+    let examTimeRemaining = 0;
+    let examQuestionSet = [];
+    let examCurrentIndex = 0;
+
+    function initStorage() {
+      try {
+        const storedSolved = localStorage.getItem('codetantra_cpp_solved');
+        if (storedSolved) solvedQuestions = new Set(JSON.parse(storedSolved));
+
+        const storedDrafts = localStorage.getItem('codetantra_cpp_drafts');
+        if (storedDrafts) savedDrafts = JSON.parse(storedDrafts);
+      } catch (e) {
+        console.warn('Storage initialisation error:', e);
+      }
+      updateStatsUI();
+    }
+
+    function saveState() {
+      try {
+        localStorage.setItem('codetantra_cpp_solved', JSON.stringify([...solvedQuestions]));
+        localStorage.setItem('codetantra_cpp_drafts', JSON.stringify(savedDrafts));
+      } catch (e) {}
+      updateStatsUI();
+    }
+
+    function updateStatsUI() {
+      document.getElementById('solved-counter').innerText = `${solvedQuestions.size} Solved`;
+      document.getElementById('total-q-count').innerText = QUESTIONS.length;
+    }
+
+    // ==========================================
+    // 3. CODE EDITOR ENGINE & LINE COUNTER
+    // ==========================================
+    const editor = document.getElementById('code-editor');
+    const lineNumbers = document.getElementById('line-numbers');
+
+    function updateLineNumbers() {
+      const lineCount = editor.value.split('\n').length;
+      let html = '';
+      for (let i = 1; i <= lineCount; i++) {
+        html += `<div>${i}</div>`;
+      }
+      lineNumbers.innerHTML = html;
+    }
+
+    editor.addEventListener('input', () => {
+      updateLineNumbers();
+      const q = QUESTIONS[currentQuestionIndex];
+      savedDrafts[q.id] = editor.value;
+      saveState();
+    });
+
+    // Support Tab indentation and preserve scroll
+    editor.addEventListener('keydown', (e) => {
+      if (e.key === 'Tab') {
+        e.preventDefault();
+        const start = editor.selectionStart;
+        const end = editor.selectionEnd;
+        editor.value = editor.value.substring(0, start) + '    ' + editor.value.substring(end);
+        editor.selectionStart = editor.selectionEnd = start + 4;
+        updateLineNumbers();
+      }
+    });
+
+    editor.addEventListener('scroll', () => {
+      lineNumbers.scrollTop = editor.scrollTop;
+    });
+
+    // ==========================================
+    // 4. LOAD QUESTION INTO WORKSPACE
+    // ==========================================
+    function loadQuestion(index) {
+      currentQuestionIndex = index;
+      const q = QUESTIONS[index];
+
+      document.getElementById('q-badge-id').innerText = q.id;
+      document.getElementById('q-badge-module').innerText = q.module;
+      document.getElementById('q-badge-diff').innerText = q.difficulty;
+      document.getElementById('q-badge-mode').innerText = q.mode.replace('_', ' ');
+
+      document.getElementById('q-title').innerText = q.title;
+      document.getElementById('q-desc').innerText = q.description;
+      document.getElementById('q-input-fmt').innerText = q.inputFormat;
+      document.getElementById('q-output-fmt').innerText = q.outputFormat;
+      document.getElementById('q-constraints').innerText = q.constraints || 'Standard bounds';
+
+      // Load Visible Test Cases
+      const sampleContainer = document.getElementById('q-samples-container');
+      sampleContainer.innerHTML = '';
+      q.sampleTestCases.forEach((tc, idx) => {
+        sampleContainer.innerHTML += `
+          <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 text-xs">
+            <span class="text-slate-400 font-semibold block mb-1">Sample Case #${idx + 1}</span>
+            <div class="grid grid-cols-2 gap-2 font-mono-code text-[11px]">
+              <div>
+                <span class="text-slate-500 block">Input:</span>
+                <pre class="bg-slate-900 p-2 rounded text-slate-200 mt-1 whitespace-pre-wrap">${tc.input || '[No Input]'}</pre>
+              </div>
+              <div>
+                <span class="text-slate-500 block">Expected Output:</span>
+                <pre class="bg-slate-900 p-2 rounded text-emerald-400 mt-1 whitespace-pre-wrap">${tc.expectedOutput}</pre>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+
+      // Code restoration
+      editor.value = savedDrafts[q.id] || q.starterCode;
+      updateLineNumbers();
+
+      // Reset Hints & Solution
+      document.getElementById('hint-display-box').classList.add('hidden');
+      document.getElementById('solution-display-box').classList.add('hidden');
+      document.getElementById('test-summary-tag').innerText = 'Ready';
+      document.getElementById('console-output').innerHTML = '<span class="text-slate-500 italic">Ready to run or submit.</span>';
+      document.getElementById('test-cases-results-list').innerHTML = '<span class="text-slate-500 italic">Submit your code to evaluate against all test cases.</span>';
+    }
+
+    function navigateQuestion(step) {
+      let next = currentQuestionIndex + step;
+      if (next >= 0 && next < QUESTIONS.length) {
+        loadQuestion(next);
+      }
+    }
+
+    function resetCurrentCode() {
+      const q = QUESTIONS[currentQuestionIndex];
+      if (confirm('Reset code back to starter template?')) {
+        editor.value = q.starterCode;
+        savedDrafts[q.id] = q.starterCode;
+        saveState();
+        updateLineNumbers();
+      }
+    }
+
+    // ==========================================
+    // 5. HINTS & SOLUTION REVEAL
+    // ==========================================
+    function toggleHint(level) {
+      const q = QUESTIONS[currentQuestionIndex];
+      const box = document.getElementById('hint-display-box');
+      box.classList.remove('hidden');
+      box.innerText = `[Hint ${level + 1}]:\n${q.hints[level]}`;
+    }
+
+    function revealSolution() {
+      const q = QUESTIONS[currentQuestionIndex];
+      const box = document.getElementById('solution-display-box');
+      box.classList.toggle('hidden');
+      document.getElementById('solution-code').innerText = q.solution;
+      document.getElementById('solution-explanation').innerText = q.explanation;
+    }
+
+    // ==========================================
+    // 6. REAL C++ COMPILER INTEGRATION (DUAL ENGINE)
+    // ==========================================
+    function normalizeOutput(str) {
+      if (!str) return '';
+      return str
+        .replace(/\r\n/g, '\n')
+        .replace(/\r/g, '\n')
+        .split('\n')
+        .map(line => line.trimEnd())
+        .join('\n')
+        .trim();
+    }
+
+    // Engine 1: Piston API
+    async function runWithPiston(code, input) {
+      const res = await fetch('https://emkc.org/api/v2/piston/execute', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          language: 'cpp',
+          version: '10.2.0',
+          files: [{ name: 'main.cpp', content: code }],
+          stdin: input,
+          run_timeout: 4000,
+          compile_timeout: 10000
+        })
+      });
+      const data = await res.json();
+      if (data.compile && data.compile.code !== 0) {
+        return {
+          compiled: false,
+          error: data.compile.output || data.compile.stderr,
+          stdout: '',
+          stderr: ''
+        };
+      }
+      return {
+        compiled: true,
+        error: null,
+        stdout: data.run.stdout || '',
+        stderr: data.run.stderr || '',
+        exitCode: data.run.code
+      };
+    }
+
+    // Engine 2: Wandbox API (Automatic Fallback)
+    async function runWithWandbox(code, input) {
+      const res = await fetch('https://wandbox.org/api/compile.json', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          compiler: 'gcc-head',
+          code: code,
+          stdin: input,
+          options: 'c++17'
+        })
+      });
+      const data = await res.json();
+      if (data.compiler_error) {
+        return {
+          compiled: false,
+          error: data.compiler_error,
+          stdout: '',
+          stderr: ''
+        };
+      }
+      return {
+        compiled: true,
+        error: null,
+        stdout: data.program_output || '',
+        stderr: data.program_error || '',
+        exitCode: parseInt(data.status || '0', 10)
+      };
+    }
+
+    // High-Level Compiler Dispatcher
+    async function compileAndExecute(code, input) {
+      try {
+        return await runWithPiston(code, input);
+      } catch (errPiston) {
+        console.warn('Piston API failed, falling back to Wandbox...', errPiston);
+        try {
+          return await runWithWandbox(code, input);
+        } catch (errWandbox) {
+          throw new Error('Both online compiler engines are unreachable. Check your internet connection.');
+        }
+      }
+    }
+
+    // Execute User Code (Run or Submit)
+    async function executeUserCode(isSubmit = false) {
+      const code = editor.value.trim();
+      const q = QUESTIONS[currentQuestionIndex];
+      const statusEl = document.getElementById('compiler-status-indicator');
+      const consoleEl = document.getElementById('console-output');
+
+      if (!code) {
+        alert('Please write some code before executing.');
+        return;
+      }
+
+      statusEl.innerHTML = '<span class="text-amber-400 animate-pulse">Compiling & Executing...</span>';
+
+      if (!isSubmit) {
+        // RUN WITH CUSTOM INPUT
+        switchBottomTab('console');
+        consoleEl.innerHTML = '<span class="text-slate-400 font-mono">Running GCC with standard input...</span>';
+
+        const customIn = document.getElementById('custom-input-box').value;
+        try {
+          const startTime = performance.now();
+          const result = await compileAndExecute(code, customIn);
+          const duration = ((performance.now() - startTime) / 1000).toFixed(2);
+
+          if (!result.compiled) {
+            statusEl.innerHTML = '<span class="text-rose-400">Compilation Error</span>';
+            consoleEl.innerHTML = `
+              <div class="p-3 bg-rose-950/40 border border-rose-800 text-rose-300 rounded font-mono-code whitespace-pre-wrap">
+                <div class="font-bold text-rose-400 mb-1">❌ Compilation Failed (g++ -std=c++17)</div>
+                ${result.error}
+              </div>
+            `;
+          } else {
+            statusEl.innerHTML = `<span class="text-emerald-400">Success (${duration}s)</span>`;
+            consoleEl.innerHTML = `
+              <div class="space-y-2">
+                <div class="text-slate-400 pb-1 border-b border-slate-800 flex justify-between">
+                  <span class="text-emerald-400">✔ Program Executed Successfully</span>
+                  <span>Exit Code: ${result.exitCode} | Time: ${duration}s</span>
+                </div>
+                <div class="text-slate-200 whitespace-pre-wrap">${result.stdout || '<span class="text-slate-500 italic">[No Standard Output]</span>'}</div>
+                ${result.stderr ? `<div class="text-rose-400 mt-2 border-t border-slate-800 pt-1 whitespace-pre-wrap">${result.stderr}</div>` : ''}
+              </div>
+            `;
+          }
+        } catch (e) {
+          statusEl.innerHTML = '<span class="text-rose-400">Network Failure</span>';
+          consoleEl.innerHTML = `<div class="text-rose-400">Execution Error: ${e.message}</div>`;
+        }
+      } else {
+        // SUBMIT AGAINST ALL TEST CASES (Visible + Hidden)
+        switchBottomTab('tests');
+        const testsList = document.getElementById('test-cases-results-list');
+        testsList.innerHTML = '<div class="text-slate-400 animate-pulse font-mono">Evaluating against all test cases...</div>';
+
+        const allCases = [
+          ...q.sampleTestCases.map(tc => ({ ...tc, isHidden: false })),
+          ...q.hiddenTestCases.map(tc => ({ ...tc, isHidden: true }))
+        ];
+
+        let passedCount = 0;
+        let testResultsHTML = '';
+        let compilationFailed = false;
+        let compError = '';
+
+        for (let i = 0; i < allCases.length; i++) {
+          const tc = allCases[i];
+          try {
+            const res = await compileAndExecute(code, tc.input);
+
+            if (!res.compiled) {
+              compilationFailed = true;
+              compError = res.error;
+              break;
+            }
+
+            const cleanActual = normalizeOutput(res.stdout);
+            const cleanExpected = normalizeOutput(tc.expectedOutput);
+            const isMatch = cleanActual === cleanExpected;
+
+            if (isMatch) passedCount++;
+
+            testResultsHTML += `
+              <div class="p-3 bg-slate-900 border ${isMatch ? 'border-slate-800' : 'border-rose-900/50'} rounded-lg flex flex-col space-y-1.5">
+                <div class="flex items-center justify-between">
+                  <span class="font-semibold text-slate-300 font-mono text-xs">
+                    Test Case #${i + 1} ${tc.isHidden ? '<span class="text-purple-400">(Hidden Case)</span>' : '<span class="text-slate-500">(Visible Case)</span>'}
+                  </span>
+                  <span class="px-2 py-0.5 rounded text-[10px] font-bold ${isMatch ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' : 'bg-rose-500/20 text-rose-400 border border-rose-500/30'}">
+                    ${isMatch ? 'PASSED' : 'WRONG ANSWER'}
+                  </span>
+                </div>
+                ${!tc.isHidden ? `
+                  <div class="grid grid-cols-2 gap-2 text-[11px] bg-slate-950 p-2 rounded font-mono-code mt-1">
+                    <div>
+                      <span class="text-slate-500 block">Expected:</span>
+                      <span class="text-emerald-400 whitespace-pre-wrap">${tc.expectedOutput}</span>
+                    </div>
+                    <div>
+                      <span class="text-slate-500 block">Actual:</span>
+                      <span class="${isMatch ? 'text-emerald-400' : 'text-rose-400'} whitespace-pre-wrap">${res.stdout || '[No Output]'}</span>
+                    </div>
+                  </div>
+                ` : `
+                  <div class="text-[11px] text-slate-500 italic pl-1">
+                    ${isMatch ? 'Hidden test passed.' : 'Hidden test case evaluation failed.'}
+                  </div>
+                `}
+              </div>
+            `;
+          } catch (e) {
+            testResultsHTML += `<div class="p-2 bg-rose-950/40 text-rose-400 rounded">Evaluation error on Test #${i + 1}: ${e.message}</div>`;
+          }
+        }
+
+        if (compilationFailed) {
+          statusEl.innerHTML = '<span class="text-rose-400">Compilation Failed</span>';
+          document.getElementById('test-summary-tag').innerText = '0 Passed';
+          testsList.innerHTML = `
+            <div class="p-3 bg-rose-950/40 border border-rose-800 text-rose-300 rounded font-mono-code whitespace-pre-wrap">
+              <div class="font-bold text-rose-400 mb-1">❌ Submission Compilation Failed</div>
+              ${compError}
+            </div>
+          `;
+          return;
+        }
+
+        const allPassed = passedCount === allCases.length;
+        document.getElementById('test-summary-tag').innerText = `${passedCount}/${allCases.length} Passed`;
+        statusEl.innerHTML = allPassed
+          ? '<span class="text-emerald-400">All Passed!</span>'
+          : '<span class="text-amber-400">Partial Pass</span>';
+
+        testsList.innerHTML = `
+          <div class="p-3 rounded-lg border ${allPassed ? 'bg-emerald-950/40 border-emerald-800 text-emerald-300' : 'bg-slate-900 border-slate-800 text-slate-300'} font-bold flex items-center justify-between text-xs mb-2">
+            <span>Result: ${passedCount} / ${allCases.length} Test Cases Passed</span>
+            <span>${allPassed ? '🎉 100% Score' : '⚠️ Keep Debugging'}</span>
+          </div>
+          ${testResultsHTML}
+        `;
+
+        if (allPassed) {
+          solvedQuestions.add(q.id);
+          saveState();
+        }
+      }
+    }
+
+    // Drawer Tabs
+    function switchBottomTab(tab) {
+      document.getElementById('bottom-tab-console').classList.toggle('hidden', tab !== 'console');
+      document.getElementById('bottom-tab-input').classList.toggle('hidden', tab !== 'input');
+      document.getElementById('bottom-tab-tests').classList.toggle('hidden', tab !== 'tests');
+
+      document.getElementById('tab-console-btn').className = tab === 'console' ? 'px-3 py-1 text-xs rounded font-medium bg-slate-800 text-sky-400' : 'px-3 py-1 text-xs rounded font-medium text-slate-400 hover:text-white';
+      document.getElementById('tab-input-btn').className = tab === 'input' ? 'px-3 py-1 text-xs rounded font-medium bg-slate-800 text-sky-400' : 'px-3 py-1 text-xs rounded font-medium text-slate-400 hover:text-white';
+      document.getElementById('tab-tests-btn').className = tab === 'tests' ? 'px-3 py-1 text-xs rounded font-medium bg-slate-800 text-sky-400' : 'px-3 py-1 text-xs rounded font-medium text-slate-400 hover:text-white';
+    }
+
+    // ==========================================
+    // 7. QUESTION BANK LIST & FILTERS
+    // ==========================================
+    function renderQuestionBank() {
+      const container = document.getElementById('question-table-body');
+      container.innerHTML = '';
+
+      const modFilter = document.getElementById('filter-module').value;
+      const modeFilter = document.getElementById('filter-mode').value;
+
+      QUESTIONS.forEach((q, idx) => {
+        if (modFilter !== 'All' && !q.module.toLowerCase().includes(modFilter.toLowerCase())) return;
+        if (modeFilter !== 'All' && q.mode !== modeFilter) return;
+
+        const isSolved = solvedQuestions.has(q.id);
+        const row = document.createElement('div');
+        row.className = 'grid grid-cols-12 gap-4 px-6 py-3.5 items-center hover:bg-slate-800/40 cursor-pointer transition select-none';
+        row.onclick = () => {
+          switchMainView('practice');
+          loadQuestion(idx);
+        };
+
+        row.innerHTML = `
+          <div class="col-span-1">
+            <span class="${isSolved ? 'text-emerald-400 font-bold' : 'text-slate-600'}">${isSolved ? '✔' : '○'}</span>
+          </div>
+          <div class="col-span-2">
+            <div class="font-mono text-sky-400 font-bold">${q.id}</div>
+            <div class="text-[11px] text-slate-500">${q.subtopic}</div>
+          </div>
+          <div class="col-span-5 text-slate-200 font-semibold">${q.title}</div>
+          <div class="col-span-2">
+            <span class="px-2 py-0.5 rounded text-[10px] bg-slate-800 border border-slate-700 text-slate-300 font-mono">
+              ${q.mode.replace('_', ' ')}
+            </span>
+          </div>
+          <div class="col-span-2 text-right">
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase ${
+              q.difficulty === 'Easy' ? 'bg-emerald-500/10 text-emerald-400' :
+              q.difficulty === 'Medium' ? 'bg-amber-500/10 text-amber-400' : 'bg-rose-500/10 text-rose-400'
+            }">
+              ${q.difficulty}
+            </span>
+          </div>
+        `;
+        container.appendChild(row);
+      });
+    }
+
+    function applyFilters() {
+      renderQuestionBank();
+    }
+
+    // ==========================================
+    // 8. TIMED MOCK EXAM SYSTEM
+    // ==========================================
+    function openMockExamModal() {
+      document.getElementById('mock-exam-modal').classList.remove('hidden');
+    }
+
+    function closeMockExamModal() {
+      document.getElementById('mock-exam-modal').classList.add('hidden');
+    }
+
+    function startExam(durationMinutes) {
+      closeMockExamModal();
+      isExamActive = true;
+      examTimeRemaining = durationMinutes * 60;
+
+      // Select random questions
+      const count = durationMinutes === 30 ? 3 : durationMinutes === 60 ? 5 : 6;
+      examQuestionSet = [...QUESTIONS].sort(() => 0.5 - Math.random()).slice(0, count);
+      examCurrentIndex = 0;
+
+      document.getElementById('exam-active-banner').classList.remove('hidden');
+      switchMainView('practice');
+
+      // Load first exam question
+      const origIndex = QUESTIONS.findIndex(q => q.id === examQuestionSet[0].id);
+      loadQuestion(origIndex);
+
+      updateExamUI();
+
+      if (examTimerInterval) clearInterval(examTimerInterval);
+      examTimerInterval = setInterval(() => {
+        examTimeRemaining--;
+        updateExamUI();
+        if (examTimeRemaining <= 0) {
+          clearInterval(examTimerInterval);
+          finishMockExam();
+        }
+      }, 1000);
+    }
+
+    function updateExamUI() {
+      const mins = Math.floor(examTimeRemaining / 60);
+      const secs = examTimeRemaining % 60;
+      document.getElementById('exam-timer-display').innerText =
+        `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+      document.getElementById('exam-q-indicator').innerText =
+        `Question ${examCurrentIndex + 1} of ${examQuestionSet.length}`;
+    }
+
+    function finishMockExam() {
+      if (examTimerInterval) clearInterval(examTimerInterval);
+      document.getElementById('exam-active-banner').classList.add('hidden');
+      isExamActive = false;
+
+      let passedInExam = 0;
+      examQuestionSet.forEach(q => {
+        if (solvedQuestions.has(q.id)) passedInExam++;
+      });
+
+      alert(`Practical Exam Completed!\n\nScore: ${passedInExam} / ${examQuestionSet.length} Solved.\nCheck your test results in the dashboard.`);
+    }
+
+    // ==========================================
+    // 9. VIEW SWITCHER
+    // ==========================================
+    function switchMainView(view) {
+      document.getElementById('view-practice').classList.toggle('hidden', view !== 'practice');
+      document.getElementById('view-bank').classList.toggle('hidden', view !== 'bank');
+
+      document.getElementById('tab-btn-practice').className = view === 'practice'
+        ? 'px-3 py-1 rounded text-xs font-medium text-white bg-slate-800 transition'
+        : 'px-3 py-1 rounded text-xs font-medium text-slate-400 hover:text-white transition';
+
+      document.getElementById('tab-btn-bank').className = view === 'bank'
+        ? 'px-3 py-1 rounded text-xs font-medium text-white bg-slate-800 transition'
+        : 'px-3 py-1 rounded text-xs font-medium text-slate-400 hover:text-white transition';
+
+      if (view === 'bank') renderQuestionBank();
+    }
+
+    // Initialise on load
+    window.addEventListener('DOMContentLoaded', () => {
+      initStorage();
+      loadQuestion(0);
+      renderQuestionBank();
+    });
+  </script>
+</body>
+</html>
