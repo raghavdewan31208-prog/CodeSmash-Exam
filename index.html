@@ -337,384 +337,2005 @@
     // 1. SYLLABUS QUESTION BANK (All 5 Modules)
     // ==========================================
     const QUESTIONS = [
-      // MODULE 1: 1D & 2D ARRAYS
       {
-        id: 'ARR-01',
-        module: 'Arrays',
-        subtopic: '1D Arrays',
-        mode: 'full_code',
-        difficulty: 'Easy',
-        title: 'Sum and Average of an Array',
-        description: 'Read an array of N integers. Compute and print the sum and the average (integer division).',
-        inputFormat: 'First line: N\nSecond line: N space-separated integers',
-        outputFormat: 'Sum = <sum>\nAverage = <avg>',
-        constraints: '1 <= N <= 1000',
-        sampleTestCases: [
-          { input: '5\n10 20 30 40 50', expectedOutput: 'Sum = 150\nAverage = 30' },
-          { input: '4\n1 2 3 4', expectedOutput: 'Sum = 10\nAverage = 2' }
+        "id": "MSC2-001",
+        "module": "Arrays",
+        "subtopic": "1D Arrays",
+        "mode": "full_code",
+        "difficulty": "Easy",
+        "title": "Read and Display an Array",
+        "description": "Read N integers into an array and display them in the same order.",
+        "inputFormat": "First line: N. Second line: N space-separated integers.",
+        "outputFormat": "Print all N elements separated by single spaces.",
+        "constraints": "1 <= N <= 1000; values fit in a 32-bit integer.",
+        "sampleTestCases": [
+          {
+            "input": "5\n2 4 1 3 5",
+            "expectedOutput": "2 4 1 3 5"
+          },
+          {
+            "input": "1\n8",
+            "expectedOutput": "8"
+          }
         ],
-        hiddenTestCases: [
-          { input: '1\n100', expectedOutput: 'Sum = 100\nAverage = 100' },
-          { input: '6\n-10 20 -30 40 -50 60', expectedOutput: 'Sum = 30\nAverage = 5' }
+        "hiddenTestCases": [
+          {
+            "input": "4\n-3 0 7 -1",
+            "expectedOutput": "-3 0 7 -1"
+          },
+          {
+            "input": "6\n9 9 -2 5 0 1",
+            "expectedOutput": "9 9 -2 5 0 1"
+          }
         ],
-        starterCode: `#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    if (!(cin >> n)) return 0;\n    // Write your code here\n    \n    return 0;\n}`,
-        hints: [
-          'Declare int sum = 0; Loop i from 0 to n-1 and accumulate arr[i].',
-          'Calculate average using integer division: sum / n.',
-          'Format: cout << "Sum = " << sum << "\\nAverage = " << (sum / n) << "\\n";'
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Write your solution here\n    return 0;\n}",
+        "hints": [
+          "Read N first, then store each element at its index.",
+          "Use a second loop to display the values.",
+          "Print a space only between adjacent elements."
         ],
-        solution: `#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    if (!(cin >> n)) return 0;\n    int arr[1000];\n    int sum = 0;\n    for (int i = 0; i < n; i++) {\n        cin >> arr[i];\n        sum += arr[i];\n    }\n    cout << "Sum = " << sum << "\\n";\n    cout << "Average = " << (sum / n) << "\\n";\n    return 0;\n}`,
-        explanation: 'We read n elements into an array, accumulate the total sum inside a loop, and print both sum and integer average.'
+        "solution": "#include <iostream>\nusing namespace std;\nint main() {\n    int n, a[1000];\n    cin >> n;\n    for (int i = 0; i < n; i++) cin >> a[i];\n    for (int i = 0; i < n; i++) {\n        if (i > 0) cout << \" \";\n        cout << a[i];\n    }\n    return 0;\n}",
+        "explanation": "This checks array input, storage, and traversal."
       },
       {
-        id: 'ARR-02',
-        module: 'Arrays',
-        subtopic: '1D Arrays',
-        mode: 'full_code',
-        difficulty: 'Easy',
-        title: 'Linear Search with First Occurrence Index',
-        description: 'Find the 0-based index of key X in an array of N integers. If not found, print -1.',
-        inputFormat: 'First line: N\nSecond line: N integers\nThird line: X',
-        outputFormat: 'Print 0-based index or -1',
-        constraints: '1 <= N <= 1000',
-        sampleTestCases: [
-          { input: '5\n12 45 67 23 90\n23', expectedOutput: '3' },
-          { input: '4\n1 3 5 7\n8', expectedOutput: '-1' }
+        "id": "MSC2-002",
+        "module": "Arrays",
+        "subtopic": "1D Arrays",
+        "mode": "full_code",
+        "difficulty": "Easy",
+        "title": "Sum and Average of an Array",
+        "description": "Read N integers, calculate their sum and integer average, and print both values.",
+        "inputFormat": "First line: N. Second line: N space-separated integers.",
+        "outputFormat": "Print the sum followed by the integer average, separated by one space.",
+        "constraints": "1 <= N <= 1000; average uses integer division.",
+        "sampleTestCases": [
+          {
+            "input": "4\n1 2 3 4",
+            "expectedOutput": "10 2"
+          },
+          {
+            "input": "3\n2 3 4",
+            "expectedOutput": "9 3"
+          }
         ],
-        hiddenTestCases: [
-          { input: '5\n5 5 5 5 5\n5', expectedOutput: '0' },
-          { input: '3\n10 20 30\n10', expectedOutput: '0' }
+        "hiddenTestCases": [
+          {
+            "input": "1\n-5",
+            "expectedOutput": "-5 -5"
+          },
+          {
+            "input": "5\n-4 0 6 2 1",
+            "expectedOutput": "5 1"
+          }
         ],
-        starterCode: `#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    if (!(cin >> n)) return 0;\n    // Implement linear search\n    \n    return 0;\n}`,
-        hints: [
-          'Read array of n numbers and target x.',
-          'Traverse from index 0 to n-1. When arr[i] == x, record index and break.',
-          'Print recorded index or -1 if the loop finished without finding x.'
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Write your solution here\n    return 0;\n}",
+        "hints": [
+          "Initialize sum to zero.",
+          "Add every input element exactly once.",
+          "Calculate the average as sum / n using integer division."
         ],
-        solution: `#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    if (!(cin >> n)) return 0;\n    int arr[1000];\n    for (int i = 0; i < n; i++) cin >> arr[i];\n    int x;\n    cin >> x;\n    int found = -1;\n    for (int i = 0; i < n; i++) {\n        if (arr[i] == x) {\n            found = i;\n            break;\n        }\n    }\n    cout << found << "\\n";\n    return 0;\n}`,
-        explanation: 'Sequential search checks every element from left to right, terminating upon finding the first match.'
+        "solution": "#include <iostream>\nusing namespace std;\nint main() {\n    int n, a[1000], sum = 0;\n    cin >> n;\n    for (int i = 0; i < n; i++) {\n        cin >> a[i];\n        sum += a[i];\n    }\n    cout << sum << \" \" << sum / n;\n    return 0;\n}",
+        "explanation": "The average is intentionally calculated with integer division, matching the stated output format."
       },
       {
-        id: 'ARR-03',
-        module: 'Arrays',
-        subtopic: '1D Arrays',
-        mode: 'full_code',
-        difficulty: 'Medium',
-        title: 'Binary Search in a Sorted Array',
-        description: 'Implement Binary Search on a sorted array of N integers to locate index of X. Use low and high variables.',
-        inputFormat: 'Line 1: N\nLine 2: N sorted integers\nLine 3: X',
-        outputFormat: '0-based index or -1',
-        constraints: '1 <= N <= 1000',
-        sampleTestCases: [
-          { input: '6\n2 5 8 12 16 23\n12', expectedOutput: '3' },
-          { input: '5\n10 20 30 40 50\n25', expectedOutput: '-1' }
+        "id": "MSC2-003",
+        "module": "Arrays",
+        "subtopic": "1D Arrays",
+        "mode": "full_code",
+        "difficulty": "Easy",
+        "title": "Largest and Smallest Element",
+        "description": "Find the largest and smallest values in an array and print the largest first.",
+        "inputFormat": "First line: N. Second line: N integers.",
+        "outputFormat": "Print largest and smallest, separated by one space.",
+        "constraints": "1 <= N <= 1000.",
+        "sampleTestCases": [
+          {
+            "input": "5\n4 9 -2 7 1",
+            "expectedOutput": "9 -2"
+          },
+          {
+            "input": "1\n-8",
+            "expectedOutput": "-8 -8"
+          }
         ],
-        hiddenTestCases: [
-          { input: '1\n100\n100', expectedOutput: '0' },
-          { input: '4\n1 2 3 4\n1', expectedOutput: '0' }
+        "hiddenTestCases": [
+          {
+            "input": "4\n-5 -2 -9 -3",
+            "expectedOutput": "-2 -9"
+          },
+          {
+            "input": "6\n0 0 5 5 -1 -1",
+            "expectedOutput": "5 -1"
+          }
         ],
-        starterCode: `#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    if (!(cin >> n)) return 0;\n    // Binary search with low, high, and mid\n    \n    return 0;\n}`,
-        hints: [
-          'Initialize low = 0, high = n - 1.',
-          'While low <= high, compute mid = (low + high) / 2.',
-          'If arr[mid] == x, found! If arr[mid] < x, low = mid + 1; else high = mid - 1.'
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Write your solution here\n    return 0;\n}",
+        "hints": [
+          "Initialize both values with the first array element.",
+          "Scan the remaining elements once.",
+          "Update the largest and smallest values independently."
         ],
-        solution: `#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    if (!(cin >> n)) return 0;\n    int arr[1000];\n    for (int i = 0; i < n; i++) cin >> arr[i];\n    int x;\n    cin >> x;\n    int low = 0, high = n - 1;\n    int ans = -1;\n    while (low <= high) {\n        int mid = (low + high) / 2;\n        if (arr[mid] == x) {\n            ans = mid;\n            break;\n        } else if (arr[mid] < x) {\n            low = mid + 1;\n        } else {\n            high = mid - 1;\n        }\n    }\n    cout << ans << "\\n";\n    return 0;\n}`,
-        explanation: 'Binary search repeatedly halves the search space, achieving O(log N) efficiency.'
+        "solution": "#include <iostream>\nusing namespace std;\nint main() {\n    int n, a[1000];\n    cin >> n;\n    for (int i = 0; i < n; i++) cin >> a[i];\n    int largest = a[0], smallest = a[0];\n    for (int i = 1; i < n; i++) {\n        if (a[i] > largest) largest = a[i];\n        if (a[i] < smallest) smallest = a[i];\n    }\n    cout << largest << \" \" << smallest;\n    return 0;\n}",
+        "explanation": "Initializing from the first element also handles arrays containing only negative values."
       },
       {
-        id: 'ARR-04',
-        module: 'Arrays',
-        subtopic: '1D Arrays',
-        mode: 'full_code',
-        difficulty: 'Medium',
-        title: 'Bubble Sort with Manual Swapping',
-        description: 'Sort an array of N integers in ascending order using Bubble Sort. Use variables i and k for nested loops, and temp for swapping.',
-        inputFormat: 'Line 1: N\nLine 2: N integers',
-        outputFormat: 'Space-separated sorted integers',
-        constraints: '1 <= N <= 500',
-        sampleTestCases: [
-          { input: '5\n64 25 12 22 11', expectedOutput: '11 12 22 25 64' },
-          { input: '4\n4 3 2 1', expectedOutput: '1 2 3 4' }
+        "id": "MSC2-004",
+        "module": "Arrays",
+        "subtopic": "1D Arrays",
+        "mode": "full_code",
+        "difficulty": "Easy",
+        "title": "Reverse an Array",
+        "description": "Reverse the elements of an array in place without using a second array.",
+        "inputFormat": "First line: N. Second line: N integers.",
+        "outputFormat": "Print the reversed array, with elements separated by spaces.",
+        "constraints": "1 <= N <= 1000.",
+        "sampleTestCases": [
+          {
+            "input": "5\n1 2 3 4 5",
+            "expectedOutput": "5 4 3 2 1"
+          },
+          {
+            "input": "1\n8",
+            "expectedOutput": "8"
+          }
         ],
-        hiddenTestCases: [
-          { input: '3\n5 1 2', expectedOutput: '1 2 5' }
+        "hiddenTestCases": [
+          {
+            "input": "4\n-2 0 7 3",
+            "expectedOutput": "3 7 0 -2"
+          },
+          {
+            "input": "6\n9 1 1 2 8 -4",
+            "expectedOutput": "-4 8 2 1 1 9"
+          }
         ],
-        starterCode: `#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    if (!(cin >> n)) return 0;\n    // Bubble sort with temp\n    \n    return 0;\n}`,
-        hints: [
-          'Outer loop runs i from 0 to n-2.',
-          'Inner loop runs k from 0 to n-i-2.',
-          'If arr[k] > arr[k+1], swap using: int temp = arr[k]; arr[k] = arr[k+1]; arr[k+1] = temp;'
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Write your solution here\n    return 0;\n}",
+        "hints": [
+          "Start left at 0 and right at N-1.",
+          "Swap the two values using a temporary variable.",
+          "Move both indices towards the centre."
         ],
-        solution: `#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    if (!(cin >> n)) return 0;\n    int arr[500];\n    for (int i = 0; i < n; i++) cin >> arr[i];\n    for (int i = 0; i < n - 1; i++) {\n        for (int k = 0; k < n - i - 1; k++) {\n            if (arr[k] > arr[k + 1]) {\n                int temp = arr[k];\n                arr[k] = arr[k + 1];\n                arr[k + 1] = temp;\n            }\n        }\n    }\n    for (int i = 0; i < n; i++) {\n        cout << arr[i] << (i == n - 1 ? "" : " ");\n    }\n    cout << "\\n";\n    return 0;\n}`,
-        explanation: 'Adjacent values are compared and swapped, pushing the largest element to the end in each outer pass.'
+        "solution": "#include <iostream>\nusing namespace std;\nint main() {\n    int n, a[1000];\n    cin >> n;\n    for (int i = 0; i < n; i++) cin >> a[i];\n    int left = 0, right = n - 1;\n    while (left < right) {\n        int temp = a[left];\n        a[left] = a[right];\n        a[right] = temp;\n        left++;\n        right--;\n    }\n    for (int i = 0; i < n; i++) {\n        if (i > 0) cout << \" \";\n        cout << a[i];\n    }\n    return 0;\n}",
+        "explanation": "Two-sided swapping reverses the array in place using constant extra space."
       },
       {
-        id: 'ARR-05',
-        module: 'Arrays',
-        subtopic: '2D Arrays',
-        mode: 'full_code',
-        difficulty: 'Medium',
-        title: 'Matrix Transpose',
-        description: 'Read an R x C matrix and output its transpose of dimensions C x R.',
-        inputFormat: 'Line 1: R C\nNext R lines: C integers',
-        outputFormat: 'Transpose matrix with rows on newlines',
-        constraints: '1 <= R, C <= 30',
-        sampleTestCases: [
-          { input: '2 3\n1 2 3\n4 5 6', expectedOutput: '1 4\n2 5\n3 6' }
+        "id": "MSC2-005",
+        "module": "Arrays",
+        "subtopic": "1D Arrays",
+        "mode": "full_code",
+        "difficulty": "Easy",
+        "title": "Count Even and Odd Elements",
+        "description": "Count how many array elements are even and how many are odd.",
+        "inputFormat": "First line: N. Second line: N integers.",
+        "outputFormat": "Print evenCount followed by oddCount.",
+        "constraints": "1 <= N <= 1000.",
+        "sampleTestCases": [
+          {
+            "input": "6\n1 2 3 4 5 6",
+            "expectedOutput": "3 3"
+          },
+          {
+            "input": "4\n2 4 6 8",
+            "expectedOutput": "4 0"
+          }
         ],
-        hiddenTestCases: [
-          { input: '1 2\n9 8', expectedOutput: '9\n8' }
+        "hiddenTestCases": [
+          {
+            "input": "5\n-3 -2 -1 0 7",
+            "expectedOutput": "2 3"
+          },
+          {
+            "input": "3\n0 0 0",
+            "expectedOutput": "3 0"
+          }
         ],
-        starterCode: `#include <iostream>\nusing namespace std;\n\nint main() {\n    int r, c;\n    if (!(cin >> r >> c)) return 0;\n    // Read matrix and print transpose\n    return 0;\n}`,
-        hints: [
-          'Read into mat[r][c].',
-          'Outer loop runs i from 0 to c-1; inner loop runs k from 0 to r-1.',
-          'Print mat[k][i] followed by space, and newline after each row.'
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Write your solution here\n    return 0;\n}",
+        "hints": [
+          "Initialize two counters to zero.",
+          "An element is even when its remainder after division by 2 is zero.",
+          "Count each element in exactly one category."
         ],
-        solution: `#include <iostream>\nusing namespace std;\n\nint main() {\n    int r, c;\n    if (!(cin >> r >> c)) return 0;\n    int mat[30][30];\n    for (int i = 0; i < r; i++) {\n        for (int k = 0; k < c; k++) {\n            cin >> mat[i][k];\n        }\n    }\n    for (int i = 0; i < c; i++) {\n        for (int k = 0; k < r; k++) {\n            cout << mat[k][i] << (k == r - 1 ? "" : " ");\n        }\n        cout << "\\n";\n    }\n    return 0;\n}`,
-        explanation: 'Transposing exchanges rows and columns by reading mat[i][k] and outputting mat[k][i].'
-      },
-
-      // MODULE 2: POINTERS
-      {
-        id: 'PTR-01',
-        module: 'Pointers',
-        subtopic: 'Pointer Arithmetic',
-        mode: 'full_code',
-        difficulty: 'Easy',
-        title: 'Array Sum Using Pointers Only',
-        description: 'Calculate the sum of N array integers using pointer arithmetic (*(ptr + i) or ptr++).',
-        inputFormat: 'Line 1: N\nLine 2: N integers',
-        outputFormat: 'Print the sum',
-        constraints: '1 <= N <= 1000',
-        sampleTestCases: [
-          { input: '4\n5 10 15 20', expectedOutput: '50' }
-        ],
-        hiddenTestCases: [
-          { input: '3\n-2 0 2', expectedOutput: '0' }
-        ],
-        starterCode: `#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    if (!(cin >> n)) return 0;\n    int arr[1000];\n    for (int i = 0; i < n; i++) cin >> arr[i];\n    // Sum using pointer\n    \n    return 0;\n}`,
-        hints: [
-          'Declare int *ptr = arr;',
-          'Accumulate sum += *(ptr + i); inside loop from 0 to n-1.'
-        ],
-        solution: `#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    if (!(cin >> n)) return 0;\n    int arr[1000];\n    for (int i = 0; i < n; i++) cin >> arr[i];\n    int *ptr = arr;\n    int sum = 0;\n    for (int i = 0; i < n; i++) {\n        sum += *(ptr + i);\n    }\n    cout << sum << "\\n";\n    return 0;\n}`,
-        explanation: 'Pointer arithmetic calculates offset memory addresses and dereferences the values directly.'
+        "solution": "#include <iostream>\nusing namespace std;\nint main() {\n    int n, a[1000], evenCount = 0, oddCount = 0;\n    cin >> n;\n    for (int i = 0; i < n; i++) {\n        cin >> a[i];\n        if (a[i] % 2 == 0) evenCount++;\n        else oddCount++;\n    }\n    cout << evenCount << \" \" << oddCount;\n    return 0;\n}",
+        "explanation": "The two counters classify every input element as either even or odd."
       },
       {
-        id: 'PTR-02',
-        module: 'Pointers',
-        subtopic: 'Functions & Pointers',
-        mode: 'full_code',
-        difficulty: 'Medium',
-        title: 'Swap Two Variables via Pointers',
-        description: 'Write a function void swapNums(int *a, int *b) that swaps values using a temp variable. Read two numbers, swap them, and print.',
-        inputFormat: 'Two space-separated integers A and B',
-        outputFormat: 'Print swapped values separated by space',
-        constraints: 'All integers',
-        sampleTestCases: [
-          { input: '10 20', expectedOutput: '20 10' }
+        "id": "MSC2-006",
+        "module": "Arrays",
+        "subtopic": "1D Arrays",
+        "mode": "full_code",
+        "difficulty": "Easy",
+        "title": "Count Positive, Negative and Zero Elements",
+        "description": "Count positive values, negative values, and zeroes in the array.",
+        "inputFormat": "First line: N. Second line: N integers.",
+        "outputFormat": "Print positiveCount negativeCount zeroCount in that order.",
+        "constraints": "1 <= N <= 1000.",
+        "sampleTestCases": [
+          {
+            "input": "6\n1 -2 0 4 0 -5",
+            "expectedOutput": "2 2 2"
+          },
+          {
+            "input": "3\n0 0 0",
+            "expectedOutput": "0 0 3"
+          }
         ],
-        hiddenTestCases: [
-          { input: '0 -50', expectedOutput: '-50 0' }
+        "hiddenTestCases": [
+          {
+            "input": "4\n-1 -2 -3 -4",
+            "expectedOutput": "0 4 0"
+          },
+          {
+            "input": "5\n8 7 6 5 4",
+            "expectedOutput": "5 0 0"
+          }
         ],
-        starterCode: `#include <iostream>\nusing namespace std;\n\nvoid swapNums(int *a, int *b) {\n    // Implement swap using temp\n}\n\nint main() {\n    int x, y;\n    if (cin >> x >> y) {\n        // Call swapNums\n        cout << x << " " << y << "\\n";\n    }\n    return 0;\n}`,
-        hints: [
-          'In swapNums: int temp = *a; *a = *b; *b = temp;',
-          'In main: pass addresses with &x and &y: swapNums(&x, &y);'
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Write your solution here\n    return 0;\n}",
+        "hints": [
+          "Use three counters, each initialized to zero.",
+          "Check greater than zero, less than zero, and equal to zero.",
+          "Print the counters in the required order."
         ],
-        solution: `#include <iostream>\nusing namespace std;\n\nvoid swapNums(int *a, int *b) {\n    int temp = *a;\n    *a = *b;\n    *b = temp;\n}\n\nint main() {\n    int x, y;\n    if (cin >> x >> y) {\n        swapNums(&x, &y);\n        cout << x << " " << y << "\\n";\n    }\n    return 0;\n}`,
-        explanation: 'Passing pointer addresses permits direct modification of caller variables in memory.'
-      },
-
-      // MODULE 3: DYNAMIC MEMORY ALLOCATION (DMA)
-      {
-        id: 'DMA-01',
-        module: 'DMA',
-        subtopic: 'Dynamic 1D Array',
-        mode: 'full_code',
-        difficulty: 'Medium',
-        title: 'Dynamic Array Allocation and Reversal',
-        description: 'Dynamically allocate an array of N integers on the heap using new. Read elements, reverse in-place using two pointers/indices with a temp variable, print, and deallocate using delete[].',
-        inputFormat: 'Line 1: N\nLine 2: N integers',
-        outputFormat: 'Space-separated reversed integers',
-        constraints: '1 <= N <= 1000',
-        sampleTestCases: [
-          { input: '5\n1 2 3 4 5', expectedOutput: '5 4 3 2 1' }
-        ],
-        hiddenTestCases: [
-          { input: '2\n99 100', expectedOutput: '100 99' }
-        ],
-        starterCode: `#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    if (!(cin >> n)) return 0;\n    // Allocate with new int[n], reverse, delete[]\n    \n    return 0;\n}`,
-        hints: [
-          'Allocate: int *arr = new int[n];',
-          'Reverse: low = 0, high = n - 1; swap with temp while low < high.',
-          'Deallocate: delete[] arr;'
-        ],
-        solution: `#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    if (!(cin >> n)) return 0;\n    int *arr = new int[n];\n    for (int i = 0; i < n; i++) cin >> arr[i];\n    int low = 0, high = n - 1;\n    while (low < high) {\n        int temp = arr[low];\n        arr[low] = arr[high];\n        arr[high] = temp;\n        low++;\n        high--;\n    }\n    for (int i = 0; i < n; i++) {\n        cout << arr[i] << (i == n - 1 ? "" : " ");\n    }\n    cout << "\\n";\n    delete[] arr;\n    return 0;\n}`,
-        explanation: 'Heap memory is allocated via new[] and must be explicitly released via delete[] to prevent memory leaks.'
-      },
-
-      // MODULE 4: FUNCTIONS & RECURSION
-      {
-        id: 'REC-01',
-        module: 'Functions and Recursion',
-        subtopic: 'Recursion',
-        mode: 'full_code',
-        difficulty: 'Easy',
-        title: 'Print 1 to N Using Head Recursion',
-        description: 'Write a recursive function void printNums(int n) that prints numbers 1 to N separated by spaces without loops.',
-        inputFormat: 'Single integer N',
-        outputFormat: 'Numbers from 1 to N separated by space',
-        constraints: '1 <= N <= 1000',
-        sampleTestCases: [
-          { input: '5', expectedOutput: '1 2 3 4 5' }
-        ],
-        hiddenTestCases: [
-          { input: '1', expectedOutput: '1' }
-        ],
-        starterCode: `#include <iostream>\nusing namespace std;\n\nvoid printNums(int n) {\n    // Base case and recursive call\n}\n\nint main() {\n    int n;\n    if (cin >> n) {\n        printNums(n);\n        cout << "\\n";\n    }\n    return 0;\n}`,
-        hints: [
-          'Base case: if (n == 0) return;',
-          'Call printNums(n - 1) before printing n.'
-        ],
-        solution: `#include <iostream>\nusing namespace std;\n\nvoid printNums(int n) {\n    if (n <= 0) return;\n    printNums(n - 1);\n    cout << n << " ";\n}\n\nint main() {\n    int n;\n    if (cin >> n) {\n        printNums(n);\n        cout << "\\n";\n    }\n    return 0;\n}`,
-        explanation: 'Stack frames unwind from base case 1 up to N.'
+        "solution": "#include <iostream>\nusing namespace std;\nint main() {\n    int n, a[1000], positive = 0, negative = 0, zero = 0;\n    cin >> n;\n    for (int i = 0; i < n; i++) {\n        cin >> a[i];\n        if (a[i] > 0) positive++;\n        else if (a[i] < 0) negative++;\n        else zero++;\n    }\n    cout << positive << \" \" << negative << \" \" << zero;\n    return 0;\n}",
+        "explanation": "The three mutually exclusive conditions classify all array elements."
       },
       {
-        id: 'REC-02',
-        module: 'Functions and Recursion',
-        subtopic: 'Recursion',
-        mode: 'full_code',
-        difficulty: 'Medium',
-        title: 'Recursive Sum of Digits',
-        description: 'Compute the sum of digits of a positive number N recursively.',
-        inputFormat: 'Single integer N',
-        outputFormat: 'Sum of digits',
-        constraints: '1 <= N <= 1000000000',
-        sampleTestCases: [
-          { input: '12345', expectedOutput: '15' }
+        "id": "MSC2-007",
+        "module": "Arrays",
+        "subtopic": "Linear Search",
+        "mode": "full_code",
+        "difficulty": "Easy",
+        "title": "Linear Search",
+        "description": "Find the first occurrence of a target value and print its zero-based index. Print -1 if it is absent.",
+        "inputFormat": "First line: N. Second line: N integers. Third line: target X.",
+        "outputFormat": "Print the first matching zero-based index, or -1.",
+        "constraints": "1 <= N <= 1000; indices start at zero.",
+        "sampleTestCases": [
+          {
+            "input": "5\n4 7 2 7 9\n7",
+            "expectedOutput": "1"
+          },
+          {
+            "input": "4\n1 2 3 4\n8",
+            "expectedOutput": "-1"
+          }
         ],
-        hiddenTestCases: [
-          { input: '90', expectedOutput: '9' }
+        "hiddenTestCases": [
+          {
+            "input": "1\n-6\n-6",
+            "expectedOutput": "0"
+          },
+          {
+            "input": "6\n3 5 3 8 3 9\n3",
+            "expectedOutput": "0"
+          }
         ],
-        starterCode: `#include <iostream>\nusing namespace std;\n\nint sumDigits(int n) {\n    // Recursive logic\n}\n\nint main() {\n    int n;\n    if (cin >> n) {\n        cout << sumDigits(n) << "\\n";\n    }\n    return 0;\n}`,
-        hints: [
-          'Base case: if (n == 0) return 0;',
-          'Recursive step: return (n % 10) + sumDigits(n / 10);'
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Write your solution here\n    return 0;\n}",
+        "hints": [
+          "Initialize the answer to -1.",
+          "Scan from index zero to N-1.",
+          "Stop immediately when the first match is found."
         ],
-        solution: `#include <iostream>\nusing namespace std;\n\nint sumDigits(int n) {\n    if (n == 0) return 0;\n    return (n % 10) + sumDigits(n / 10);\n}\n\nint main() {\n    int n;\n    if (cin >> n) {\n        cout << sumDigits(n) << "\\n";\n    }\n    return 0;\n}`,
-        explanation: 'Strips the last digit with % 10 and adds to recursive call on n / 10.'
-      },
-
-      // MODULE 5: LOGIC FUNDAMENTALS
-      {
-        id: 'LOGIC-01',
-        module: 'Logic Fundamentals',
-        subtopic: 'Number Properties',
-        mode: 'full_code',
-        difficulty: 'Easy',
-        title: 'Check 3-Digit Armstrong Number',
-        description: 'Check if a 3-digit number is an Armstrong number (sum of cubes of its digits equals the number). Print YES or NO.',
-        inputFormat: 'A 3-digit integer N',
-        outputFormat: 'YES or NO',
-        constraints: '100 <= N <= 999',
-        sampleTestCases: [
-          { input: '153', expectedOutput: 'YES' },
-          { input: '120', expectedOutput: 'NO' }
-        ],
-        hiddenTestCases: [
-          { input: '370', expectedOutput: 'YES' },
-          { input: '371', expectedOutput: 'YES' }
-        ],
-        starterCode: `#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    if (cin >> n) {\n        // Check Armstrong\n    }\n    return 0;\n}`,
-        hints: [
-          'Extract digits: d = temp % 10; sum += (d * d * d); temp /= 10;',
-          'Compare sum with original n.'
-        ],
-        solution: `#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    if (cin >> n) {\n        int original = n;\n        int sum = 0;\n        int temp = n;\n        while (temp > 0) {\n            int d = temp % 10;\n            sum += (d * d * d);\n            temp /= 10;\n        }\n        if (sum == original) cout << "YES\\n";\n        else cout << "NO\\n";\n    }\n    return 0;\n}`,
-        explanation: 'Cube of each digit is summed and verified against the original value.'
+        "solution": "#include <iostream>\nusing namespace std;\nint main() {\n    int n, a[1000], x, answer = -1;\n    cin >> n;\n    for (int i = 0; i < n; i++) cin >> a[i];\n    cin >> x;\n    for (int i = 0; i < n; i++) {\n        if (a[i] == x) {\n            answer = i;\n            break;\n        }\n    }\n    cout << answer;\n    return 0;\n}",
+        "explanation": "Linear search checks values from left to right and returns the first matching index."
       },
       {
-        id: 'LOGIC-02',
-        module: 'Logic Fundamentals',
-        subtopic: 'GCD & LCM',
-        mode: 'full_code',
-        difficulty: 'Easy',
-        title: 'GCD and LCM of Two Numbers',
-        description: 'Compute GCD and LCM of two integers using the Euclidean algorithm.',
-        inputFormat: 'Two integers A and B',
-        outputFormat: 'GCD = <gcd>\nLCM = <lcm>',
-        constraints: '1 <= A, B <= 100000',
-        sampleTestCases: [
-          { input: '12 18', expectedOutput: 'GCD = 6\nLCM = 36' }
+        "id": "MSC2-008",
+        "module": "Arrays",
+        "subtopic": "Binary Search",
+        "mode": "full_code",
+        "difficulty": "Medium",
+        "title": "Binary Search",
+        "description": "Search for a target in an already sorted array using the binary search algorithm.",
+        "inputFormat": "First line: N. Second line: N sorted integers. Third line: target X.",
+        "outputFormat": "Print the target's zero-based index, or -1 if it is absent.",
+        "constraints": "1 <= N <= 1000; input array is sorted in non-decreasing order.",
+        "sampleTestCases": [
+          {
+            "input": "6\n2 5 8 12 16 23\n12",
+            "expectedOutput": "3"
+          },
+          {
+            "input": "5\n10 20 30 40 50\n25",
+            "expectedOutput": "-1"
+          }
         ],
-        hiddenTestCases: [
-          { input: '7 13', expectedOutput: 'GCD = 1\nLCM = 91' }
+        "hiddenTestCases": [
+          {
+            "input": "1\n100\n100",
+            "expectedOutput": "0"
+          },
+          {
+            "input": "4\n1 2 3 4\n1",
+            "expectedOutput": "0"
+          }
         ],
-        starterCode: `#include <iostream>\nusing namespace std;\n\nint main() {\n    long long a, b;\n    if (cin >> a >> b) {\n        // Euclidean GCD and LCM\n    }\n    return 0;\n}`,
-        hints: [
-          'Euclidean: while(y != 0) { int temp = y; y = x % y; x = temp; }',
-          'LCM = (A * B) / GCD'
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Write your solution here\n    return 0;\n}",
+        "hints": [
+          "Set low = 0 and high = N-1.",
+          "Calculate mid = (low + high) / 2.",
+          "Compare the middle value and discard the half that cannot contain X."
         ],
-        solution: `#include <iostream>\nusing namespace std;\n\nint main() {\n    long long a, b;\n    if (cin >> a >> b) {\n        long long x = a, y = b;\n        while (y != 0) {\n            long long temp = y;\n            y = x % y;\n            x = temp;\n        }\n        long long gcd = x;\n        long long lcm = (a * b) / gcd;\n        cout << "GCD = " << gcd << "\\n";\n        cout << "LCM = " << lcm << "\\n";\n    }\n    return 0;\n}`,
-        explanation: 'Euclidean division quickly finds the GCD, and LCM is derived from the product divided by GCD.'
+        "solution": "#include <iostream>\nusing namespace std;\nint main() {\n    int n, a[1000], x;\n    cin >> n;\n    for (int i = 0; i < n; i++) cin >> a[i];\n    cin >> x;\n    int low = 0, high = n - 1, answer = -1;\n    while (low <= high) {\n        int mid = (low + high) / 2;\n        if (a[mid] == x) {\n            answer = mid;\n            break;\n        } else if (a[mid] < x) {\n            low = mid + 1;\n        } else {\n            high = mid - 1;\n        }\n    }\n    cout << answer;\n    return 0;\n}",
+        "explanation": "Binary search halves the remaining search range on every iteration."
       },
-
-      // MODE B: DEBUGGING EXERCISES
       {
-        id: 'DEBUG-01',
-        module: 'Arrays',
-        subtopic: 'Array Indexing & Bounds',
-        mode: 'debugging',
-        difficulty: 'Easy',
-        title: 'Fix Array Maximum & Bounds Bug',
-        description: 'CodeTantra Debug: The program below has an off-by-one bounds error (i <= n) and fails for negative numbers. Fix the errors so all tests pass.',
-        inputFormat: 'Line 1: N\nLine 2: N integers',
-        outputFormat: 'Maximum integer',
-        constraints: '1 <= N <= 1000',
-        sampleTestCases: [
-          { input: '5\n12 45 7 89 23', expectedOutput: '89' },
-          { input: '3\n-10 -5 -20', expectedOutput: '-5' }
+        "id": "MSC2-009",
+        "module": "Arrays",
+        "subtopic": "Frequency Counting",
+        "mode": "full_code",
+        "difficulty": "Medium",
+        "title": "Frequency of an Element",
+        "description": "Count how many times a given target value occurs in the array.",
+        "inputFormat": "First line: N. Second line: N integers. Third line: target X.",
+        "outputFormat": "Print the number of occurrences of X.",
+        "constraints": "1 <= N <= 1000.",
+        "sampleTestCases": [
+          {
+            "input": "6\n2 4 2 2 5 2\n2",
+            "expectedOutput": "4"
+          },
+          {
+            "input": "4\n1 2 3 4\n9",
+            "expectedOutput": "0"
+          }
         ],
-        hiddenTestCases: [
-          { input: '1\n-99', expectedOutput: '-99' }
+        "hiddenTestCases": [
+          {
+            "input": "1\n7\n7",
+            "expectedOutput": "1"
+          },
+          {
+            "input": "5\n0 0 -1 0 2\n0",
+            "expectedOutput": "3"
+          }
         ],
-        starterCode: `#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    int arr[1000];\n    // Bug 1: off-by-one reading\n    for (int i = 0; i <= n; i++) {\n        cin >> arr[i];\n    }\n    // Bug 2: 0 fails for all negative numbers\n    int maxVal = 0;\n    for (int i = 0; i < n; i++) {\n        if (arr[i] < maxVal) { // Bug 3: inverted comparison\n            maxVal = arr[i];\n        }\n    }\n    cout << maxVal << "\\n";\n    return 0;\n}`,
-        hints: [
-          'Change reading loop to i < n.',
-          'Initialize maxVal = arr[0].',
-          'Change comparison to if (arr[i] > maxVal).'
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Write your solution here\n    return 0;\n}",
+        "hints": [
+          "Initialize a counter to zero.",
+          "Traverse the complete array.",
+          "Increase the counter whenever the current element equals X."
         ],
-        solution: `#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    if (!(cin >> n)) return 0;\n    int arr[1000];\n    for (int i = 0; i < n; i++) cin >> arr[i];\n    int maxVal = arr[0];\n    for (int i = 1; i < n; i++) {\n        if (arr[i] > maxVal) maxVal = arr[i];\n    }\n    cout << maxVal << "\\n";\n    return 0;\n}`,
-        explanation: 'Corrects bounds and ensures negative elements are handled.'
+        "solution": "#include <iostream>\nusing namespace std;\nint main() {\n    int n, a[1000], x, count = 0;\n    cin >> n;\n    for (int i = 0; i < n; i++) cin >> a[i];\n    cin >> x;\n    for (int i = 0; i < n; i++) {\n        if (a[i] == x) count++;\n    }\n    cout << count;\n    return 0;\n}",
+        "explanation": "The complete traversal counts every occurrence, not only the first match."
       },
-
-      // MODE C: FILL IN THE MISSING CODE
       {
-        id: 'FILL-01',
-        module: 'Arrays',
-        subtopic: '2D Diagonal Traversal',
-        mode: 'fill_blanks',
-        difficulty: 'Easy',
-        title: 'Fill Main Diagonal Sum Expression',
-        description: 'Complete the missing expression in the matrix traversal to compute the main diagonal sum. Replace /*___BLANK_1___*/ with the correct syntax.',
-        inputFormat: 'Line 1: N\nNext N lines: N integers',
-        outputFormat: 'Main diagonal sum',
-        constraints: '1 <= N <= 30',
-        sampleTestCases: [
-          { input: '3\n1 2 3\n4 5 6\n7 8 9', expectedOutput: '15' }
+        "id": "MSC2-010",
+        "module": "Arrays",
+        "subtopic": "Insertion",
+        "mode": "full_code",
+        "difficulty": "Medium",
+        "title": "Insert an Element at a Position",
+        "description": "Insert a new value at a specified zero-based position and shift the remaining elements to the right.",
+        "inputFormat": "First line: N. Second line: N integers. Third line: value X and zero-based position P.",
+        "outputFormat": "Print the resulting N+1 elements separated by spaces.",
+        "constraints": "1 <= N < 1000; 0 <= P <= N.",
+        "sampleTestCases": [
+          {
+            "input": "5\n1 2 3 4 5\n9 2",
+            "expectedOutput": "1 2 9 3 4 5"
+          },
+          {
+            "input": "3\n10 20 30\n5 0",
+            "expectedOutput": "5 10 20 30"
+          }
         ],
-        hiddenTestCases: [
-          { input: '2\n10 20\n30 40', expectedOutput: '50' }
+        "hiddenTestCases": [
+          {
+            "input": "3\n1 2 3\n8 3",
+            "expectedOutput": "1 2 3 8"
+          },
+          {
+            "input": "1\n7\n4 1",
+            "expectedOutput": "7 4"
+          }
         ],
-        starterCode: `#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    if (!(cin >> n)) return 0;\n    int mat[30][30];\n    for (int i = 0; i < n; i++) {\n        for (int k = 0; k < n; k++) {\n            cin >> mat[i][k];\n        }\n    }\n    int diagSum = 0;\n    for (int i = 0; i < n; i++) {\n        diagSum += /*___BLANK_1___*/;\n    }\n    cout << diagSum << "\\n";\n    return 0;\n}`,
-        hints: [
-          'Main diagonal has row index equal to column index: mat[i][i]'
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Write your solution here\n    return 0;\n}",
+        "hints": [
+          "Use an array with space for at least N+1 elements.",
+          "Shift elements from the end towards position P.",
+          "Place X at index P after shifting."
         ],
-        solution: `#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    if (!(cin >> n)) return 0;\n    int mat[30][30];\n    for (int i = 0; i < n; i++) {\n        for (int k = 0; k < n; k++) {\n            cin >> mat[i][k];\n        }\n    }\n    int diagSum = 0;\n    for (int i = 0; i < n; i++) {\n        diagSum += mat[i][i];\n    }\n    cout << diagSum << "\\n";\n    return 0;\n}`,
-        explanation: 'The primary diagonal uses matching indices mat[i][i].'
+        "solution": "#include <iostream>\nusing namespace std;\nint main() {\n    int n, a[1001], x, pos;\n    cin >> n;\n    for (int i = 0; i < n; i++) cin >> a[i];\n    cin >> x >> pos;\n    for (int i = n; i > pos; i--) a[i] = a[i - 1];\n    a[pos] = x;\n    for (int i = 0; i <= n; i++) {\n        if (i > 0) cout << \" \";\n        cout << a[i];\n    }\n    return 0;\n}",
+        "explanation": "Shifting from right to left prevents overwriting values that still need to move."
+      },
+      {
+        "id": "MSC2-011",
+        "module": "Arrays",
+        "subtopic": "Deletion",
+        "mode": "full_code",
+        "difficulty": "Medium",
+        "title": "Delete an Element at a Position",
+        "description": "Delete the element at a specified zero-based position and shift later elements one place left.",
+        "inputFormat": "First line: N. Second line: N integers. Third line: zero-based position P.",
+        "outputFormat": "Print the remaining N-1 elements separated by spaces.",
+        "constraints": "1 <= N <= 1000; 0 <= P < N.",
+        "sampleTestCases": [
+          {
+            "input": "5\n10 20 30 40 50\n2",
+            "expectedOutput": "10 20 40 50"
+          },
+          {
+            "input": "4\n1 2 3 4\n0",
+            "expectedOutput": "2 3 4"
+          }
+        ],
+        "hiddenTestCases": [
+          {
+            "input": "3\n7 8 9\n2",
+            "expectedOutput": "7 8"
+          },
+          {
+            "input": "2\n-1 5\n1",
+            "expectedOutput": "-1"
+          }
+        ],
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Write your solution here\n    return 0;\n}",
+        "hints": [
+          "Read the position to be removed.",
+          "Starting at P, copy each next element one place left.",
+          "Print only the first N-1 positions."
+        ],
+        "solution": "#include <iostream>\nusing namespace std;\nint main() {\n    int n, a[1000], pos;\n    cin >> n;\n    for (int i = 0; i < n; i++) cin >> a[i];\n    cin >> pos;\n    for (int i = pos; i < n - 1; i++) a[i] = a[i + 1];\n    for (int i = 0; i < n - 1; i++) {\n        if (i > 0) cout << \" \";\n        cout << a[i];\n    }\n    return 0;\n}",
+        "explanation": "Deletion is performed by overwriting the selected position with the element to its right."
+      },
+      {
+        "id": "MSC2-012",
+        "module": "Arrays",
+        "subtopic": "Distinct Maximum",
+        "mode": "full_code",
+        "difficulty": "Medium",
+        "title": "Second Largest Distinct Element",
+        "description": "Find the second-largest distinct value. Duplicate copies of the maximum do not count. Print -1 if no second distinct value exists.",
+        "inputFormat": "First line: N. Second line: N integers.",
+        "outputFormat": "Print the second-largest distinct value, or -1 if it does not exist.",
+        "constraints": "1 <= N <= 1000.",
+        "sampleTestCases": [
+          {
+            "input": "6\n5 1 5 3 2 5",
+            "expectedOutput": "3"
+          },
+          {
+            "input": "4\n7 7 7 7",
+            "expectedOutput": "-1"
+          }
+        ],
+        "hiddenTestCases": [
+          {
+            "input": "5\n-8 -2 -5 -2 -9",
+            "expectedOutput": "-5"
+          },
+          {
+            "input": "1\n42",
+            "expectedOutput": "-1"
+          }
+        ],
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Write your solution here\n    return 0;\n}",
+        "hints": [
+          "Track the largest and second-largest distinct values separately.",
+          "When a new largest value appears, the old largest becomes second.",
+          "Ignore values equal to the current largest."
+        ],
+        "solution": "#include <iostream>\nusing namespace std;\nint main() {\n    int n, a[1000];\n    cin >> n;\n    for (int i = 0; i < n; i++) cin >> a[i];\n    int largest = a[0], second = 0, found = 0;\n    for (int i = 1; i < n; i++) {\n        if (a[i] > largest) {\n            second = largest;\n            largest = a[i];\n            found = 1;\n        } else if (a[i] < largest && (!found || a[i] > second)) {\n            second = a[i];\n            found = 1;\n        }\n    }\n    if (found) cout << second;\n    else cout << -1;\n    return 0;\n}",
+        "explanation": "The strict comparison avoids treating duplicate maximum values as the second largest."
+      },
+      {
+        "id": "MSC2-013",
+        "module": "Arrays",
+        "subtopic": "Bubble Sort",
+        "mode": "full_code",
+        "difficulty": "Medium",
+        "title": "Bubble Sort",
+        "description": "Sort N integers in ascending order using bubble sort and manual swapping with a temporary variable.",
+        "inputFormat": "First line: N. Second line: N integers.",
+        "outputFormat": "Print the sorted array separated by spaces.",
+        "constraints": "1 <= N <= 1000.",
+        "sampleTestCases": [
+          {
+            "input": "5\n64 25 12 22 11",
+            "expectedOutput": "11 12 22 25 64"
+          },
+          {
+            "input": "4\n4 3 2 1",
+            "expectedOutput": "1 2 3 4"
+          }
+        ],
+        "hiddenTestCases": [
+          {
+            "input": "3\n5 1 2",
+            "expectedOutput": "1 2 5"
+          },
+          {
+            "input": "5\n-1 0 -3 8 2",
+            "expectedOutput": "-3 -1 0 2 8"
+          }
+        ],
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Write your solution here\n    return 0;\n}",
+        "hints": [
+          "The outer loop makes N-1 passes.",
+          "Compare adjacent elements in the inner loop.",
+          "Swap when the left element is greater than the right element."
+        ],
+        "solution": "#include <iostream>\nusing namespace std;\nint main() {\n    int n, a[1000];\n    cin >> n;\n    for (int i = 0; i < n; i++) cin >> a[i];\n    for (int i = 0; i < n - 1; i++) {\n        for (int k = 0; k < n - i - 1; k++) {\n            if (a[k] > a[k + 1]) {\n                int temp = a[k];\n                a[k] = a[k + 1];\n                a[k + 1] = temp;\n            }\n        }\n    }\n    for (int i = 0; i < n; i++) {\n        if (i > 0) cout << \" \";\n        cout << a[i];\n    }\n    return 0;\n}",
+        "explanation": "Each pass moves the largest remaining unsorted element to its final position."
+      },
+      {
+        "id": "MSC2-014",
+        "module": "Arrays",
+        "subtopic": "Selection and Insertion Sort",
+        "mode": "full_code",
+        "difficulty": "Medium",
+        "title": "Selection Sort and Insertion Sort",
+        "description": "Sort the same input array twice: once using selection sort and once using insertion sort.",
+        "inputFormat": "First line: N. Second line: N integers.",
+        "outputFormat": "Print two lines: Selection: followed by the selection-sorted array; Insertion: followed by the insertion-sorted array.",
+        "constraints": "1 <= N <= 1000.",
+        "sampleTestCases": [
+          {
+            "input": "5\n5 2 4 1 3",
+            "expectedOutput": "Selection: 1 2 3 4 5\nInsertion: 1 2 3 4 5"
+          },
+          {
+            "input": "4\n4 3 2 1",
+            "expectedOutput": "Selection: 1 2 3 4\nInsertion: 1 2 3 4"
+          }
+        ],
+        "hiddenTestCases": [
+          {
+            "input": "3\n7 7 -1",
+            "expectedOutput": "Selection: -1 7 7\nInsertion: -1 7 7"
+          },
+          {
+            "input": "5\n0 -5 8 2 -1",
+            "expectedOutput": "Selection: -5 -1 0 2 8\nInsertion: -5 -1 0 2 8"
+          }
+        ],
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Write your solution here\n    return 0;\n}",
+        "hints": [
+          "Copy the input into two arrays so each algorithm sorts its own copy.",
+          "Selection sort selects the smallest remaining element on each pass.",
+          "Insertion sort inserts each new value into the already-sorted left portion."
+        ],
+        "solution": "#include <iostream>\nusing namespace std;\nint main() {\n    int n, a[1000], b[1000];\n    cin >> n;\n    for (int i = 0; i < n; i++) {\n        cin >> a[i];\n        b[i] = a[i];\n    }\n    for (int i = 0; i < n - 1; i++) {\n        int minIndex = i;\n        for (int k = i + 1; k < n; k++) {\n            if (a[k] < a[minIndex]) minIndex = k;\n        }\n        int temp = a[i];\n        a[i] = a[minIndex];\n        a[minIndex] = temp;\n    }\n    for (int i = 1; i < n; i++) {\n        int key = b[i];\n        int k = i - 1;\n        while (k >= 0 && b[k] > key) {\n            b[k + 1] = b[k];\n            k--;\n        }\n        b[k + 1] = key;\n    }\n    cout << \"Selection:\";\n    for (int i = 0; i < n; i++) cout << \" \" << a[i];\n    cout << \"\\nInsertion:\";\n    for (int i = 0; i < n; i++) cout << \" \" << b[i];\n    return 0;\n}",
+        "explanation": "This question compares two common sorting algorithms on identical input data."
+      },
+      {
+        "id": "MSC2-015",
+        "module": "Arrays",
+        "subtopic": "2D Arrays",
+        "mode": "full_code",
+        "difficulty": "Easy",
+        "title": "Read and Display a Matrix",
+        "description": "Read an R by C matrix and display it in the original row-column layout.",
+        "inputFormat": "First line: R C. Next R lines: C integers each.",
+        "outputFormat": "Print R rows, with elements in each row separated by spaces.",
+        "constraints": "1 <= R,C <= 50.",
+        "sampleTestCases": [
+          {
+            "input": "2 3\n1 2 3\n4 5 6",
+            "expectedOutput": "1 2 3\n4 5 6"
+          },
+          {
+            "input": "1 1\n9",
+            "expectedOutput": "9"
+          }
+        ],
+        "hiddenTestCases": [
+          {
+            "input": "3 2\n-1 0\n4 5\n7 -2",
+            "expectedOutput": "-1 0\n4 5\n7 -2"
+          },
+          {
+            "input": "2 2\n8 8\n0 -3",
+            "expectedOutput": "8 8\n0 -3"
+          }
+        ],
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Write your solution here\n    return 0;\n}",
+        "hints": [
+          "Use one loop for rows and a nested loop for columns.",
+          "Read every element into a[i][k].",
+          "Print a newline after each row."
+        ],
+        "solution": "#include <iostream>\nusing namespace std;\nint main() {\n    int r, c, a[50][50];\n    cin >> r >> c;\n    for (int i = 0; i < r; i++)\n        for (int k = 0; k < c; k++) cin >> a[i][k];\n    for (int i = 0; i < r; i++) {\n        for (int k = 0; k < c; k++) {\n            if (k > 0) cout << \" \";\n            cout << a[i][k];\n        }\n        if (i + 1 < r) cout << \"\\n\";\n    }\n    return 0;\n}",
+        "explanation": "Two nested loops follow the row-column structure of a two-dimensional array."
+      },
+      {
+        "id": "MSC2-016",
+        "module": "Arrays",
+        "subtopic": "Matrix Addition",
+        "mode": "full_code",
+        "difficulty": "Medium",
+        "title": "Matrix Addition",
+        "description": "Read two matrices of equal dimensions and print their element-wise sum.",
+        "inputFormat": "First line: R C. Then R rows of matrix A, followed by R rows of matrix B.",
+        "outputFormat": "Print the sum matrix with R rows and C columns.",
+        "constraints": "1 <= R,C <= 50; both matrices have equal dimensions.",
+        "sampleTestCases": [
+          {
+            "input": "2 2\n1 2\n3 4\n5 6\n7 8",
+            "expectedOutput": "6 8\n10 12"
+          },
+          {
+            "input": "1 1\n-3\n8",
+            "expectedOutput": "5"
+          }
+        ],
+        "hiddenTestCases": [
+          {
+            "input": "2 3\n1 0 -1\n2 3 4\n5 6 7\n-1 -2 -3",
+            "expectedOutput": "6 6 6\n1 1 1"
+          },
+          {
+            "input": "1 2\n100 -100\n-50 25",
+            "expectedOutput": "50 -75"
+          }
+        ],
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Write your solution here\n    return 0;\n}",
+        "hints": [
+          "Read both matrices before computing the result.",
+          "Add elements with the same row and column indices.",
+          "Store or print A[i][k] + B[i][k]."
+        ],
+        "solution": "#include <iostream>\nusing namespace std;\nint main() {\n    int r, c, a[50][50], b[50][50];\n    cin >> r >> c;\n    for (int i = 0; i < r; i++)\n        for (int k = 0; k < c; k++) cin >> a[i][k];\n    for (int i = 0; i < r; i++)\n        for (int k = 0; k < c; k++) cin >> b[i][k];\n    for (int i = 0; i < r; i++) {\n        for (int k = 0; k < c; k++) {\n            if (k > 0) cout << \" \";\n            cout << a[i][k] + b[i][k];\n        }\n        if (i + 1 < r) cout << \"\\n\";\n    }\n    return 0;\n}",
+        "explanation": "Matrix addition is performed independently at each corresponding position."
+      },
+      {
+        "id": "MSC2-017",
+        "module": "Arrays",
+        "subtopic": "Matrix Subtraction",
+        "mode": "full_code",
+        "difficulty": "Medium",
+        "title": "Matrix Subtraction",
+        "description": "Read two matrices of equal dimensions and subtract matrix B from matrix A.",
+        "inputFormat": "First line: R C. Then R rows of matrix A, followed by R rows of matrix B.",
+        "outputFormat": "Print A-B with R rows and C columns.",
+        "constraints": "1 <= R,C <= 50; both matrices have equal dimensions.",
+        "sampleTestCases": [
+          {
+            "input": "2 2\n8 6\n4 2\n3 1\n1 2",
+            "expectedOutput": "5 5\n3 0"
+          },
+          {
+            "input": "1 1\n-3\n8",
+            "expectedOutput": "-11"
+          }
+        ],
+        "hiddenTestCases": [
+          {
+            "input": "2 3\n1 0 -1\n2 3 4\n5 6 7\n-1 -2 -3",
+            "expectedOutput": "-4 -6 -8\n3 5 7"
+          },
+          {
+            "input": "1 2\n100 -100\n-50 25",
+            "expectedOutput": "150 -125"
+          }
+        ],
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Write your solution here\n    return 0;\n}",
+        "hints": [
+          "Read matrix A and matrix B separately.",
+          "Subtract corresponding elements in the order A-B.",
+          "Keep the same number of rows and columns."
+        ],
+        "solution": "#include <iostream>\nusing namespace std;\nint main() {\n    int r, c, a[50][50], b[50][50];\n    cin >> r >> c;\n    for (int i = 0; i < r; i++)\n        for (int k = 0; k < c; k++) cin >> a[i][k];\n    for (int i = 0; i < r; i++)\n        for (int k = 0; k < c; k++) cin >> b[i][k];\n    for (int i = 0; i < r; i++) {\n        for (int k = 0; k < c; k++) {\n            if (k > 0) cout << \" \";\n            cout << a[i][k] - b[i][k];\n        }\n        if (i + 1 < r) cout << \"\\n\";\n    }\n    return 0;\n}",
+        "explanation": "Subtraction preserves the matrix dimensions and subtracts corresponding entries."
+      },
+      {
+        "id": "MSC2-018",
+        "module": "Arrays",
+        "subtopic": "Transpose",
+        "mode": "full_code",
+        "difficulty": "Medium",
+        "title": "Transpose of a Matrix",
+        "description": "Display the transpose of an R by C matrix. The result has C rows and R columns.",
+        "inputFormat": "First line: R C. Next R lines: C integers each.",
+        "outputFormat": "Print the transposed matrix with C rows and R columns.",
+        "constraints": "1 <= R,C <= 50.",
+        "sampleTestCases": [
+          {
+            "input": "2 3\n1 2 3\n4 5 6",
+            "expectedOutput": "1 4\n2 5\n3 6"
+          },
+          {
+            "input": "1 2\n7 9",
+            "expectedOutput": "7\n9"
+          }
+        ],
+        "hiddenTestCases": [
+          {
+            "input": "3 1\n5\n6\n7",
+            "expectedOutput": "5 6 7"
+          },
+          {
+            "input": "2 2\n1 2\n3 4",
+            "expectedOutput": "1 3\n2 4"
+          }
+        ],
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Write your solution here\n    return 0;\n}",
+        "hints": [
+          "Read the original matrix using R rows and C columns.",
+          "For the transpose, the outer loop runs over original columns.",
+          "Print a[k][i] while swapping the row and column roles."
+        ],
+        "solution": "#include <iostream>\nusing namespace std;\nint main() {\n    int r, c, a[50][50];\n    cin >> r >> c;\n    for (int i = 0; i < r; i++)\n        for (int k = 0; k < c; k++) cin >> a[i][k];\n    for (int i = 0; i < c; i++) {\n        for (int k = 0; k < r; k++) {\n            if (k > 0) cout << \" \";\n            cout << a[k][i];\n        }\n        if (i + 1 < c) cout << \"\\n\";\n    }\n    return 0;\n}",
+        "explanation": "Transposing a matrix exchanges its row and column indices."
+      },
+      {
+        "id": "MSC2-019",
+        "module": "Arrays",
+        "subtopic": "Matrix Multiplication",
+        "mode": "full_code",
+        "difficulty": "Hard",
+        "title": "Matrix Multiplication",
+        "description": "Multiply matrix A of size R1 by C1 with matrix B of size R2 by C2.",
+        "inputFormat": "Input: R1 C1, matrix A, then R2 C2, matrix B. The inputs satisfy C1=R2.",
+        "outputFormat": "Print the product matrix with R1 rows and C2 columns.",
+        "constraints": "1 <= R1,C1,R2,C2 <= 20; C1 must equal R2.",
+        "sampleTestCases": [
+          {
+            "input": "2 2\n1 2\n3 4\n2 2\n5 6\n7 8",
+            "expectedOutput": "19 22\n43 50"
+          },
+          {
+            "input": "1 2\n2 3\n2 1\n4\n5",
+            "expectedOutput": "23"
+          }
+        ],
+        "hiddenTestCases": [
+          {
+            "input": "2 3\n1 0 2\n-1 3 1\n3 2\n3 1\n2 1\n1 0",
+            "expectedOutput": "5 1\n4 2"
+          },
+          {
+            "input": "1 1\n-3\n1 1\n4",
+            "expectedOutput": "-12"
+          }
+        ],
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Write your solution here\n    return 0;\n}",
+        "hints": [
+          "The number of columns in A must equal the number of rows in B.",
+          "For each result cell, sum A[i][j] * B[j][k].",
+          "Initialize every result cell to zero before accumulation."
+        ],
+        "solution": "#include <iostream>\nusing namespace std;\nint main() {\n    int r1, c1, r2, c2;\n    int a[20][20], b[20][20], result[20][20] = {};\n    cin >> r1 >> c1;\n    for (int i = 0; i < r1; i++)\n        for (int k = 0; k < c1; k++) cin >> a[i][k];\n    cin >> r2 >> c2;\n    for (int i = 0; i < r2; i++)\n        for (int k = 0; k < c2; k++) cin >> b[i][k];\n    for (int i = 0; i < r1; i++) {\n        for (int k = 0; k < c2; k++) {\n            for (int j = 0; j < c1; j++)\n                result[i][k] += a[i][j] * b[j][k];\n        }\n    }\n    for (int i = 0; i < r1; i++) {\n        for (int k = 0; k < c2; k++) {\n            if (k > 0) cout << \" \";\n            cout << result[i][k];\n        }\n        if (i + 1 < r1) cout << \"\\n\";\n    }\n    return 0;\n}",
+        "explanation": "Each product-matrix entry is a dot product of one row from A and one column from B."
+      },
+      {
+        "id": "MSC2-020",
+        "module": "Arrays",
+        "subtopic": "Row and Column Aggregation",
+        "mode": "full_code",
+        "difficulty": "Hard",
+        "title": "Sum of Each Row and Column",
+        "description": "Calculate the sum of every row and every column in a matrix.",
+        "inputFormat": "First line: R C. Next R lines: C integers each.",
+        "outputFormat": "Print two lines: Rows: followed by R row sums; Columns: followed by C column sums.",
+        "constraints": "1 <= R,C <= 50.",
+        "sampleTestCases": [
+          {
+            "input": "2 3\n1 2 3\n4 5 6",
+            "expectedOutput": "Rows: 6 15\nColumns: 5 7 9"
+          },
+          {
+            "input": "1 1\n9",
+            "expectedOutput": "Rows: 9\nColumns: 9"
+          }
+        ],
+        "hiddenTestCases": [
+          {
+            "input": "3 2\n1 -1\n2 3\n4 5",
+            "expectedOutput": "Rows: 0 5 9\nColumns: 7 7"
+          },
+          {
+            "input": "2 2\n0 0\n-2 5",
+            "expectedOutput": "Rows: 0 3\nColumns: -2 5"
+          }
+        ],
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Write your solution here\n    return 0;\n}",
+        "hints": [
+          "Initialize one row-sum counter per row and one column-sum counter per column.",
+          "When reading a[i][k], add it to both rowSum[i] and colSum[k].",
+          "Print all row sums first, then all column sums."
+        ],
+        "solution": "#include <iostream>\nusing namespace std;\nint main() {\n    int r, c, a[50][50], rowSum[50] = {}, colSum[50] = {};\n    cin >> r >> c;\n    for (int i = 0; i < r; i++) {\n        for (int k = 0; k < c; k++) {\n            cin >> a[i][k];\n            rowSum[i] += a[i][k];\n            colSum[k] += a[i][k];\n        }\n    }\n    cout << \"Rows:\";\n    for (int i = 0; i < r; i++) cout << \" \" << rowSum[i];\n    cout << \"\\nColumns:\";\n    for (int k = 0; k < c; k++) cout << \" \" << colSum[k];\n    return 0;\n}",
+        "explanation": "Each matrix element contributes to exactly one row total and one column total."
+      },
+      {
+        "id": "MSC2-021",
+        "module": "Arrays",
+        "subtopic": "Diagonal Sums",
+        "mode": "full_code",
+        "difficulty": "Hard",
+        "title": "Sum of Main and Secondary Diagonals",
+        "description": "Find the sums of the main and secondary diagonals of a square matrix.",
+        "inputFormat": "First line: N. Next N lines: N integers each.",
+        "outputFormat": "Print mainDiagonalSum followed by secondaryDiagonalSum.",
+        "constraints": "1 <= N <= 50; for odd N, the centre element is included in both sums.",
+        "sampleTestCases": [
+          {
+            "input": "3\n1 2 3\n4 5 6\n7 8 9",
+            "expectedOutput": "15 15"
+          },
+          {
+            "input": "2\n1 2\n3 4",
+            "expectedOutput": "5 5"
+          }
+        ],
+        "hiddenTestCases": [
+          {
+            "input": "1\n9",
+            "expectedOutput": "9 9"
+          },
+          {
+            "input": "4\n1 2 3 4\n5 6 7 8\n9 10 11 12\n13 14 15 16",
+            "expectedOutput": "34 34"
+          }
+        ],
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Write your solution here\n    return 0;\n}",
+        "hints": [
+          "The main diagonal uses a[i][i].",
+          "The secondary diagonal uses a[i][N-1-i].",
+          "Add both diagonal elements for every row."
+        ],
+        "solution": "#include <iostream>\nusing namespace std;\nint main() {\n    int n, a[50][50], mainSum = 0, secondarySum = 0;\n    cin >> n;\n    for (int i = 0; i < n; i++)\n        for (int k = 0; k < n; k++) cin >> a[i][k];\n    for (int i = 0; i < n; i++) {\n        mainSum += a[i][i];\n        secondarySum += a[i][n - 1 - i];\n    }\n    cout << mainSum << \" \" << secondarySum;\n    return 0;\n}",
+        "explanation": "For odd N, the centre element belongs to both diagonals and is counted in both sums."
+      },
+      {
+        "id": "MSC2-022",
+        "module": "Arrays",
+        "subtopic": "Identity Matrix",
+        "mode": "full_code",
+        "difficulty": "Hard",
+        "title": "Identity Matrix",
+        "description": "Check whether a square matrix is an identity matrix.",
+        "inputFormat": "First line: N. Next N lines: N integers each.",
+        "outputFormat": "Print YES if all diagonal elements are 1 and all other elements are 0; otherwise print NO.",
+        "constraints": "1 <= N <= 50.",
+        "sampleTestCases": [
+          {
+            "input": "2\n1 0\n0 1",
+            "expectedOutput": "YES"
+          },
+          {
+            "input": "2\n1 2\n0 1",
+            "expectedOutput": "NO"
+          }
+        ],
+        "hiddenTestCases": [
+          {
+            "input": "1\n1",
+            "expectedOutput": "YES"
+          },
+          {
+            "input": "3\n1 0 0\n0 1 0\n0 0 1",
+            "expectedOutput": "YES"
+          }
+        ],
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Write your solution here\n    return 0;\n}",
+        "hints": [
+          "An identity matrix must be square.",
+          "Check that a[i][i] is 1 for every diagonal position.",
+          "Check that every position with i different from k is zero."
+        ],
+        "solution": "#include <iostream>\nusing namespace std;\nint main() {\n    int n, a[50][50], valid = 1;\n    cin >> n;\n    for (int i = 0; i < n; i++)\n        for (int k = 0; k < n; k++) cin >> a[i][k];\n    for (int i = 0; i < n; i++) {\n        for (int k = 0; k < n; k++) {\n            if (i == k && a[i][k] != 1) valid = 0;\n            if (i != k && a[i][k] != 0) valid = 0;\n        }\n    }\n    if (valid) cout << \"YES\";\n    else cout << \"NO\";\n    return 0;\n}",
+        "explanation": "Both diagonal and non-diagonal positions must satisfy their identity-matrix conditions."
+      },
+      {
+        "id": "MSC2-023",
+        "module": "Arrays",
+        "subtopic": "Symmetric Matrix",
+        "mode": "full_code",
+        "difficulty": "Hard",
+        "title": "Symmetric Matrix",
+        "description": "Check whether a square matrix is symmetric, meaning it is equal to its transpose.",
+        "inputFormat": "First line: N. Next N lines: N integers each.",
+        "outputFormat": "Print YES if a[i][k] equals a[k][i] for every pair; otherwise print NO.",
+        "constraints": "1 <= N <= 50.",
+        "sampleTestCases": [
+          {
+            "input": "3\n1 2 3\n2 4 5\n3 5 6",
+            "expectedOutput": "YES"
+          },
+          {
+            "input": "2\n1 2\n3 4",
+            "expectedOutput": "NO"
+          }
+        ],
+        "hiddenTestCases": [
+          {
+            "input": "1\n7",
+            "expectedOutput": "YES"
+          },
+          {
+            "input": "2\n0 -1\n-1 0",
+            "expectedOutput": "YES"
+          }
+        ],
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Write your solution here\n    return 0;\n}",
+        "hints": [
+          "A symmetric matrix must be square.",
+          "Compare each element with the element at swapped indices.",
+          "If any pair differs, the matrix is not symmetric."
+        ],
+        "solution": "#include <iostream>\nusing namespace std;\nint main() {\n    int n, a[50][50], valid = 1;\n    cin >> n;\n    for (int i = 0; i < n; i++)\n        for (int k = 0; k < n; k++) cin >> a[i][k];\n    for (int i = 0; i < n; i++) {\n        for (int k = 0; k < n; k++) {\n            if (a[i][k] != a[k][i]) valid = 0;\n        }\n    }\n    if (valid) cout << \"YES\";\n    else cout << \"NO\";\n    return 0;\n}",
+        "explanation": "A matrix is symmetric exactly when A equals its transpose."
+      },
+      {
+        "id": "MSC2-024",
+        "module": "Arrays",
+        "subtopic": "Upper Triangular Matrix",
+        "mode": "full_code",
+        "difficulty": "Hard",
+        "title": "Upper Triangular Matrix",
+        "description": "Check whether every element below the main diagonal is zero.",
+        "inputFormat": "First line: N. Next N lines: N integers each.",
+        "outputFormat": "Print YES if the matrix is upper triangular; otherwise print NO.",
+        "constraints": "1 <= N <= 50; input is square.",
+        "sampleTestCases": [
+          {
+            "input": "3\n1 2 3\n0 4 5\n0 0 6",
+            "expectedOutput": "YES"
+          },
+          {
+            "input": "2\n1 2\n3 4",
+            "expectedOutput": "NO"
+          }
+        ],
+        "hiddenTestCases": [
+          {
+            "input": "1\n9",
+            "expectedOutput": "YES"
+          },
+          {
+            "input": "3\n0 0 0\n0 5 1\n0 0 -2",
+            "expectedOutput": "YES"
+          }
+        ],
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Write your solution here\n    return 0;\n}",
+        "hints": [
+          "Only positions with row index greater than column index are below the diagonal.",
+          "Check those positions for zero.",
+          "The diagonal and elements above it may contain any integer."
+        ],
+        "solution": "#include <iostream>\nusing namespace std;\nint main() {\n    int n, a[50][50], valid = 1;\n    cin >> n;\n    for (int i = 0; i < n; i++)\n        for (int k = 0; k < n; k++) cin >> a[i][k];\n    for (int i = 0; i < n; i++) {\n        for (int k = 0; k < i; k++) {\n            if (a[i][k] != 0) valid = 0;\n        }\n    }\n    if (valid) cout << \"YES\";\n    else cout << \"NO\";\n    return 0;\n}",
+        "explanation": "An upper triangular matrix has zeros strictly below its main diagonal."
+      },
+      {
+        "id": "MSC2-025",
+        "module": "Arrays",
+        "subtopic": "Lower Triangular Matrix",
+        "mode": "full_code",
+        "difficulty": "Hard",
+        "title": "Lower Triangular Matrix",
+        "description": "Check whether every element above the main diagonal is zero.",
+        "inputFormat": "First line: N. Next N lines: N integers each.",
+        "outputFormat": "Print YES if the matrix is lower triangular; otherwise print NO.",
+        "constraints": "1 <= N <= 50; input is square.",
+        "sampleTestCases": [
+          {
+            "input": "3\n1 0 0\n2 4 0\n3 5 6",
+            "expectedOutput": "YES"
+          },
+          {
+            "input": "2\n1 2\n0 4",
+            "expectedOutput": "NO"
+          }
+        ],
+        "hiddenTestCases": [
+          {
+            "input": "1\n9",
+            "expectedOutput": "YES"
+          },
+          {
+            "input": "3\n5 0 0\n-1 7 0\n2 4 8",
+            "expectedOutput": "YES"
+          }
+        ],
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Write your solution here\n    return 0;\n}",
+        "hints": [
+          "Only positions with column index greater than row index are above the diagonal.",
+          "Check all such positions for zero.",
+          "The diagonal and elements below it may contain any integer."
+        ],
+        "solution": "#include <iostream>\nusing namespace std;\nint main() {\n    int n, a[50][50], valid = 1;\n    cin >> n;\n    for (int i = 0; i < n; i++)\n        for (int k = 0; k < n; k++) cin >> a[i][k];\n    for (int i = 0; i < n; i++) {\n        for (int k = i + 1; k < n; k++) {\n            if (a[i][k] != 0) valid = 0;\n        }\n    }\n    if (valid) cout << \"YES\";\n    else cout << \"NO\";\n    return 0;\n}",
+        "explanation": "A lower triangular matrix has zeros strictly above its main diagonal."
+      },
+      {
+        "id": "MSC2-026",
+        "module": "Arrays",
+        "subtopic": "Matrix Minimum and Maximum",
+        "mode": "full_code",
+        "difficulty": "Hard",
+        "title": "Largest and Smallest Element in a Matrix",
+        "description": "Find the largest and smallest values among all elements of a matrix.",
+        "inputFormat": "First line: R C. Next R lines: C integers each.",
+        "outputFormat": "Print the largest value followed by the smallest value.",
+        "constraints": "1 <= R,C <= 50.",
+        "sampleTestCases": [
+          {
+            "input": "2 3\n1 9 -2\n4 5 0",
+            "expectedOutput": "9 -2"
+          },
+          {
+            "input": "1 1\n-7",
+            "expectedOutput": "-7 -7"
+          }
+        ],
+        "hiddenTestCases": [
+          {
+            "input": "3 2\n-1 -5\n-9 -3\n-4 -2",
+            "expectedOutput": "-1 -9"
+          },
+          {
+            "input": "2 2\n0 0\n0 0",
+            "expectedOutput": "0 0"
+          }
+        ],
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Write your solution here\n    return 0;\n}",
+        "hints": [
+          "Initialize both values using the first matrix element.",
+          "Traverse every row and every column.",
+          "Update maximum and minimum separately."
+        ],
+        "solution": "#include <iostream>\nusing namespace std;\nint main() {\n    int r, c, a[50][50];\n    cin >> r >> c;\n    for (int i = 0; i < r; i++)\n        for (int k = 0; k < c; k++) cin >> a[i][k];\n    int largest = a[0][0], smallest = a[0][0];\n    for (int i = 0; i < r; i++) {\n        for (int k = 0; k < c; k++) {\n            if (a[i][k] > largest) largest = a[i][k];\n            if (a[i][k] < smallest) smallest = a[i][k];\n        }\n    }\n    cout << largest << \" \" << smallest;\n    return 0;\n}",
+        "explanation": "Initializing from a real matrix element handles negative-only matrices correctly."
+      },
+      {
+        "id": "MSC2-027",
+        "module": "Pointers",
+        "subtopic": "Pointer Basics",
+        "mode": "full_code",
+        "difficulty": "Medium",
+        "title": "Basic Pointer Operations",
+        "description": "Read an integer, store its address in a pointer, and display the value by dereferencing the pointer.",
+        "inputFormat": "One integer X.",
+        "outputFormat": "Print the value accessed through the pointer.",
+        "constraints": "X fits in a 32-bit integer.",
+        "sampleTestCases": [
+          {
+            "input": "25",
+            "expectedOutput": "25"
+          },
+          {
+            "input": "-8",
+            "expectedOutput": "-8"
+          }
+        ],
+        "hiddenTestCases": [
+          {
+            "input": "0",
+            "expectedOutput": "0"
+          },
+          {
+            "input": "100000",
+            "expectedOutput": "100000"
+          }
+        ],
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Write your solution here\n    return 0;\n}",
+        "hints": [
+          "Declare an integer variable and read its value.",
+          "Use int *p = &x to store its address.",
+          "Use *p to access the value at that address."
+        ],
+        "solution": "#include <iostream>\nusing namespace std;\nint main() {\n    int x;\n    cin >> x;\n    int *p = &x;\n    cout << *p;\n    return 0;\n}",
+        "explanation": "The dereference operator * reads the value stored at the address held by the pointer."
+      },
+      {
+        "id": "MSC2-028",
+        "module": "Pointers",
+        "subtopic": "Pointer Arithmetic",
+        "mode": "full_code",
+        "difficulty": "Medium",
+        "title": "Access Array Elements Using Pointers",
+        "description": "Read an array and display all its elements by using pointer arithmetic instead of array indexing for traversal.",
+        "inputFormat": "First line: N. Second line: N integers.",
+        "outputFormat": "Print the elements in their original order separated by spaces.",
+        "constraints": "1 <= N <= 1000.",
+        "sampleTestCases": [
+          {
+            "input": "4\n5 10 15 20",
+            "expectedOutput": "5 10 15 20"
+          },
+          {
+            "input": "1\n9",
+            "expectedOutput": "9"
+          }
+        ],
+        "hiddenTestCases": [
+          {
+            "input": "3\n-2 0 7",
+            "expectedOutput": "-2 0 7"
+          },
+          {
+            "input": "5\n1 1 2 3 5",
+            "expectedOutput": "1 1 2 3 5"
+          }
+        ],
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Write your solution here\n    return 0;\n}",
+        "hints": [
+          "The array name gives the address of its first element.",
+          "Store that address in an int pointer.",
+          "Access element i with *(p+i)."
+        ],
+        "solution": "#include <iostream>\nusing namespace std;\nint main() {\n    int n, a[1000];\n    cin >> n;\n    for (int i = 0; i < n; i++) cin >> a[i];\n    int *p = a;\n    for (int i = 0; i < n; i++) {\n        if (i > 0) cout << \" \";\n        cout << *(p + i);\n    }\n    return 0;\n}",
+        "explanation": "Pointer arithmetic advances by elements of the pointed-to type, not by individual bytes."
+      },
+      {
+        "id": "MSC2-029",
+        "module": "Pointers",
+        "subtopic": "Pointer Arithmetic",
+        "mode": "full_code",
+        "difficulty": "Medium",
+        "title": "Sum of Array Elements Using Pointers",
+        "description": "Calculate the sum of all array elements using pointer arithmetic and dereferencing.",
+        "inputFormat": "First line: N. Second line: N integers.",
+        "outputFormat": "Print the sum of all elements.",
+        "constraints": "1 <= N <= 1000.",
+        "sampleTestCases": [
+          {
+            "input": "4\n5 10 15 20",
+            "expectedOutput": "50"
+          },
+          {
+            "input": "3\n-2 0 2",
+            "expectedOutput": "0"
+          }
+        ],
+        "hiddenTestCases": [
+          {
+            "input": "1\n-9",
+            "expectedOutput": "-9"
+          },
+          {
+            "input": "5\n1 2 3 4 5",
+            "expectedOutput": "15"
+          }
+        ],
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Write your solution here\n    return 0;\n}",
+        "hints": [
+          "Declare a pointer to the first array element.",
+          "Traverse from offset 0 to N-1.",
+          "Add each dereferenced value to sum."
+        ],
+        "solution": "#include <iostream>\nusing namespace std;\nint main() {\n    int n, a[1000], sum = 0;\n    cin >> n;\n    for (int i = 0; i < n; i++) cin >> a[i];\n    int *p = a;\n    for (int i = 0; i < n; i++) sum += *(p + i);\n    cout << sum;\n    return 0;\n}",
+        "explanation": "This exercise uses pointer arithmetic to traverse an array without indexing it in the summation loop."
+      },
+      {
+        "id": "MSC2-030",
+        "module": "Pointers",
+        "subtopic": "Pointers and Arrays",
+        "mode": "full_code",
+        "difficulty": "Medium",
+        "title": "Largest Element Using Pointers",
+        "description": "Find the largest array element by traversing the array through a pointer.",
+        "inputFormat": "First line: N. Second line: N integers.",
+        "outputFormat": "Print the largest element.",
+        "constraints": "1 <= N <= 1000.",
+        "sampleTestCases": [
+          {
+            "input": "5\n4 9 -2 7 1",
+            "expectedOutput": "9"
+          },
+          {
+            "input": "3\n-10 -5 -20",
+            "expectedOutput": "-5"
+          }
+        ],
+        "hiddenTestCases": [
+          {
+            "input": "1\n-99",
+            "expectedOutput": "-99"
+          },
+          {
+            "input": "4\n0 0 5 3",
+            "expectedOutput": "5"
+          }
+        ],
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Write your solution here\n    return 0;\n}",
+        "hints": [
+          "Point to the first array element.",
+          "Initialize largest using *p.",
+          "Compare each later value using *(p+i)."
+        ],
+        "solution": "#include <iostream>\nusing namespace std;\nint main() {\n    int n, a[1000];\n    cin >> n;\n    for (int i = 0; i < n; i++) cin >> a[i];\n    int *p = a;\n    int largest = *p;\n    for (int i = 1; i < n; i++) {\n        if (*(p + i) > largest) largest = *(p + i);\n    }\n    cout << largest;\n    return 0;\n}",
+        "explanation": "Pointer-based traversal can perform the same comparisons as ordinary array indexing."
+      },
+      {
+        "id": "MSC2-031",
+        "module": "Pointers",
+        "subtopic": "Functions and Pointers",
+        "mode": "full_code",
+        "difficulty": "Medium",
+        "title": "Swap Two Numbers Using Pointers",
+        "description": "Write a function that receives two integer pointers and swaps the values using a temporary variable.",
+        "inputFormat": "Two space-separated integers A and B.",
+        "outputFormat": "Print the values after swapping.",
+        "constraints": "Both values fit in a 32-bit integer.",
+        "sampleTestCases": [
+          {
+            "input": "10 20",
+            "expectedOutput": "20 10"
+          },
+          {
+            "input": "0 -50",
+            "expectedOutput": "-50 0"
+          }
+        ],
+        "hiddenTestCases": [
+          {
+            "input": "7 7",
+            "expectedOutput": "7 7"
+          },
+          {
+            "input": "-3 12",
+            "expectedOutput": "12 -3"
+          }
+        ],
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Write your solution here\n    return 0;\n}",
+        "hints": [
+          "The function parameters must be integer pointers.",
+          "Pass the addresses of the two variables using &.",
+          "Swap the dereferenced values using temp."
+        ],
+        "solution": "#include <iostream>\nusing namespace std;\nvoid swapNumbers(int *p, int *q) {\n    int temp = *p;\n    *p = *q;\n    *q = temp;\n}\nint main() {\n    int a, b;\n    cin >> a >> b;\n    swapNumbers(&a, &b);\n    cout << a << \" \" << b;\n    return 0;\n}",
+        "explanation": "Passing addresses lets the function modify the original variables in main."
+      },
+      {
+        "id": "MSC2-032",
+        "module": "Pointers",
+        "subtopic": "Pointer to Pointer",
+        "mode": "full_code",
+        "difficulty": "Hard",
+        "title": "Pointer to Pointer",
+        "description": "Read an integer and access it through both a pointer and a pointer-to-pointer.",
+        "inputFormat": "One integer X.",
+        "outputFormat": "Print the value accessed through the single pointer and the double pointer.",
+        "constraints": "X fits in a 32-bit integer.",
+        "sampleTestCases": [
+          {
+            "input": "42",
+            "expectedOutput": "42 42"
+          },
+          {
+            "input": "-5",
+            "expectedOutput": "-5 -5"
+          }
+        ],
+        "hiddenTestCases": [
+          {
+            "input": "0",
+            "expectedOutput": "0 0"
+          },
+          {
+            "input": "999",
+            "expectedOutput": "999 999"
+          }
+        ],
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Write your solution here\n    return 0;\n}",
+        "hints": [
+          "First create a pointer to x.",
+          "Create a second pointer that stores the address of the first pointer.",
+          "Use **pp to reach the original integer."
+        ],
+        "solution": "#include <iostream>\nusing namespace std;\nint main() {\n    int x;\n    cin >> x;\n    int *p = &x;\n    int **pp = &p;\n    cout << *p << \" \" << **pp;\n    return 0;\n}",
+        "explanation": "A pointer-to-pointer stores the address of another pointer; two dereferences reach the original value."
+      },
+      {
+        "id": "MSC2-033",
+        "module": "Pointers",
+        "subtopic": "Array of Pointers",
+        "mode": "full_code",
+        "difficulty": "Hard",
+        "title": "Array of Pointers",
+        "description": "Read three integers, create an array of pointers to those integers, and display the pointed-to values.",
+        "inputFormat": "Three space-separated integers.",
+        "outputFormat": "Print the three values in their original order separated by spaces.",
+        "constraints": "Exactly three integers are provided.",
+        "sampleTestCases": [
+          {
+            "input": "10 20 30",
+            "expectedOutput": "10 20 30"
+          },
+          {
+            "input": "-1 0 1",
+            "expectedOutput": "-1 0 1"
+          }
+        ],
+        "hiddenTestCases": [
+          {
+            "input": "7 7 7",
+            "expectedOutput": "7 7 7"
+          },
+          {
+            "input": "100 -50 25",
+            "expectedOutput": "100 -50 25"
+          }
+        ],
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Write your solution here\n    return 0;\n}",
+        "hints": [
+          "Declare an integer array and an array of three integer pointers.",
+          "Store the address of each corresponding integer in p[i].",
+          "Dereference each pointer to display the value."
+        ],
+        "solution": "#include <iostream>\nusing namespace std;\nint main() {\n    int a[3];\n    int *p[3];\n    for (int i = 0; i < 3; i++) cin >> a[i];\n    for (int i = 0; i < 3; i++) p[i] = &a[i];\n    for (int i = 0; i < 3; i++) {\n        if (i > 0) cout << \" \";\n        cout << *p[i];\n    }\n    return 0;\n}",
+        "explanation": "An array of pointers stores multiple addresses, with each pointer referring to an integer."
+      },
+      {
+        "id": "MSC2-034",
+        "module": "Pointers",
+        "subtopic": "Functions and Pointers",
+        "mode": "full_code",
+        "difficulty": "Hard",
+        "title": "Modify a Variable Using a Pointer Function",
+        "description": "Write a function that receives an integer pointer and increases the original variable by one.",
+        "inputFormat": "One integer X.",
+        "outputFormat": "Print the updated value after calling the function.",
+        "constraints": "X is between -1000000 and 1000000.",
+        "sampleTestCases": [
+          {
+            "input": "5",
+            "expectedOutput": "6"
+          },
+          {
+            "input": "-2",
+            "expectedOutput": "-1"
+          }
+        ],
+        "hiddenTestCases": [
+          {
+            "input": "0",
+            "expectedOutput": "1"
+          },
+          {
+            "input": "99",
+            "expectedOutput": "100"
+          }
+        ],
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Write your solution here\n    return 0;\n}",
+        "hints": [
+          "The function should accept an int pointer.",
+          "Pass the address of x from main.",
+          "Increase the value using *p = *p + 1."
+        ],
+        "solution": "#include <iostream>\nusing namespace std;\nvoid increase(int *p) {\n    *p = *p + 1;\n}\nint main() {\n    int x;\n    cin >> x;\n    increase(&x);\n    cout << x;\n    return 0;\n}",
+        "explanation": "Changing the dereferenced pointer modifies the original variable in the calling function."
+      },
+      {
+        "id": "MSC2-035",
+        "module": "DMA",
+        "subtopic": "Dynamic 1D Array",
+        "mode": "full_code",
+        "difficulty": "Hard",
+        "title": "Dynamic 1D Array",
+        "description": "Allocate an integer array dynamically using new, read its elements, display them, and release the memory.",
+        "inputFormat": "First line: N. Second line: N integers.",
+        "outputFormat": "Print all N elements separated by spaces.",
+        "constraints": "1 <= N <= 1000.",
+        "sampleTestCases": [
+          {
+            "input": "4\n2 4 6 8",
+            "expectedOutput": "2 4 6 8"
+          },
+          {
+            "input": "1\n9",
+            "expectedOutput": "9"
+          }
+        ],
+        "hiddenTestCases": [
+          {
+            "input": "3\n-1 0 5",
+            "expectedOutput": "-1 0 5"
+          },
+          {
+            "input": "5\n3 1 4 1 5",
+            "expectedOutput": "3 1 4 1 5"
+          }
+        ],
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Write your solution here\n    return 0;\n}",
+        "hints": [
+          "Allocate space with int *a = new int[n].",
+          "Read and display values using the allocated array.",
+          "Release the complete array using delete[] a."
+        ],
+        "solution": "#include <iostream>\nusing namespace std;\nint main() {\n    int n;\n    cin >> n;\n    int *a = new int[n];\n    for (int i = 0; i < n; i++) cin >> a[i];\n    for (int i = 0; i < n; i++) {\n        if (i > 0) cout << \" \";\n        cout << a[i];\n    }\n    delete[] a;\n    return 0;\n}",
+        "explanation": "Memory allocated with new[] should be released with the matching delete[] operator."
+      },
+      {
+        "id": "MSC2-036",
+        "module": "DMA",
+        "subtopic": "Dynamic 1D Array",
+        "mode": "full_code",
+        "difficulty": "Hard",
+        "title": "Sum and Average Using DMA",
+        "description": "Allocate an array dynamically and calculate its sum and integer average.",
+        "inputFormat": "First line: N. Second line: N integers.",
+        "outputFormat": "Print sum followed by integer average.",
+        "constraints": "1 <= N <= 1000; average uses integer division.",
+        "sampleTestCases": [
+          {
+            "input": "4\n1 2 3 4",
+            "expectedOutput": "10 2"
+          },
+          {
+            "input": "3\n2 3 4",
+            "expectedOutput": "9 3"
+          }
+        ],
+        "hiddenTestCases": [
+          {
+            "input": "1\n-5",
+            "expectedOutput": "-5 -5"
+          },
+          {
+            "input": "5\n-4 0 6 2 1",
+            "expectedOutput": "5 1"
+          }
+        ],
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Write your solution here\n    return 0;\n}",
+        "hints": [
+          "Allocate the array after reading N.",
+          "Add every input value to sum as it is read.",
+          "Print sum and sum/n, then deallocate the array."
+        ],
+        "solution": "#include <iostream>\nusing namespace std;\nint main() {\n    int n, sum = 0;\n    cin >> n;\n    int *a = new int[n];\n    for (int i = 0; i < n; i++) {\n        cin >> a[i];\n        sum += a[i];\n    }\n    cout << sum << \" \" << sum / n;\n    delete[] a;\n    return 0;\n}",
+        "explanation": "This combines dynamic array allocation with basic array aggregation."
+      },
+      {
+        "id": "MSC2-037",
+        "module": "DMA",
+        "subtopic": "Dynamic 1D Array",
+        "mode": "full_code",
+        "difficulty": "Hard",
+        "title": "Search in a Dynamic Array",
+        "description": "Use a dynamically allocated array and perform linear search for a target value.",
+        "inputFormat": "First line: N. Second line: N integers. Third line: target X.",
+        "outputFormat": "Print the first zero-based index of X, or -1 if it is absent.",
+        "constraints": "1 <= N <= 1000.",
+        "sampleTestCases": [
+          {
+            "input": "5\n4 7 2 7 9\n7",
+            "expectedOutput": "1"
+          },
+          {
+            "input": "4\n1 2 3 4\n8",
+            "expectedOutput": "-1"
+          }
+        ],
+        "hiddenTestCases": [
+          {
+            "input": "1\n-6\n-6",
+            "expectedOutput": "0"
+          },
+          {
+            "input": "6\n3 5 3 8 3 9\n3",
+            "expectedOutput": "0"
+          }
+        ],
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Write your solution here\n    return 0;\n}",
+        "hints": [
+          "Use new int[n] after reading N.",
+          "Traverse the allocated array from index zero.",
+          "Store the first matching index and then delete[] the memory."
+        ],
+        "solution": "#include <iostream>\nusing namespace std;\nint main() {\n    int n, x, answer = -1;\n    cin >> n;\n    int *a = new int[n];\n    for (int i = 0; i < n; i++) cin >> a[i];\n    cin >> x;\n    for (int i = 0; i < n; i++) {\n        if (a[i] == x) {\n            answer = i;\n            break;\n        }\n    }\n    cout << answer;\n    delete[] a;\n    return 0;\n}",
+        "explanation": "The search logic is the same as linear search on a regular array; only allocation differs."
+      },
+      {
+        "id": "MSC2-038",
+        "module": "DMA",
+        "subtopic": "Dynamic 2D Array",
+        "mode": "full_code",
+        "difficulty": "Hard",
+        "title": "Dynamic 2D Matrix Transpose",
+        "description": "Allocate a two-dimensional matrix dynamically using a pointer-to-pointer and print its transpose.",
+        "inputFormat": "First line: R C. Next R lines: C integers each.",
+        "outputFormat": "Print the transpose with C rows and R columns.",
+        "constraints": "1 <= R,C <= 30.",
+        "sampleTestCases": [
+          {
+            "input": "2 3\n1 2 3\n4 5 6",
+            "expectedOutput": "1 4\n2 5\n3 6"
+          },
+          {
+            "input": "1 2\n7 9",
+            "expectedOutput": "7\n9"
+          }
+        ],
+        "hiddenTestCases": [
+          {
+            "input": "3 1\n5\n6\n7",
+            "expectedOutput": "5 6 7"
+          },
+          {
+            "input": "2 2\n1 2\n3 4",
+            "expectedOutput": "1 3\n2 4"
+          }
+        ],
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Write your solution here\n    return 0;\n}",
+        "hints": [
+          "Allocate the row-pointer array using new int*[r].",
+          "Allocate each row separately using new int[c].",
+          "Print a[k][i], then delete every row and finally delete the row-pointer array."
+        ],
+        "solution": "#include <iostream>\nusing namespace std;\nint main() {\n    int r, c;\n    cin >> r >> c;\n    int **a = new int*[r];\n    for (int i = 0; i < r; i++) a[i] = new int[c];\n    for (int i = 0; i < r; i++)\n        for (int k = 0; k < c; k++) cin >> a[i][k];\n    for (int i = 0; i < c; i++) {\n        for (int k = 0; k < r; k++) {\n            if (k > 0) cout << \" \";\n            cout << a[k][i];\n        }\n        if (i + 1 < c) cout << \"\\n\";\n    }\n    for (int i = 0; i < r; i++) delete[] a[i];\n    delete[] a;\n    return 0;\n}",
+        "explanation": "A dynamic 2D array created as int** requires each allocated row and the outer pointer array to be released."
+      },
+      {
+        "id": "MSC2-039",
+        "module": "Functions",
+        "subtopic": "User-Defined Functions",
+        "mode": "full_code",
+        "difficulty": "Hard",
+        "title": "Prime Number Using a Function",
+        "description": "Write a user-defined function that checks whether an integer is prime.",
+        "inputFormat": "One integer N.",
+        "outputFormat": "Print YES if N is prime; otherwise print NO.",
+        "constraints": "-1000000 <= N <= 1000000.",
+        "sampleTestCases": [
+          {
+            "input": "7",
+            "expectedOutput": "YES"
+          },
+          {
+            "input": "12",
+            "expectedOutput": "NO"
+          }
+        ],
+        "hiddenTestCases": [
+          {
+            "input": "1",
+            "expectedOutput": "NO"
+          },
+          {
+            "input": "97",
+            "expectedOutput": "YES"
+          }
+        ],
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Write your solution here\n    return 0;\n}",
+        "hints": [
+          "A prime number must be greater than one.",
+          "Try divisors from 2 while i*i <= n.",
+          "Return false as soon as a divisor is found."
+        ],
+        "solution": "#include <iostream>\nusing namespace std;\nint isPrime(int n) {\n    if (n < 2) return 0;\n    for (int i = 2; i * i <= n; i++) {\n        if (n % i == 0) return 0;\n    }\n    return 1;\n}\nint main() {\n    int n;\n    cin >> n;\n    if (isPrime(n)) cout << \"YES\";\n    else cout << \"NO\";\n    return 0;\n}",
+        "explanation": "The prime-checking logic is kept in a separate function so it can be reused."
+      },
+      {
+        "id": "MSC2-040",
+        "module": "Functions",
+        "subtopic": "User-Defined Functions",
+        "mode": "full_code",
+        "difficulty": "Hard",
+        "title": "Factorial Using a Function",
+        "description": "Write a function that calculates the factorial of a non-negative integer.",
+        "inputFormat": "One integer N.",
+        "outputFormat": "Print N factorial.",
+        "constraints": "0 <= N <= 20; use a 64-bit integer for the result.",
+        "sampleTestCases": [
+          {
+            "input": "5",
+            "expectedOutput": "120"
+          },
+          {
+            "input": "0",
+            "expectedOutput": "1"
+          }
+        ],
+        "hiddenTestCases": [
+          {
+            "input": "1",
+            "expectedOutput": "1"
+          },
+          {
+            "input": "10",
+            "expectedOutput": "3628800"
+          }
+        ],
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Write your solution here\n    return 0;\n}",
+        "hints": [
+          "Define a function that receives n and returns a 64-bit integer.",
+          "Start the result at one.",
+          "Multiply it by every integer from 1 through n."
+        ],
+        "solution": "#include <iostream>\nusing namespace std;\nlong long factorial(int n) {\n    long long result = 1;\n    for (int i = 1; i <= n; i++) result *= i;\n    return result;\n}\nint main() {\n    int n;\n    cin >> n;\n    cout << factorial(n);\n    return 0;\n}",
+        "explanation": "A function separates the factorial calculation from the input and output code."
+      },
+      {
+        "id": "MSC2-041",
+        "module": "Functions",
+        "subtopic": "Call by Value",
+        "mode": "full_code",
+        "difficulty": "Hard",
+        "title": "Call by Value",
+        "description": "Demonstrate call by value: add 10 to the function's local copy and then display the unchanged original value.",
+        "inputFormat": "One integer X.",
+        "outputFormat": "Print the modified local copy followed by the original value in main.",
+        "constraints": "-1000000 <= X <= 1000000.",
+        "sampleTestCases": [
+          {
+            "input": "5",
+            "expectedOutput": "15 5"
+          },
+          {
+            "input": "-4",
+            "expectedOutput": "6 -4"
+          }
+        ],
+        "hiddenTestCases": [
+          {
+            "input": "0",
+            "expectedOutput": "10 0"
+          },
+          {
+            "input": "100",
+            "expectedOutput": "110 100"
+          }
+        ],
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Write your solution here\n    return 0;\n}",
+        "hints": [
+          "The function parameter receives a copy of the argument.",
+          "Add 10 to the parameter inside the function.",
+          "Print x again in main to show that the original is unchanged."
+        ],
+        "solution": "#include <iostream>\nusing namespace std;\nvoid changeValue(int x) {\n    x = x + 10;\n    cout << x << \" \";\n}\nint main() {\n    int x;\n    cin >> x;\n    changeValue(x);\n    cout << x;\n    return 0;\n}",
+        "explanation": "Call by value copies the argument, so modifying the parameter does not modify the caller's variable."
+      },
+      {
+        "id": "MSC2-042",
+        "module": "Functions",
+        "subtopic": "Call by Reference",
+        "mode": "full_code",
+        "difficulty": "Hard",
+        "title": "Call by Reference",
+        "description": "Swap two integers by passing them to a function using reference parameters.",
+        "inputFormat": "Two space-separated integers A and B.",
+        "outputFormat": "Print the two values after swapping.",
+        "constraints": "Both values fit in a 32-bit integer.",
+        "sampleTestCases": [
+          {
+            "input": "10 20",
+            "expectedOutput": "20 10"
+          },
+          {
+            "input": "0 -50",
+            "expectedOutput": "-50 0"
+          }
+        ],
+        "hiddenTestCases": [
+          {
+            "input": "7 7",
+            "expectedOutput": "7 7"
+          },
+          {
+            "input": "-3 12",
+            "expectedOutput": "12 -3"
+          }
+        ],
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Write your solution here\n    return 0;\n}",
+        "hints": [
+          "Use int & in the function parameter list.",
+          "Pass the variables directly, without using & in the call.",
+          "Swap the referenced values with a temporary variable."
+        ],
+        "solution": "#include <iostream>\nusing namespace std;\nvoid swapNumbers(int &a, int &b) {\n    int temp = a;\n    a = b;\n    b = temp;\n}\nint main() {\n    int a, b;\n    cin >> a >> b;\n    swapNumbers(a, b);\n    cout << a << \" \" << b;\n    return 0;\n}",
+        "explanation": "Reference parameters act as aliases for the original variables, so the function can modify them."
+      },
+      {
+        "id": "MSC2-043",
+        "module": "Functions",
+        "subtopic": "Array Operations Using Functions",
+        "mode": "full_code",
+        "difficulty": "Hard",
+        "title": "Array Operations Using Functions",
+        "description": "Write separate functions to find the largest element, smallest element, and sum of an array.",
+        "inputFormat": "First line: N. Second line: N integers.",
+        "outputFormat": "Print largest, smallest, and sum in that order.",
+        "constraints": "1 <= N <= 1000.",
+        "sampleTestCases": [
+          {
+            "input": "5\n4 9 -2 7 1",
+            "expectedOutput": "9 -2 19"
+          },
+          {
+            "input": "1\n-8",
+            "expectedOutput": "-8 -8 -8"
+          }
+        ],
+        "hiddenTestCases": [
+          {
+            "input": "4\n-5 -2 -9 -3",
+            "expectedOutput": "-2 -9 -19"
+          },
+          {
+            "input": "3\n10 20 30",
+            "expectedOutput": "30 10 60"
+          }
+        ],
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Write your solution here\n    return 0;\n}",
+        "hints": [
+          "Create one function for each requested operation.",
+          "Pass the array and its size to every function.",
+          "Call all three functions from main and print their results."
+        ],
+        "solution": "#include <iostream>\nusing namespace std;\nint findLargest(int a[], int n) {\n    int largest = a[0];\n    for (int i = 1; i < n; i++)\n        if (a[i] > largest) largest = a[i];\n    return largest;\n}\nint findSmallest(int a[], int n) {\n    int smallest = a[0];\n    for (int i = 1; i < n; i++)\n        if (a[i] < smallest) smallest = a[i];\n    return smallest;\n}\nint findSum(int a[], int n) {\n    int sum = 0;\n    for (int i = 0; i < n; i++) sum += a[i];\n    return sum;\n}\nint main() {\n    int n, a[1000];\n    cin >> n;\n    for (int i = 0; i < n; i++) cin >> a[i];\n    cout << findLargest(a, n) << \" \"\n         << findSmallest(a, n) << \" \"\n         << findSum(a, n);\n    return 0;\n}",
+        "explanation": "Modular programming divides a larger task into small functions with clear responsibilities."
+      },
+      {
+        "id": "MSC2-044",
+        "module": "Functions",
+        "subtopic": "Recursion",
+        "mode": "full_code",
+        "difficulty": "Hard",
+        "title": "Print Numbers from 1 to N Using Recursion",
+        "description": "Print all integers from 1 through N using a recursive function and no loop.",
+        "inputFormat": "One positive integer N.",
+        "outputFormat": "Print the numbers from 1 to N separated by spaces.",
+        "constraints": "1 <= N <= 1000.",
+        "sampleTestCases": [
+          {
+            "input": "5",
+            "expectedOutput": "1 2 3 4 5"
+          },
+          {
+            "input": "1",
+            "expectedOutput": "1"
+          }
+        ],
+        "hiddenTestCases": [
+          {
+            "input": "3",
+            "expectedOutput": "1 2 3"
+          },
+          {
+            "input": "8",
+            "expectedOutput": "1 2 3 4 5 6 7 8"
+          }
+        ],
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Write your solution here\n    return 0;\n}",
+        "hints": [
+          "Use n == 0 as the base case.",
+          "Call printNumbers(n-1) before printing n.",
+          "This order prints values while recursive calls return."
+        ],
+        "solution": "#include <iostream>\nusing namespace std;\nvoid printNumbers(int n) {\n    if (n == 0) return;\n    printNumbers(n - 1);\n    if (n > 1) cout << \" \";\n    cout << n;\n}\nint main() {\n    int n;\n    cin >> n;\n    printNumbers(n);\n    return 0;\n}",
+        "explanation": "The recursive calls reach zero first, then print values in ascending order during stack unwinding."
+      },
+      {
+        "id": "MSC2-045",
+        "module": "Functions",
+        "subtopic": "Recursion",
+        "mode": "full_code",
+        "difficulty": "Hard",
+        "title": "Sum of First N Natural Numbers Using Recursion",
+        "description": "Calculate the sum of the first N natural numbers recursively.",
+        "inputFormat": "One non-negative integer N.",
+        "outputFormat": "Print the sum from 1 through N.",
+        "constraints": "0 <= N <= 100000.",
+        "sampleTestCases": [
+          {
+            "input": "5",
+            "expectedOutput": "15"
+          },
+          {
+            "input": "1",
+            "expectedOutput": "1"
+          }
+        ],
+        "hiddenTestCases": [
+          {
+            "input": "0",
+            "expectedOutput": "0"
+          },
+          {
+            "input": "10",
+            "expectedOutput": "55"
+          }
+        ],
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Write your solution here\n    return 0;\n}",
+        "hints": [
+          "Use sumNatural(0) = 0 as the base case.",
+          "For n greater than zero, add n to the result for n-1.",
+          "Print the function's returned value."
+        ],
+        "solution": "#include <iostream>\nusing namespace std;\nint sumNatural(int n) {\n    if (n == 0) return 0;\n    return n + sumNatural(n - 1);\n}\nint main() {\n    int n;\n    cin >> n;\n    cout << sumNatural(n);\n    return 0;\n}",
+        "explanation": "Each recursive call reduces N until the base case is reached."
+      },
+      {
+        "id": "MSC2-046",
+        "module": "Functions",
+        "subtopic": "Recursion",
+        "mode": "full_code",
+        "difficulty": "Hard",
+        "title": "Factorial Using Recursion",
+        "description": "Calculate the factorial of a non-negative integer using recursion.",
+        "inputFormat": "One integer N.",
+        "outputFormat": "Print N factorial.",
+        "constraints": "0 <= N <= 20; use a 64-bit integer for the result.",
+        "sampleTestCases": [
+          {
+            "input": "5",
+            "expectedOutput": "120"
+          },
+          {
+            "input": "0",
+            "expectedOutput": "1"
+          }
+        ],
+        "hiddenTestCases": [
+          {
+            "input": "1",
+            "expectedOutput": "1"
+          },
+          {
+            "input": "10",
+            "expectedOutput": "3628800"
+          }
+        ],
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Write your solution here\n    return 0;\n}",
+        "hints": [
+          "The base case is factorial of zero or one, which is one.",
+          "For n greater than one, return n multiplied by factorial(n-1).",
+          "Use long long for values up to 20 factorial."
+        ],
+        "solution": "#include <iostream>\nusing namespace std;\nlong long factorial(int n) {\n    if (n <= 1) return 1;\n    return n * factorial(n - 1);\n}\nint main() {\n    int n;\n    cin >> n;\n    cout << factorial(n);\n    return 0;\n}",
+        "explanation": "The recursive definition reduces factorial N to N multiplied by factorial N-1."
+      },
+      {
+        "id": "MSC2-047",
+        "module": "Functions",
+        "subtopic": "Recursion",
+        "mode": "full_code",
+        "difficulty": "Hard",
+        "title": "Fibonacci Series Using Recursion",
+        "description": "Generate the first N terms of the Fibonacci sequence using a recursive Fibonacci function.",
+        "inputFormat": "One integer N.",
+        "outputFormat": "Print the first N Fibonacci terms starting with 0 and 1.",
+        "constraints": "1 <= N <= 20.",
+        "sampleTestCases": [
+          {
+            "input": "6",
+            "expectedOutput": "0 1 1 2 3 5"
+          },
+          {
+            "input": "1",
+            "expectedOutput": "0"
+          }
+        ],
+        "hiddenTestCases": [
+          {
+            "input": "2",
+            "expectedOutput": "0 1"
+          },
+          {
+            "input": "10",
+            "expectedOutput": "0 1 1 2 3 5 8 13 21 34"
+          }
+        ],
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Write your solution here\n    return 0;\n}",
+        "hints": [
+          "The first two Fibonacci values are F(0)=0 and F(1)=1.",
+          "For larger indices, return F(n-1)+F(n-2).",
+          "Call the recursive function for indices 0 through N-1."
+        ],
+        "solution": "#include <iostream>\nusing namespace std;\nint fibonacci(int n) {\n    if (n <= 1) return n;\n    return fibonacci(n - 1) + fibonacci(n - 2);\n}\nint main() {\n    int n;\n    cin >> n;\n    for (int i = 0; i < n; i++) {\n        if (i > 0) cout << \" \";\n        cout << fibonacci(i);\n    }\n    return 0;\n}",
+        "explanation": "The Fibonacci sequence is defined by the sum of its two previous terms."
+      },
+      {
+        "id": "MSC2-048",
+        "module": "Functions",
+        "subtopic": "Recursion",
+        "mode": "full_code",
+        "difficulty": "Hard",
+        "title": "Count Digits Using Recursion",
+        "description": "Count the number of digits in a non-negative integer using recursion.",
+        "inputFormat": "One non-negative integer N.",
+        "outputFormat": "Print the number of digits. The value zero has one digit.",
+        "constraints": "0 <= N <= 1000000000.",
+        "sampleTestCases": [
+          {
+            "input": "12345",
+            "expectedOutput": "5"
+          },
+          {
+            "input": "0",
+            "expectedOutput": "1"
+          }
+        ],
+        "hiddenTestCases": [
+          {
+            "input": "7",
+            "expectedOutput": "1"
+          },
+          {
+            "input": "1000000000",
+            "expectedOutput": "10"
+          }
+        ],
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Write your solution here\n    return 0;\n}",
+        "hints": [
+          "A single-digit number, including zero, has one digit.",
+          "For larger numbers, remove the last digit using n/10.",
+          "Add one for the removed digit and recurse."
+        ],
+        "solution": "#include <iostream>\nusing namespace std;\nint countDigits(int n) {\n    if (n < 10) return 1;\n    return 1 + countDigits(n / 10);\n}\nint main() {\n    int n;\n    cin >> n;\n    cout << countDigits(n);\n    return 0;\n}",
+        "explanation": "Integer division by ten removes one decimal digit on each recursive call."
+      },
+      {
+        "id": "MSC2-049",
+        "module": "Functions",
+        "subtopic": "Recursion",
+        "mode": "full_code",
+        "difficulty": "Hard",
+        "title": "Sum of Digits Using Recursion",
+        "description": "Calculate the sum of all decimal digits of a non-negative integer using recursion.",
+        "inputFormat": "One non-negative integer N.",
+        "outputFormat": "Print the sum of its digits.",
+        "constraints": "0 <= N <= 1000000000.",
+        "sampleTestCases": [
+          {
+            "input": "12345",
+            "expectedOutput": "15"
+          },
+          {
+            "input": "90",
+            "expectedOutput": "9"
+          }
+        ],
+        "hiddenTestCases": [
+          {
+            "input": "0",
+            "expectedOutput": "0"
+          },
+          {
+            "input": "508",
+            "expectedOutput": "13"
+          }
+        ],
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Write your solution here\n    return 0;\n}",
+        "hints": [
+          "The base case is n == 0.",
+          "Extract the last digit using n%10.",
+          "Add that digit to the recursive result for n/10."
+        ],
+        "solution": "#include <iostream>\nusing namespace std;\nint sumDigits(int n) {\n    if (n == 0) return 0;\n    return n % 10 + sumDigits(n / 10);\n}\nint main() {\n    int n;\n    cin >> n;\n    cout << sumDigits(n);\n    return 0;\n}",
+        "explanation": "The remainder gives the last digit, while integer division removes it."
+      },
+      {
+        "id": "MSC2-050",
+        "module": "Functions",
+        "subtopic": "Recursion",
+        "mode": "full_code",
+        "difficulty": "Hard",
+        "title": "Reverse a Number Using Recursion",
+        "description": "Reverse the decimal digits of a non-negative integer using a recursive helper function.",
+        "inputFormat": "One non-negative integer N.",
+        "outputFormat": "Print the reversed integer. Leading zeroes in the reversed form are not printed.",
+        "constraints": "0 <= N <= 1000000000.",
+        "sampleTestCases": [
+          {
+            "input": "1234",
+            "expectedOutput": "4321"
+          },
+          {
+            "input": "0",
+            "expectedOutput": "0"
+          }
+        ],
+        "hiddenTestCases": [
+          {
+            "input": "900",
+            "expectedOutput": "9"
+          },
+          {
+            "input": "5081",
+            "expectedOutput": "1805"
+          }
+        ],
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Write your solution here\n    return 0;\n}",
+        "hints": [
+          "Use a helper with two parameters: the remaining number and the reversed value.",
+          "Append the last digit with reversed*10 + n%10.",
+          "Recurse with n/10 until n becomes zero."
+        ],
+        "solution": "#include <iostream>\nusing namespace std;\nint reverseNumber(int n, int reversed) {\n    if (n == 0) return reversed;\n    return reverseNumber(n / 10, reversed * 10 + n % 10);\n}\nint main() {\n    int n;\n    cin >> n;\n    cout << reverseNumber(n, 0);\n    return 0;\n}",
+        "explanation": "The helper builds the reversed number one digit at a time as the original number is reduced."
       }
     ];
 
