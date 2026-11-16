@@ -249,7 +249,7 @@
     <div class="flex items-center justify-between">
       <div>
         <h2 class="text-2xl font-bold text-white tracking-tight">C++ University Question Bank</h2>
-        <p class="text-sm text-slate-400">Strictly following your 5-module B.Tech CSE Practical exam syllabus.</p>
+        <p class="text-sm text-slate-400">Core C++ syllabus practice, exam questions, and string problems.</p>
       </div>
       <div class="flex space-x-3">
         <select id="filter-module" onchange="applyFilters()" class="bg-slate-800 border border-slate-700 text-xs rounded-lg px-3 py-2 text-slate-200 outline-none">
@@ -259,6 +259,8 @@
           <option value="DMA">Module 3: Dynamic Memory (DMA)</option>
           <option value="Functions">Module 4: Functions & Recursion</option>
           <option value="Logic">Module 5: Logic Fundamentals</option>
+          <option value="Test ques">Test Questions</option>
+          <option value="Strings All">Strings All</option>
         </select>
         <select id="filter-mode" onchange="applyFilters()" class="bg-slate-800 border border-slate-700 text-xs rounded-lg px-3 py-2 text-slate-200 outline-none">
           <option value="All">All Modes</option>
@@ -291,7 +293,7 @@
         <button onclick="closeMockExamModal()" class="text-slate-400 hover:text-white">✕</button>
       </div>
       <p class="text-xs text-slate-300 leading-relaxed">
-        This mode sets up a timed exam session with random questions selected across your 5 syllabus modules.
+        This mode sets up a timed exam session with random questions selected from the question bank.
         Includes a live countdown timer and test-case submission tracker.
       </p>
       <div class="grid grid-cols-3 gap-3">
@@ -331,7 +333,7 @@
   <!-- ================= LOGIC & REAL COMPILER INTEGRATION ================= -->
   <script>
     // ==========================================
-    // 1. SYLLABUS QUESTION BANK (All 5 Modules)
+    // 1. SYLLABUS QUESTION BANK
     // ==========================================
     const QUESTIONS = [
       {
@@ -2333,6 +2335,670 @@
         ],
         "solution": "#include <iostream>\nusing namespace std;\nint reverseNumber(int n, int reversed) {\n    if (n == 0) return reversed;\n    return reverseNumber(n / 10, reversed * 10 + n % 10);\n}\nint main() {\n    int n;\n    cin >> n;\n    cout << reverseNumber(n, 0);\n    return 0;\n}",
         "explanation": "The helper builds the reversed number one digit at a time as the original number is reduced."
+      },
+      {
+        "id": "MSC2-051",
+        "module": "Test ques",
+        "subtopic": "Easy Coding",
+        "mode": "debugging",
+        "difficulty": "Easy",
+        "title": "Sum of Each Matrix Row",
+        "description": "Complete the TODO block(s) in the starter code. The input/output scaffold is provided. Calculate the sum of every row in an R by C matrix.",
+        "inputFormat": "First line: R C. Next R lines: C integers each.",
+        "outputFormat": "Print the R row sums on one line, separated by spaces.",
+        "constraints": "1 <= R, C <= 50",
+        "sampleTestCases": [
+          {
+            "input": "2 3\n1 2 3\n4 5 6",
+            "expectedOutput": "6 15"
+          }
+        ],
+        "hiddenTestCases": [
+          {
+            "input": "3 2\n-1 5\n0 0\n8 -3",
+            "expectedOutput": "4 0 5"
+          }
+        ],
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int r, c, a[50][50], rowSum[50] = {};\n    cin >> r >> c;\n    for (int i = 0; i < r; i++)\n        for (int j = 0; j < c; j++) cin >> a[i][j];\n\n    // TODO: Write nested loops to calculate each row sum.\n\n    for (int i = 0; i < r; i++) {\n        if (i > 0) cout << \" \";\n        cout << rowSum[i];\n    }\n    return 0;\n}",
+        "hints": [
+          "Keep one total for each row.",
+          "Visit every element of each row and add it to that row's total.",
+          "Print the totals in row order."
+        ],
+        "solution": "#include <iostream>\nusing namespace std;\nint main() {\n    int r, c, a[50][50], rowSum[50] = {};\n    cin >> r >> c;\n    for (int i = 0; i < r; i++)\n        for (int j = 0; j < c; j++) cin >> a[i][j];\n    for (int i = 0; i < r; i++)\n        for (int j = 0; j < c; j++) rowSum[i] += a[i][j];\n    for (int i = 0; i < r; i++) {\n        if (i > 0) cout << \" \";\n        cout << rowSum[i];\n    }\n    return 0;\n}",
+        "explanation": "Accumulate each matrix value into the sum for its row."
+      },
+      {
+        "id": "MSC2-052",
+        "module": "Test ques",
+        "subtopic": "Easy Coding",
+        "mode": "debugging",
+        "difficulty": "Medium",
+        "title": "Recursive Search in a String Array",
+        "description": "Complete the TODO block(s) in the starter code. The input/output scaffold is provided. Use recursion to find the first zero-based index of a target string in an array. Print -1 if it is absent.",
+        "inputFormat": "First line: N. Next line: N space-separated words. Last line: target word.",
+        "outputFormat": "Print the first matching zero-based index, or -1 if the target is absent.",
+        "constraints": "1 <= N <= 1000; words contain no spaces.",
+        "sampleTestCases": [
+          {
+            "input": "5\napple banana kiwi banana pear\nbanana",
+            "expectedOutput": "1"
+          }
+        ],
+        "hiddenTestCases": [
+          {
+            "input": "4\nred blue green yellow\nblack",
+            "expectedOutput": "-1"
+          }
+        ],
+        "starterCode": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint searchFrom(string words[], int n, string target, int index) {\n    // TODO: Add the base case and recursive search.\n    return -1;\n}\n\nint main() {\n    int n;\n    string words[1000], target;\n    cin >> n;\n    for (int i = 0; i < n; i++) cin >> words[i];\n    cin >> target;\n    cout << searchFrom(words, n, target, 0);\n    return 0;\n}",
+        "hints": [
+          "Pass the current index into the recursive function.",
+          "Stop when the index reaches n; return the index when the word matches.",
+          "Otherwise recurse with index + 1."
+        ],
+        "solution": "#include <iostream>\n#include <string>\nusing namespace std;\nint searchFrom(string words[], int n, string target, int index) {\n    if (index == n) return -1;\n    if (words[index] == target) return index;\n    return searchFrom(words, n, target, index + 1);\n}\nint main() {\n    int n;\n    string words[1000], target;\n    cin >> n;\n    for (int i = 0; i < n; i++) cin >> words[i];\n    cin >> target;\n    cout << searchFrom(words, n, target, 0);\n    return 0;\n}",
+        "explanation": "Check the current word, then recurse to the next index until the array ends."
+      },
+      {
+        "id": "MSC2-053",
+        "module": "Test ques",
+        "subtopic": "Easy Coding",
+        "mode": "debugging",
+        "difficulty": "Easy",
+        "title": "Reverse an Array",
+        "description": "Complete the TODO block(s) in the starter code. The input/output scaffold is provided. Reverse an array in place without creating a second array.",
+        "inputFormat": "First line: N. Second line: N integers.",
+        "outputFormat": "Print the reversed array, with elements separated by spaces.",
+        "constraints": "1 <= N <= 1000",
+        "sampleTestCases": [
+          {
+            "input": "5\n1 2 3 4 5",
+            "expectedOutput": "5 4 3 2 1"
+          }
+        ],
+        "hiddenTestCases": [
+          {
+            "input": "4\n7 -2 0 7",
+            "expectedOutput": "7 0 -2 7"
+          }
+        ],
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int n, a[1000];\n    cin >> n;\n    for (int i = 0; i < n; i++) cin >> a[i];\n\n    // TODO: Reverse the array in place.\n\n    for (int i = 0; i < n; i++) {\n        if (i > 0) cout << \" \";\n        cout << a[i];\n    }\n    return 0;\n}",
+        "hints": [
+          "Use one index at each end of the array.",
+          "Swap the two indexed values, then move both indices toward the center.",
+          "Stop when the indices meet or cross."
+        ],
+        "solution": "#include <iostream>\nusing namespace std;\nint main() {\n    int n, a[1000];\n    cin >> n;\n    for (int i = 0; i < n; i++) cin >> a[i];\n    int left = 0, right = n - 1;\n    while (left < right) {\n        int temp = a[left]; a[left] = a[right]; a[right] = temp;\n        left++; right--;\n    }\n    for (int i = 0; i < n; i++) {\n        if (i > 0) cout << \" \";\n        cout << a[i];\n    }\n    return 0;\n}",
+        "explanation": "Swap symmetric elements in place while moving from both ends toward the center."
+      },
+      {
+        "id": "MSC2-054",
+        "module": "Test ques",
+        "subtopic": "Hard",
+        "mode": "debugging",
+        "difficulty": "Hard",
+        "title": "First and Last Occurrence with Binary Search",
+        "description": "Complete the TODO block(s) in the starter code. The input/output scaffold is provided. Given a sorted array and target K, find the first and last zero-based positions of K using binary search. Print -1 -1 if K is absent.",
+        "inputFormat": "First line: N. Second line: N sorted integers. Third line: K.",
+        "outputFormat": "Print the first and last zero-based indices of K, separated by a space; print -1 -1 if absent.",
+        "constraints": "1 <= N <= 1000; the array is sorted in non-decreasing order.",
+        "sampleTestCases": [
+          {
+            "input": "7\n1 2 2 2 3 4 5\n2",
+            "expectedOutput": "1 3"
+          }
+        ],
+        "hiddenTestCases": [
+          {
+            "input": "6\n-4 -1 0 0 0 7\n0",
+            "expectedOutput": "2 4"
+          },
+          {
+            "input": "4\n1 3 5 7\n2",
+            "expectedOutput": "-1 -1"
+          }
+        ],
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int n, a[1000], k;\n    cin >> n;\n    for (int i = 0; i < n; i++) cin >> a[i];\n    cin >> k;\n\n    int first = -1, last = -1;\n    // TODO: Use binary search to find the first and last positions.\n\n    cout << first << \" \" << last;\n    return 0;\n}",
+        "hints": [
+          "Run binary search twice, narrowing left after a match for the first position.",
+          "For the last position, narrow right after a match.",
+          "Leave the answer at -1 when no matching element exists."
+        ],
+        "solution": "#include <iostream>\nusing namespace std;\nint main() {\n    int n, a[1000], k;\n    cin >> n;\n    for (int i = 0; i < n; i++) cin >> a[i];\n    cin >> k;\n    int first = -1, last = -1;\n    int low = 0, high = n - 1;\n    while (low <= high) {\n        int mid = low + (high - low) / 2;\n        if (a[mid] >= k) high = mid - 1;\n        else low = mid + 1;\n    }\n    if (low < n && a[low] == k) first = low;\n    low = 0; high = n - 1;\n    while (low <= high) {\n        int mid = low + (high - low) / 2;\n        if (a[mid] <= k) low = mid + 1;\n        else high = mid - 1;\n    }\n    if (high >= 0 && a[high] == k) last = high;\n    cout << first << \" \" << last;\n    return 0;\n}",
+        "explanation": "Use lower-bound and upper-bound style binary searches to locate both ends of the equal-value range."
+      },
+      {
+        "id": "MSC2-055",
+        "module": "Test ques",
+        "subtopic": "Hard",
+        "mode": "debugging",
+        "difficulty": "Medium",
+        "title": "Count Elements Strictly Smaller Than K",
+        "description": "Complete the TODO block(s) in the starter code. The input/output scaffold is provided. Given a sorted array, use binary search to count how many elements are strictly smaller than K.",
+        "inputFormat": "First line: N. Second line: N sorted integers. Third line: K.",
+        "outputFormat": "Print the number of elements strictly smaller than K.",
+        "constraints": "1 <= N <= 1000; the array is sorted in non-decreasing order.",
+        "sampleTestCases": [
+          {
+            "input": "6\n1 2 2 4 6 9\n4",
+            "expectedOutput": "3"
+          }
+        ],
+        "hiddenTestCases": [
+          {
+            "input": "5\n-3 0 0 5 8\n-5",
+            "expectedOutput": "0"
+          },
+          {
+            "input": "4\n1 3 5 7\n9",
+            "expectedOutput": "4"
+          }
+        ],
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int n, a[1000], k;\n    cin >> n;\n    for (int i = 0; i < n; i++) cin >> a[i];\n    cin >> k;\n\n    int count = 0;\n    // TODO: Use binary search to find the first element >= k.\n\n    cout << count;\n    return 0;\n}",
+        "hints": [
+          "The answer is the index of the first element that is not smaller than K.",
+          "Use binary search to find that lower-bound position.",
+          "If every value is smaller, the answer is n."
+        ],
+        "solution": "#include <iostream>\nusing namespace std;\nint main() {\n    int n, a[1000], k;\n    cin >> n;\n    for (int i = 0; i < n; i++) cin >> a[i];\n    cin >> k;\n    int low = 0, high = n;\n    while (low < high) {\n        int mid = low + (high - low) / 2;\n        if (a[mid] < k) low = mid + 1;\n        else high = mid;\n    }\n    cout << low;\n    return 0;\n}",
+        "explanation": "The lower-bound index is exactly the count of values strictly smaller than K."
+      },
+      {
+        "id": "MSC2-056",
+        "module": "Test ques",
+        "subtopic": "Matrix Hard",
+        "mode": "debugging",
+        "difficulty": "Hard",
+        "title": "Rotate a Square Matrix 90 Degrees Clockwise In Place",
+        "description": "Complete the TODO block(s) in the starter code. The input/output scaffold is provided. Rotate an N by N matrix 90 degrees clockwise without using another matrix.",
+        "inputFormat": "First line: N. Next N lines: N integers each.",
+        "outputFormat": "Print the rotated matrix with N rows and N columns.",
+        "constraints": "1 <= N <= 50",
+        "sampleTestCases": [
+          {
+            "input": "3\n1 2 3\n4 5 6\n7 8 9",
+            "expectedOutput": "7 4 1\n8 5 2\n9 6 3"
+          }
+        ],
+        "hiddenTestCases": [
+          {
+            "input": "2\n1 2\n3 4",
+            "expectedOutput": "3 1\n4 2"
+          }
+        ],
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int n, a[50][50];\n    cin >> n;\n    for (int i = 0; i < n; i++)\n        for (int j = 0; j < n; j++) cin >> a[i][j];\n\n    // TODO: Rotate the matrix in place using transpose and row reversal.\n\n    for (int i = 0; i < n; i++) {\n        for (int j = 0; j < n; j++) {\n            if (j > 0) cout << \" \";\n            cout << a[i][j];\n        }\n        if (i + 1 < n) cout << endl;\n    }\n    return 0;\n}",
+        "hints": [
+          "Transpose the matrix by swapping across its main diagonal.",
+          "Then reverse the elements in every row.",
+          "Do both steps on the original matrix."
+        ],
+        "solution": "#include <iostream>\nusing namespace std;\nint main() {\n    int n, a[50][50];\n    cin >> n;\n    for (int i = 0; i < n; i++)\n        for (int j = 0; j < n; j++) cin >> a[i][j];\n    for (int i = 0; i < n; i++)\n        for (int j = i + 1; j < n; j++) {\n            int temp = a[i][j]; a[i][j] = a[j][i]; a[j][i] = temp;\n        }\n    for (int i = 0; i < n; i++) {\n        int left = 0, right = n - 1;\n        while (left < right) {\n            int temp = a[i][left]; a[i][left] = a[i][right]; a[i][right] = temp;\n            left++; right--;\n        }\n    }\n    for (int i = 0; i < n; i++) {\n        for (int j = 0; j < n; j++) {\n            if (j > 0) cout << \" \";\n            cout << a[i][j];\n        }\n        if (i + 1 < n) cout << endl;\n    }\n    return 0;\n}",
+        "explanation": "Transposing and then reversing each row gives a clockwise rotation without a second matrix."
+      },
+      {
+        "id": "MSC2-057",
+        "module": "Test ques",
+        "subtopic": "Matrix Hard",
+        "mode": "debugging",
+        "difficulty": "Medium",
+        "title": "Interchange Two Rows of a Matrix",
+        "description": "Complete the TODO block(s) in the starter code. The input/output scaffold is provided. Interchange two specified rows of a matrix. Row indices are zero-based.",
+        "inputFormat": "First line: R C. Next R lines: C integers each. Last line: row indices A B.",
+        "outputFormat": "Print the matrix after swapping the two rows.",
+        "constraints": "1 <= R, C <= 50; 0 <= A, B < R",
+        "sampleTestCases": [
+          {
+            "input": "3 2\n1 2\n3 4\n5 6\n0 2",
+            "expectedOutput": "5 6\n3 4\n1 2"
+          }
+        ],
+        "hiddenTestCases": [
+          {
+            "input": "2 3\n7 8 9\n1 2 3\n1 1",
+            "expectedOutput": "7 8 9\n1 2 3"
+          }
+        ],
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int r, c, a[50][50], rowA, rowB;\n    cin >> r >> c;\n    for (int i = 0; i < r; i++)\n        for (int j = 0; j < c; j++) cin >> a[i][j];\n    cin >> rowA >> rowB;\n\n    // TODO: Swap the values in the two selected rows.\n\n    for (int i = 0; i < r; i++) {\n        for (int j = 0; j < c; j++) {\n            if (j > 0) cout << \" \";\n            cout << a[i][j];\n        }\n        if (i + 1 < r) cout << endl;\n    }\n    return 0;\n}",
+        "hints": [
+          "The rows are selected by their zero-based indices.",
+          "For every column, exchange the two values.",
+          "If both indices are equal, the matrix remains the same."
+        ],
+        "solution": "#include <iostream>\nusing namespace std;\nint main() {\n    int r, c, a[50][50], rowA, rowB;\n    cin >> r >> c;\n    for (int i = 0; i < r; i++)\n        for (int j = 0; j < c; j++) cin >> a[i][j];\n    cin >> rowA >> rowB;\n    for (int j = 0; j < c; j++) {\n        int temp = a[rowA][j]; a[rowA][j] = a[rowB][j]; a[rowB][j] = temp;\n    }\n    for (int i = 0; i < r; i++) {\n        for (int j = 0; j < c; j++) {\n            if (j > 0) cout << \" \";\n            cout << a[i][j];\n        }\n        if (i + 1 < r) cout << endl;\n    }\n    return 0;\n}",
+        "explanation": "Swap the entries column by column between the selected rows."
+      },
+      {
+        "id": "MSC2-058",
+        "module": "Test ques",
+        "subtopic": "String",
+        "mode": "debugging",
+        "difficulty": "Medium",
+        "title": "Check Whether Two Strings Are Anagrams",
+        "description": "Complete the TODO block(s) in the starter code. The input/output scaffold is provided. Determine whether two lowercase English words contain the same letters with the same frequencies.",
+        "inputFormat": "Two space-separated lowercase English words.",
+        "outputFormat": "Print YES if the words are anagrams; otherwise print NO.",
+        "constraints": "Each word contains only lowercase English letters.",
+        "sampleTestCases": [
+          {
+            "input": "listen silent",
+            "expectedOutput": "YES"
+          }
+        ],
+        "hiddenTestCases": [
+          {
+            "input": "triangle integral",
+            "expectedOutput": "YES"
+          },
+          {
+            "input": "hello world",
+            "expectedOutput": "NO"
+          }
+        ],
+        "starterCode": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string first, second;\n    cin >> first >> second;\n    int frequency[26] = {};\n    bool anagram = true;\n\n    // TODO: Count letters from both words and compare their frequencies.\n\n    if (anagram) cout << \"YES\";\n    else cout << \"NO\";\n    return 0;\n}",
+        "hints": [
+          "Anagrams have equal lengths and equal counts for every letter.",
+          "Increment counts for the first word and decrement them for the second.",
+          "If any final count is nonzero, the words are not anagrams."
+        ],
+        "solution": "#include <iostream>\n#include <string>\nusing namespace std;\nint main() {\n    string first, second;\n    cin >> first >> second;\n    int frequency[26] = {};\n    bool anagram = first.size() == second.size();\n    for (char ch : first) frequency[ch - 'a']++;\n    for (char ch : second) frequency[ch - 'a']--;\n    for (int i = 0; i < 26; i++)\n        if (frequency[i] != 0) anagram = false;\n    if (anagram) cout << \"YES\";\n    else cout << \"NO\";\n    return 0;\n}",
+        "explanation": "Compare character frequencies instead of sorting the strings."
+      },
+      {
+        "id": "MSC2-059",
+        "module": "Test ques",
+        "subtopic": "String",
+        "mode": "debugging",
+        "difficulty": "Easy",
+        "title": "Remove Duplicate Characters",
+        "description": "Complete the TODO block(s) in the starter code. The input/output scaffold is provided. Remove repeated characters from a string while keeping the first occurrence of each character. Uppercase and lowercase are different.",
+        "inputFormat": "One string without spaces.",
+        "outputFormat": "Print the string after keeping only the first occurrence of each character.",
+        "constraints": "Characters are case-sensitive.",
+        "sampleTestCases": [
+          {
+            "input": "programming",
+            "expectedOutput": "progamin"
+          }
+        ],
+        "hiddenTestCases": [
+          {
+            "input": "AaBbAa",
+            "expectedOutput": "AaBb"
+          },
+          {
+            "input": "banana",
+            "expectedOutput": "ban"
+          }
+        ],
+        "starterCode": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string s;\n    cin >> s;\n    bool seen[256] = {};\n\n    // TODO: Print each character only the first time it appears.\n    return 0;\n}",
+        "hints": [
+          "Keep a seen/not-seen flag for each character value.",
+          "Scan the string from left to right.",
+          "Print a character the first time, then mark it as seen."
+        ],
+        "solution": "#include <iostream>\n#include <string>\nusing namespace std;\nint main() {\n    string s;\n    cin >> s;\n    bool seen[256] = {};\n    for (unsigned char ch : s) {\n        if (!seen[ch]) {\n            cout << ch;\n            seen[ch] = true;\n        }\n    }\n    return 0;\n}",
+        "explanation": "Scanning from left to right preserves the first occurrence and its original order."
+      },
+      {
+        "id": "MSC2-060",
+        "module": "Strings All",
+        "subtopic": "String Practice",
+        "mode": "debugging",
+        "difficulty": "Easy",
+        "title": "Normalize Spaces in a Sentence",
+        "description": "Complete the TODO block(s) in the starter code. The input/output scaffold is provided. Replace each run of consecutive spaces with one space and remove leading and trailing spaces.",
+        "inputFormat": "One full line of text, which may contain repeated, leading, or trailing spaces.",
+        "outputFormat": "Print the cleaned sentence.",
+        "constraints": "Sentence length is at most 1000 characters.",
+        "sampleTestCases": [
+          {
+            "input": "C++    is   a     powerful language",
+            "expectedOutput": "C++ is a powerful language"
+          }
+        ],
+        "hiddenTestCases": [
+          {
+            "input": "   hello     world   ",
+            "expectedOutput": "hello world"
+          },
+          {
+            "input": "single",
+            "expectedOutput": "single"
+          }
+        ],
+        "starterCode": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string sentence;\n    getline(cin, sentence);\n\n    // TODO: Build and print a trimmed sentence with single spaces between words.\n    return 0;\n}",
+        "hints": [
+          "Ignore spaces before the first non-space character.",
+          "After a word, remember that a separator may be needed.",
+          "Print one space before the next word, and do not print a final space."
+        ],
+        "solution": "#include <iostream>\n#include <string>\nusing namespace std;\nint main() {\n    string sentence, cleaned;\n    getline(cin, sentence);\n    bool pendingSpace = false;\n    for (char ch : sentence) {\n        if (ch == ' ') {\n            if (!cleaned.empty()) pendingSpace = true;\n        } else {\n            if (pendingSpace) cleaned += ' ';\n            cleaned += ch;\n            pendingSpace = false;\n        }\n    }\n    cout << cleaned;\n    return 0;\n}",
+        "explanation": "Build the result only when a non-space character arrives so leading and trailing spaces disappear."
+      },
+      {
+        "id": "MSC2-061",
+        "module": "Strings All",
+        "subtopic": "String Practice",
+        "mode": "debugging",
+        "difficulty": "Easy",
+        "title": "Print Missing Alphabet Letters",
+        "description": "Complete the TODO block(s) in the starter code. The input/output scaffold is provided. Print every lowercase English letter that does not appear in the input string, in alphabetical order.",
+        "inputFormat": "One string containing lowercase English letters.",
+        "outputFormat": "Print missing letters separated by spaces, or print Complete if every letter appears.",
+        "constraints": "Input contains only lowercase English letters.",
+        "sampleTestCases": [
+          {
+            "input": "abcdefgxyz",
+            "expectedOutput": "h i j k l m n o p q r s t u v w"
+          }
+        ],
+        "hiddenTestCases": [
+          {
+            "input": "abcdefghijklmnopqrstuvwxyz",
+            "expectedOutput": "Complete"
+          },
+          {
+            "input": "a",
+            "expectedOutput": "b c d e f g h i j k l m n o p q r s t u v w x y z"
+          }
+        ],
+        "starterCode": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string s;\n    cin >> s;\n    bool present[26] = {};\n    bool printedAny = false;\n\n    // TODO: Mark present letters, then print missing letters in order.\n    return 0;\n}",
+        "hints": [
+          "Use a 26-element boolean array for letters a through z.",
+          "Mark every letter found in the input.",
+          "Scan the boolean array from a to z and handle the case where none are missing."
+        ],
+        "solution": "#include <iostream>\n#include <string>\nusing namespace std;\nint main() {\n    string s;\n    cin >> s;\n    bool present[26] = {};\n    for (char ch : s) present[ch - 'a'] = true;\n    bool printedAny = false;\n    for (int i = 0; i < 26; i++) {\n        if (!present[i]) {\n            if (printedAny) cout << \" \";\n            cout << char('a' + i);\n            printedAny = true;\n        }\n    }\n    if (!printedAny) cout << \"Complete\";\n    return 0;\n}",
+        "explanation": "Mark which letters occur, then scan the alphabet once to print the missing ones."
+      },
+      {
+        "id": "MSC2-062",
+        "module": "Strings All",
+        "subtopic": "String Practice",
+        "mode": "debugging",
+        "difficulty": "Easy",
+        "title": "Count Words in a Sentence",
+        "description": "Complete the TODO block(s) in the starter code. The input/output scaffold is provided. Count the words in a sentence. Multiple spaces act as one separator, and leading or trailing spaces do not count.",
+        "inputFormat": "One full line containing a sentence.",
+        "outputFormat": "Print the number of words.",
+        "constraints": "Sentence length is at most 1000 characters.",
+        "sampleTestCases": [
+          {
+            "input": "  Learning   C++ is interesting  ",
+            "expectedOutput": "5"
+          }
+        ],
+        "hiddenTestCases": [
+          {
+            "input": "one",
+            "expectedOutput": "1"
+          },
+          {
+            "input": "   ",
+            "expectedOutput": "0"
+          }
+        ],
+        "starterCode": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string sentence;\n    getline(cin, sentence);\n    int wordCount = 0;\n    bool insideWord = false;\n\n    // TODO: Count transitions from separators into words.\n    cout << wordCount;\n    return 0;\n}",
+        "hints": [
+          "Track whether the previous character was part of a word.",
+          "A word begins when a non-space character follows a separator or the start of the line.",
+          "Count each such transition once."
+        ],
+        "solution": "#include <iostream>\n#include <string>\nusing namespace std;\nint main() {\n    string sentence;\n    getline(cin, sentence);\n    int wordCount = 0;\n    bool insideWord = false;\n    for (char ch : sentence) {\n        if (ch == ' ') insideWord = false;\n        else if (!insideWord) {\n            wordCount++;\n            insideWord = true;\n        }\n    }\n    cout << wordCount;\n    return 0;\n}",
+        "explanation": "Count the start of each run of non-space characters."
+      },
+      {
+        "id": "MSC2-063",
+        "module": "Strings All",
+        "subtopic": "String Practice",
+        "mode": "debugging",
+        "difficulty": "Easy",
+        "title": "Remove Repeated Characters",
+        "description": "Complete the TODO block(s) in the starter code. The input/output scaffold is provided. Keep the first occurrence of each character and remove later occurrences. Uppercase and lowercase characters are different.",
+        "inputFormat": "One full line containing a string.",
+        "outputFormat": "Print the resulting string with duplicate characters removed.",
+        "constraints": "String length is at most 1000 characters.",
+        "sampleTestCases": [
+          {
+            "input": "programming",
+            "expectedOutput": "progamin"
+          }
+        ],
+        "hiddenTestCases": [
+          {
+            "input": "AaBbAa",
+            "expectedOutput": "AaBb"
+          },
+          {
+            "input": "hello world",
+            "expectedOutput": "helo wrd"
+          }
+        ],
+        "starterCode": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string s;\n    getline(cin, s);\n    bool seen[256] = {};\n\n    // TODO: Print each character only on its first occurrence.\n    return 0;\n}",
+        "hints": [
+          "Scan from left to right so the first occurrence comes first.",
+          "Track seen characters by their unsigned character value.",
+          "Preserve the original character when you print it."
+        ],
+        "solution": "#include <iostream>\n#include <string>\nusing namespace std;\nint main() {\n    string s;\n    getline(cin, s);\n    bool seen[256] = {};\n    for (unsigned char ch : s) {\n        if (!seen[ch]) {\n            cout << ch;\n            seen[ch] = true;\n        }\n    }\n    return 0;\n}",
+        "explanation": "A 256-entry seen table works for the character values in the input and preserves their original order."
+      },
+      {
+        "id": "MSC2-064",
+        "module": "Strings All",
+        "subtopic": "String Practice",
+        "mode": "debugging",
+        "difficulty": "Medium",
+        "title": "Words with Matching First and Last Characters",
+        "description": "Complete the TODO block(s) in the starter code. The input/output scaffold is provided. Print each word whose first and last characters match when case is ignored. Keep qualifying words in their original spelling and order.",
+        "inputFormat": "One full line containing a sentence.",
+        "outputFormat": "Print qualifying words separated by spaces, or print No special words if none qualify.",
+        "constraints": "Words are separated by whitespace.",
+        "sampleTestCases": [
+          {
+            "input": "Anna likes coding and radar games",
+            "expectedOutput": "Anna radar"
+          }
+        ],
+        "hiddenTestCases": [
+          {
+            "input": "level noon civic",
+            "expectedOutput": "level noon civic"
+          },
+          {
+            "input": "Code is fun",
+            "expectedOutput": "No special words"
+          }
+        ],
+        "starterCode": "#include <iostream>\n#include <string>\n#include <sstream>\nusing namespace std;\n\nint main() {\n    string sentence;\n    getline(cin, sentence);\n    istringstream input(sentence);\n    string word;\n    bool found = false;\n\n    // TODO: Check each word case-insensitively and print qualifying words.\n    if (!found) cout << \"No special words\";\n    return 0;\n}",
+        "hints": [
+          "Read the sentence as separate whitespace-delimited words.",
+          "Compare the first and last characters after converting both to lowercase.",
+          "Print original words and track whether any word matched."
+        ],
+        "solution": "#include <iostream>\n#include <string>\n#include <sstream>\n#include <cctype>\nusing namespace std;\nint main() {\n    string sentence;\n    getline(cin, sentence);\n    istringstream input(sentence);\n    string word;\n    bool found = false;\n    while (input >> word) {\n        char first = tolower(static_cast<unsigned char>(word.front()));\n        char last = tolower(static_cast<unsigned char>(word.back()));\n        if (first == last) {\n            if (found) cout << \" \";\n            cout << word;\n            found = true;\n        }\n    }\n    if (!found) cout << \"No special words\";\n    return 0;\n}",
+        "explanation": "Compare normalized endpoint characters but print the untouched word."
+      },
+      {
+        "id": "MSC2-065",
+        "module": "Strings All",
+        "subtopic": "String Practice",
+        "mode": "debugging",
+        "difficulty": "Easy",
+        "title": "Find the Longest Word",
+        "description": "Complete the TODO block(s) in the starter code. The input/output scaffold is provided. Print the longest word in a sentence. If several words share the maximum length, print the first one.",
+        "inputFormat": "One full line containing a sentence.",
+        "outputFormat": "Print the longest word.",
+        "constraints": "The sentence contains at least one word; words are separated by whitespace.",
+        "sampleTestCases": [
+          {
+            "input": "Programming makes problem solving interesting",
+            "expectedOutput": "Programming"
+          }
+        ],
+        "hiddenTestCases": [
+          {
+            "input": "red blue green",
+            "expectedOutput": "green"
+          },
+          {
+            "input": "one two six",
+            "expectedOutput": "one"
+          }
+        ],
+        "starterCode": "#include <iostream>\n#include <string>\n#include <sstream>\nusing namespace std;\n\nint main() {\n    string sentence, word, longest;\n    getline(cin, sentence);\n    istringstream input(sentence);\n\n    // TODO: Find the longest word, keeping the first one when lengths tie.\n    cout << longest;\n    return 0;\n}",
+        "hints": [
+          "Read one word at a time from the sentence.",
+          "Replace the current longest word only when a strictly longer word appears.",
+          "Using a strict comparison preserves the first word in a tie."
+        ],
+        "solution": "#include <iostream>\n#include <string>\n#include <sstream>\nusing namespace std;\nint main() {\n    string sentence, word, longest;\n    getline(cin, sentence);\n    istringstream input(sentence);\n    while (input >> word)\n        if (word.size() > longest.size()) longest = word;\n    cout << longest;\n    return 0;\n}",
+        "explanation": "Update the answer only when a word is longer, not when it is equally long."
+      },
+      {
+        "id": "MSC2-066",
+        "module": "Strings All",
+        "subtopic": "String Practice",
+        "mode": "debugging",
+        "difficulty": "Medium",
+        "title": "Balanced Vowels and Consonants",
+        "description": "Complete the TODO block(s) in the starter code. The input/output scaffold is provided. Determine whether a string has the same number of vowels and consonants. Ignore letter case.",
+        "inputFormat": "One string containing only English alphabetic characters.",
+        "outputFormat": "Print Balanced when the counts are equal; otherwise print Not Balanced.",
+        "constraints": "String length is at most 1000 characters.",
+        "sampleTestCases": [
+          {
+            "input": "Education",
+            "expectedOutput": "Not Balanced"
+          }
+        ],
+        "hiddenTestCases": [
+          {
+            "input": "ab",
+            "expectedOutput": "Balanced"
+          },
+          {
+            "input": "AEIbcdf",
+            "expectedOutput": "Not Balanced"
+          }
+        ],
+        "starterCode": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string s;\n    cin >> s;\n    int vowels = 0, consonants = 0;\n\n    // TODO: Count vowels and consonants without considering letter case.\n    if (vowels == consonants) cout << \"Balanced\";\n    else cout << \"Not Balanced\";\n    return 0;\n}",
+        "hints": [
+          "Convert each character to lowercase before classifying it.",
+          "The vowels are a, e, i, o, and u.",
+          "Every other alphabetic character is a consonant."
+        ],
+        "solution": "#include <iostream>\n#include <string>\n#include <cctype>\nusing namespace std;\nint main() {\n    string s;\n    cin >> s;\n    int vowels = 0, consonants = 0;\n    for (unsigned char raw : s) {\n        char ch = tolower(raw);\n        if (ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u') vowels++;\n        else consonants++;\n    }\n    if (vowels == consonants) cout << \"Balanced\";\n    else cout << \"Not Balanced\";\n    return 0;\n}",
+        "explanation": "Lowercase each character, classify it, and compare the two totals."
+      },
+      {
+        "id": "MSC2-067",
+        "module": "Strings All",
+        "subtopic": "String Practice",
+        "mode": "debugging",
+        "difficulty": "Easy",
+        "title": "Generate Initials from a Full Name",
+        "description": "Complete the TODO block(s) in the starter code. The input/output scaffold is provided. Print the first letter of every word in a full name, followed by a dot. Convert initials to uppercase.",
+        "inputFormat": "One full line containing a full name.",
+        "outputFormat": "Print the uppercase initials separated by dots, with a dot after the last initial too.",
+        "constraints": "Name parts are separated by whitespace.",
+        "sampleTestCases": [
+          {
+            "input": "rahul kumar sharma",
+            "expectedOutput": "R.K.S."
+          }
+        ],
+        "hiddenTestCases": [
+          {
+            "input": "Ada Lovelace",
+            "expectedOutput": "A.L."
+          },
+          {
+            "input": "  grace   hopper  ",
+            "expectedOutput": "G.H."
+          }
+        ],
+        "starterCode": "#include <iostream>\n#include <string>\n#include <sstream>\nusing namespace std;\n\nint main() {\n    string name, word;\n    getline(cin, name);\n    istringstream input(name);\n\n    // TODO: Print the uppercase first letter of each word followed by a dot.\n    return 0;\n}",
+        "hints": [
+          "Split the full name into words so extra spaces are ignored.",
+          "Take the first character of each word and convert it to uppercase.",
+          "Print a dot after every initial."
+        ],
+        "solution": "#include <iostream>\n#include <string>\n#include <sstream>\n#include <cctype>\nusing namespace std;\nint main() {\n    string name, word;\n    getline(cin, name);\n    istringstream input(name);\n    while (input >> word)\n        cout << char(toupper(static_cast<unsigned char>(word[0]))) << \".\";\n    return 0;\n}",
+        "explanation": "Extracting words handles leading, trailing, and repeated spaces naturally."
+      },
+      {
+        "id": "MSC2-068",
+        "module": "Strings All",
+        "subtopic": "String Practice",
+        "mode": "debugging",
+        "difficulty": "Easy",
+        "title": "Remove Consecutive Duplicate Characters",
+        "description": "Complete the TODO block(s) in the starter code. The input/output scaffold is provided. Remove repeated characters only when they are adjacent. A character that appears again later must remain. Preserve the original case.",
+        "inputFormat": "One string without spaces.",
+        "outputFormat": "Print the string with consecutive repetitions reduced to one character.",
+        "constraints": "String length is at most 1000 characters.",
+        "sampleTestCases": [
+          {
+            "input": "aaabbccccddeee",
+            "expectedOutput": "abcde"
+          }
+        ],
+        "hiddenTestCases": [
+          {
+            "input": "mississippi",
+            "expectedOutput": "misisipi"
+          },
+          {
+            "input": "aAaAA",
+            "expectedOutput": "aAaA"
+          }
+        ],
+        "starterCode": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string s;\n    cin >> s;\n\n    // TODO: Print the first character of each consecutive run.\n    return 0;\n}",
+        "hints": [
+          "Compare each character with the one immediately before it.",
+          "Keep the first character, then keep a character only when it differs from its predecessor.",
+          "Do not use a global seen set; later runs must remain."
+        ],
+        "solution": "#include <iostream>\n#include <string>\nusing namespace std;\nint main() {\n    string s;\n    cin >> s;\n    for (int i = 0; i < static_cast<int>(s.size()); i++)\n        if (i == 0 || s[i] != s[i - 1]) cout << s[i];\n    return 0;\n}",
+        "explanation": "Only adjacent equal characters are duplicates for this task, so compare with the previous input character."
+      },
+      {
+        "id": "MSC2-069",
+        "module": "Strings All",
+        "subtopic": "String Practice",
+        "mode": "debugging",
+        "difficulty": "Medium",
+        "title": "Sort Words Alphabetically Ignoring Case",
+        "description": "Complete the TODO block(s) in the starter code. The input/output scaffold is provided. Sort the words in a sentence alphabetically without considering case. Preserve each word's original spelling and case in the output.",
+        "inputFormat": "One full line containing a sentence.",
+        "outputFormat": "Print the sorted words separated by spaces.",
+        "constraints": "Words are separated by whitespace; the sentence contains at least one word.",
+        "sampleTestCases": [
+          {
+            "input": "Banana apple Mango cherry",
+            "expectedOutput": "apple Banana cherry Mango"
+          }
+        ],
+        "hiddenTestCases": [
+          {
+            "input": "zebra Alpha alpha",
+            "expectedOutput": "Alpha alpha zebra"
+          },
+          {
+            "input": "Pear plum apricot",
+            "expectedOutput": "apricot Pear plum"
+          }
+        ],
+        "starterCode": "#include <iostream>\n#include <string>\n#include <sstream>\n#include <vector>\nusing namespace std;\n\nint main() {\n    string sentence, word;\n    getline(cin, sentence);\n    istringstream input(sentence);\n    vector<string> words;\n\n    // TODO: Read and sort words alphabetically without changing their spelling.\n\n    for (int i = 0; i < static_cast<int>(words.size()); i++) {\n        if (i > 0) cout << \" \";\n        cout << words[i];\n    }\n    return 0;\n}",
+        "hints": [
+          "Read the sentence into a list of words.",
+          "Compare lowercase versions of words when sorting.",
+          "Store the original words so the output keeps their case."
+        ],
+        "solution": "#include <iostream>\n#include <string>\n#include <sstream>\n#include <vector>\n#include <algorithm>\n#include <cctype>\nusing namespace std;\nint main() {\n    string sentence, word;\n    getline(cin, sentence);\n    istringstream input(sentence);\n    vector<string> words;\n    while (input >> word) words.push_back(word);\n    stable_sort(words.begin(), words.end(), [](const string &a, const string &b) {\n        string lowerA = a, lowerB = b;\n        for (char &ch : lowerA) ch = tolower(static_cast<unsigned char>(ch));\n        for (char &ch : lowerB) ch = tolower(static_cast<unsigned char>(ch));\n        return lowerA < lowerB;\n    });\n    for (int i = 0; i < static_cast<int>(words.size()); i++) {\n        if (i > 0) cout << \" \";\n        cout << words[i];\n    }\n    return 0;\n}",
+        "explanation": "Sort using lowercase comparison keys while retaining and printing the original words."
       }
     ];
 
